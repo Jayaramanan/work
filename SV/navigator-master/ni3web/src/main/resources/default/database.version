@@ -1,0 +1,5 @@
+#expected database version. The format is the a.b.c, where
+# a - major release number (always 1 until now)
+# b - major database change that breaks the application code. If this number (in this file) does not match with sys_am table value the application will not start
+# c - minor database change that does not break the application code. If this number (in this file) does not match with sys_am table value the application will still start
+com.ni3.ag.navigator.db.version=1.49.0

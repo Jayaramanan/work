@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>ni3all</name>
+    <groupId>com.ni3.ag</groupId>
+    <artifactId>ni3all</artifactId>
+    <packaging>pom</packaging>
+    <version>${module.version}</version>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>central</name>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
+    <modules>
+        <module>ni3shared</module>
+        <module>ni3</module>
+        <module>acni3shared</module>
+        <module>ni3dal</module>
+        <module>ni3web</module>
+        <module>ni3webjetty</module>
+        <module>acni3</module>
+        <module>acni3web</module>
+    </modules>
+    <properties>
+        <module.version>4.0.010</module.version>
+
+        <!-- library versions -->
+        <build-helper-maven-plugin.version>1.9.1</build-helper-maven-plugin.version>
+        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+        <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+        <maven-shade-plugin.version>2.4.2</maven-shade-plugin.version>
+        <protobuf.version>2.5.0</protobuf.version>
+
+        <!-- for mac use put the following : osx-x86_64 -->
+        <!-- for win use put the followind : windows-x86_64 -->
+	<os.classifier>osx-x86_64</os.classifier>
+    </properties>
+</project>

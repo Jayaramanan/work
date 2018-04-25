@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.navigator.server.domain.Schema" table="sys_schema" mutable="false" lazy="false">
+
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+		<property name="name" column="Name" length="50" />
+
+		<bag order-by="sort asc" name="definitions" inverse="true">
+			<key column="schemaID" />
+			<one-to-many class="com.ni3.ag.navigator.server.domain.ObjectDefinition" />
+		</bag>
+
+		<property name="creation" column="Creation" />
+	</class>
+</hibernate-mapping>
+

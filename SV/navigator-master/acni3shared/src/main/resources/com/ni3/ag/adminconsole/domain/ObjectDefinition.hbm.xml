@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.ObjectDefinition" table="sys_object">
+
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">sys_schema_object_id_seq</param>
+			</generator>
+		</id>
+
+		<property name="name" column="Name" length="50" />
+
+		<property name="objectType_" column="ObjectTypeID" />
+
+		<many-to-one name="schema" column="SchemaID" />
+
+		<bag name="metaphors" inverse="true" table="sys_metaphor" lazy="true" cascade="all-delete-orphan">
+			<key column="objectdefinitionid" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.Metaphor" />
+		</bag>
+
+		<bag name="objectAttributes" inverse="true" cascade="persist,all-delete-orphan" order-by="sort">
+			<key column="ObjectDefinitionID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ObjectAttribute" />
+			<filter name="inMetaphor" condition="inMetaphor=1" />
+			<filter name="Predefined" condition="Predefined>0" />
+			<filter name="NotFixedNodeAttributes" condition="lower(inTable) != 'cis_nodes'" />
+			<filter name="NumericAttributes" condition="datatypeid in (2,4)" />
+		</bag>
+
+		<one-to-one name="context" class="com.ni3.ag.adminconsole.domain.Context" property-ref="objectDefinition" fetch="join"
+			lazy="false" cascade="all" />
+
+		<property name="tableName" column="TableName" length="50" />
+		<property name="description" column="Description" type="text" />
+		<property name="creationDate" column="Creation" />
+		<many-to-one name="createdBy" column="CreatedBy" />
+		<property name="sort" column="sort" length="25" />
+
+		<bag name="objectConnections" inverse="true" cascade="all-delete-orphan">
+			<key column="objectid" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ObjectConnection" />
+		</bag>
+
+		<bag name="objectGroups" inverse="true" cascade="all-delete-orphan">
+			<key column="objectID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ObjectGroup" />
+		</bag>
+
+	</class>
+
+	<filter-def name="inMetaphor"></filter-def>
+	<filter-def name="Predefined"></filter-def>
+	<filter-def name="NotFixedNodeAttributes"></filter-def>
+	<filter-def name="NumericAttributes"></filter-def>
+
+</hibernate-mapping>

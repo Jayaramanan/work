@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<!-- This config is used to run JUnit tests -->
+
+	<bean id="userDAO" class="com.ni3.ag.navigator.server.dao.mock.UserDAOMock" autowire="byName" />
+	<bean id="ssoCache" class="com.ni3.ag.navigator.server.cache.SSOCacheMock" />
+	<bean id="deltaHeaderDAO" class="com.ni3.ag.navigator.server.dao.mock.DeltaHeaderDAOMock" />
+	<bean id="deltaHeaderUserDAO" class="com.ni3.ag.navigator.server.dao.impl.mock.DeltaHeaderUserDAOMock" autowire="byName" />
+	<bean id="userGroupDAO" class="com.ni3.ag.navigator.server.dao.impl.mock.UserGroupDAOImpl" autowire="byName" />
+	<bean id="objectUserGroupDAO" class="com.ni3.ag.navigator.server.dao.impl.mock.ObjectUserGroupDAOImpl" autowire="byName" />
+	<bean id="groupDAO" class="com.ni3.ag.navigator.server.dao.mock.GroupDAOMock" autowire="byName"/>
+	<bean id="userService" class="com.ni3.ag.navigator.server.services.mock.UserServiceMock" autowire="byName"/>
+    <bean id="databaseAdapter" class="com.ni3.ag.navigator.server.db.mock.PostgreSqlAdapterMock" autowire="byName" />
+	<bean id="geoAnalyticsDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.GeoAnalyticsDAOImpl" autowire="byName" />
+
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://localhost:8888/pfizer_canada" />
+		<property name="username" value="xxx" />
+		<property name="password" value="yyy" />
+	</bean>
+
+</beans>

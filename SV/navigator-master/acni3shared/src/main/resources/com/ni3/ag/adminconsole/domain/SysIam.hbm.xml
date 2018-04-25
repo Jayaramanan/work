@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.ni3.ag.adminconsole.domain.SysIam" table="sys_iam" lazy="false">
+        <id name="id">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="version" column="version" length="50"/>
+        <property name="name" column="name" length="255" not-null="true"/>
+    </class>
+</hibernate-mapping>

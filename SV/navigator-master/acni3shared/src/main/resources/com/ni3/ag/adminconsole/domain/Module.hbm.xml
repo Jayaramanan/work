@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.Module" table="sys_module_list" lazy="false">
+
+		<id name="id" column="id">
+			<generator class="identity" />
+		</id>
+		<property name="path" column="path" type="text"/>
+		<property name="hash" column="hash"/>
+		<property name="version" column="version"/>
+		<property name="archivePassword" column="archive_pass"/>
+		<property name="name" column="name"/>
+		<property name="params" column="params"/>
+        <bag name="currentUserModules" inverse="true" table="sys_module_user" lazy="true" cascade="all-delete-orphan">
+            <key column="current_module_id" />
+            <one-to-many class="com.ni3.ag.adminconsole.domain.ModuleUser" />
+        </bag>
+        <bag name="targetUserModules" inverse="true" table="sys_module_user" lazy="true" cascade="all-delete-orphan">
+            <key column="target_module_id" />
+            <one-to-many class="com.ni3.ag.adminconsole.domain.ModuleUser" />
+        </bag>
+	</class>
+</hibernate-mapping>
+

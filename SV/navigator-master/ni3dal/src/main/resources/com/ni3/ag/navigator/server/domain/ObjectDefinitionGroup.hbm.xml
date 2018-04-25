@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.navigator.server.domain.ObjectDefinitionGroup" table="sys_object_group" mutable="false">
+		<composite-id>
+			<key-many-to-one name="object" column="ObjectID" />
+            <key-property name="groupId" column="GroupID" />
+		</composite-id>
+
+		<property name="canRead_" column="CanRead" type="integer" />
+		<property name="canCreate_" column="CanCreate" type="integer" />
+		<property name="canUpdate_" column="CanUpdate" type="integer" />
+		<property name="canDelete_" column="CanDelete" type="integer" />
+	</class>
+</hibernate-mapping>

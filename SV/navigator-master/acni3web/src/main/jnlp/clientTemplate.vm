@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE jnlp PUBLIC "-//Sun Microsystems, Inc//DTD JNLP Descriptor 6.0.10//EN" "http://java.sun.com/dtd/JNLP-6.0.dtd">
+<jnlp spec="1.6+" codebase="$$codebase" context="$$context" href="$$name">
+	<information>
+		<title>Ni3 Admin Console v2.4</title>
+		<vendor>Ni3 AG</vendor>
+		<description>Administration console for database configuration</description>
+		<icon href="splash.png" kind="splash"/>
+	</information>
+	<security>
+		<all-permissions/>
+	</security>
+	<resources>
+		<j2se version="1.6+" java-vm-args="-Xms128m -Xmx512m"/>
+        <jar href="ACNi3.jar" main="true" download="eager" version="$project.Version"/>
+		<property name="serviceHost" value="$$context/"/>
+	</resources>
+	<application-desc main-class="com.ni3.ag.adminconsole.client.applet.ACMain" />
+</jnlp>

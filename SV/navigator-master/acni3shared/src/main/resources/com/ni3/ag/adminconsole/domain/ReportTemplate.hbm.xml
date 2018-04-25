@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.ReportTemplate" table="sys_report_template">
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+		<property name="name" column="name" length="100" />
+		<property name="type" column="type" type="integer" />
+		<property name="xml" column="xml" lazy="false" />
+		<property name="preview" column="preview" type="binary" />
+		<many-to-one name="schema" column="schemaid" />
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<servlet>
+		<servlet-name>JnlpDownloadServlet</servlet-name>
+		<servlet-class>jnlp.sample.servlet.JnlpDownloadServlet</servlet-class>
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>DEBUG</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>JnlpDownloadServlet</servlet-name>
+		<url-pattern>/webstart/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>default face page</description>
+		<servlet-name>client</servlet-name>
+		<servlet-class>com.ni3.ag.adminconsole.server.jws.ClientDownloadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>client</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>module transfer servlet</description>
+		<servlet-name>ModuleTransferServlet</servlet-name>
+		<servlet-class>com.ni3.ag.adminconsole.server.offlineclient.ModuleTransferServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ModuleTransferServlet</servlet-name>
+		<url-pattern>/ModuleTransfer</url-pattern>
+	</servlet-mapping>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/ACNi3Web-beans.xml</param-value>
+	</context-param>
+
+
+	<servlet>
+		<description>This is used for Spring framework</description>
+		<servlet-name>ACNi3Web</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ACNi3Web</servlet-name>
+		<url-pattern>/spring/*</url-pattern>
+	</servlet-mapping>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+</web-app>

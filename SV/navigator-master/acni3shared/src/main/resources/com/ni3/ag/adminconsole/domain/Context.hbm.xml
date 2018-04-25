@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.Context" table="sys_context">
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="objectDefinition" column="ObjectDefinitionID" unique="true"/>
+		<many-to-one name="pkAttribute" column="pkattrid" />
+
+		<property name="name" column="name" />
+		<property name="tableName" column="tableName" />
+
+		<bag name="contextAttributes" inverse="true" table="sys_context_attributes" lazy="true" cascade="all-delete-orphan">
+			<key column="contextId" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ContextAttribute" />
+		</bag>
+
+	</class>
+</hibernate-mapping>

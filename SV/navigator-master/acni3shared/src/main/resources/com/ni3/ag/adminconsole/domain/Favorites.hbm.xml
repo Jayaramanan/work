@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.Favorites" table="cis_favorites">
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+		<property name="description" column="Description" length="255" />
+		<property name="data" column="Data" type="text" />
+		<property name="layout" column="Layout" type="text" />
+		<property name="groupFavorite_" column="groupfavorites" />
+		<property name="mode" column="mode" />
+
+		<many-to-one name="schema" column="SchemaID" class="com.ni3.ag.adminconsole.domain.Schema" />
+		<many-to-one name="creator" column="CreatorID" class="com.ni3.ag.adminconsole.domain.User" />
+		<many-to-one name="folder" column="FolderId" class="com.ni3.ag.adminconsole.domain.FavoritesFolder" />
+		<property name="dbVersion" column="dbversion" />
+		<property name="name" column="name" />
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.ApplicationSetting" table="sys_settings_application" lazy="false">
+		<composite-id>
+			<key-property name="section" column="Section" length="10"/>
+			<key-property name="prop" column="Prop" length="50"/>
+		</composite-id>
+		<property name="value" column="Value" length="500"/>
+	</class>
+</hibernate-mapping>

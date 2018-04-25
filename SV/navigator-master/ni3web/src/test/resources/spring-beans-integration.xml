@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<!-- This config is used to run integration tests -->
+
+	<bean id="userDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.UserDAOImpl" autowire="byName" />
+	<bean id="userGroupDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.UserGroupDAOImpl" autowire="byName" />
+	<bean id="attributeGroupDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.AttributeGroupDAOImpl" autowire="byName" />
+	<bean id="contextDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ContextDAOImpl" autowire="byName" />
+	<bean id="contextAttributeDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ContextAttributeDAOImpl"
+		autowire="byName" />
+	<bean id="predefinedAttributesDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.PredefinedAttributesDAOImpl"
+		autowire="byName" />
+	<bean id="gisGeoanalyticsDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.GisGeoanalyticsDAOImpl"
+		autowire="byName" />
+	<bean id="deltaHeaderDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.DeltaHeaderDAOImpl" autowire="byName" />
+	<bean id="deltaHeaderUserDAO" class="com.ni3.ag.navigator.server.dao.impl.DeltaHeaderUserDAOImpl" autowire="byName" />
+	<bean id="deltaParamDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.DeltaParamDAOImpl" autowire="byName" />
+	<bean id="favoritesFolderDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.FavoritesFolderDAOImpl"
+		autowire="byName" />
+	<bean id="favoriteDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.FavoriteDAOImpl" autowire="byName" />
+	<bean id="userSettingsDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.UserSettingsDAOImpl" autowire="byName" />
+	<bean id="objectUserGroupDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ObjectUserGroupDAOImpl"
+		autowire="byName" />
+	<bean id="objectManagementService" class="com.ni3.ag.navigator.server.services.impl.ObjectManagementServiceImpl"
+		autowire="byName" />
+	<bean id="databaseAdapter" class="com.ni3.ag.navigator.server.db.impl.PostgreSqlAdapter" autowire="byName" />
+	<bean id="attributeDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.AttributeDAOImpl" autowire="byName" />
+
+	<!-- This class is automatically autowired to all mock DAO objects -->
+	<bean id="connectionProvider" class="com.ni3.ag.navigator.server.util.JdbcConnectionProviderImpl" autowire="byName">
+		<property name="url" value="jdbc:postgresql://db-dev.office.ni3.net:5432/integration-test-db" />
+		<property name="username" value="sa" />
+		<property name="password" value="netVIz" />
+	</bean>
+
+
+</beans>

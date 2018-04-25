@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.Schema" table="sys_schema">
+
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">sys_schema_object_id_seq</param>
+			</generator>
+		</id>
+
+		<property name="name" column="Name" length="50" />
+
+		<bag order-by="sort asc" name="objectDefinitions" inverse="true" cascade="all-delete-orphan">
+			<key column="schemaID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ObjectDefinition" />
+			<filter name="notObjectType" condition="objectTypeID != :objTypeID" />
+			<filter name="withObjectType" condition="objectTypeID in (:objTypeID)" />
+			<filter name="childOf" condition="schemaID = :parObjID" />
+		</bag>
+
+		<bag name="charts" inverse="true" table="sys_charts" cascade="persist,all-delete-orphan" lazy="true">
+			<key column="schemaid" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.Chart" />
+		</bag>
+
+		<bag name="favorites" inverse="true" table="cis_favorites" lazy="true" cascade="all-delete-orphan">
+			<key column="schemaID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.Favorites" />
+		</bag>
+		<bag name="favoritesFolders" inverse="true" table="cis_favorites_folder" lazy="true" cascade="all-delete-orphan">
+			<key column="schemaID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.FavoritesFolder" />
+		</bag>
+
+		<bag name="schemaGroups" inverse="true" table="sys_schema_group" cascade="persist,all-delete-orphan" lazy="true">
+			<key column="schemaid" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.SchemaGroup" />
+		</bag>
+
+		<property name="description" column="Description" type="text" />
+		<property name="creationDate" column="Creation" />
+		<many-to-one name="createdBy" column="CreatedBy" cascade="all" />
+
+	</class>
+	<filter-def name="notObjectType">
+		<filter-param name="objTypeID" type="integer" />
+	</filter-def>
+	<filter-def name="withObjectType">
+		<filter-param name="objTypeID" type="integer" />
+	</filter-def>
+	<filter-def name="childOf">
+		<filter-param name="parObjID" type="integer" />
+	</filter-def>
+
+</hibernate-mapping>
+

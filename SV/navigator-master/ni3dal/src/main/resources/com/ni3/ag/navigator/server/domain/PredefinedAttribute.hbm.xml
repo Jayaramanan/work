@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.navigator.server.domain.PredefinedAttribute" table="cht_predefinedattributes" mutable="false">
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="attribute" column="AttributeID" lazy="false"/>
+        <property name="value" column="Value" type="string" length="100" />
+   		<property name="label" column="Label" type="string" length="100" />
+        <property name="touse" column="toUse" type="integer" />
+        <property name="sort" column="Sort" type="integer" />
+
+        <many-to-one name="parent" column="parent" lazy="false" />
+
+		<property name="sourceId" column="srcID" type="string" length="255" />
+		<property name="haloColor" column="HaloColor" length="15" />
+	</class>
+</hibernate-mapping>

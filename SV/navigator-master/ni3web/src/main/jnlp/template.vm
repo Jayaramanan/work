@@ -1,0 +1,21 @@
+#set( $dollar = "$" )
+<jnlp spec="1.6+" codebase="\\${dollar}\\${dollar}codebase" >
+        <information>
+                <title>$title$</title>
+                <vendor>Ni3 AG</vendor>
+                <description>Ni3 Navigator</description>
+        </information>
+        <security>
+                <all-permissions/>
+        </security>
+        <resources>
+                <j2se version="1.6.0+" java-vm-args="-Xms128m -Xmx512m" href="http://java.sun.com/products/autodl/j2se"/>
+                <jar href="Ni3.jar" main="true" download="eager" version="$project.Version"/>
+        </resources>
+        <application-desc main-class="$mainClass">
+                <argument>ServerURL=$navigator.server.url$</argument>
+                <argument>ServerContextRoot=$navigator.server.contextPath$</argument>
+                <argument>MetaphorURL=$metaphor.url$</argument>
+                <argument>ImagesURL=$images.url$</argument>
+        </application-desc>
+</jnlp>

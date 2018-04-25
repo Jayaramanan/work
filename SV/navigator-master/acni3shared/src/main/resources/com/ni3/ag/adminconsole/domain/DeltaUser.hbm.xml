@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.DeltaUser" table="sys_delta_user" lazy="true">
+		<id name="id" column="id">
+			<generator class="identity" />
+		</id>
+		<property name="created" column="created" />
+		<property name="processed" column="processed" />
+		<many-to-one name="deltaHeader" column="delta_header_id" />
+		<many-to-one name="targetUser" column="target_user_id" />
+
+	</class>
+</hibernate-mapping>
+

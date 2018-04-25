@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.PredefinedAttribute" table="cht_predefinedattributes">
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="objectAttribute" column="AttributeID" />
+		<many-to-one name="parent" column="parent" cascade="none" lazy="false" />
+
+		<property name="value" column="Value" type="string" length="100" />
+		<property name="label" column="Label" type="string" length="100" />
+		<property name="toUse_" column="toUse" type="integer" />
+		<property name="sort" column="Sort" type="integer" />
+		<property name="srcID" column="srcID" type="string" length="255" />
+		<property name="haloColor" column="HaloColor" length="15" />
+
+		<bag name="predefAttributeGroups" inverse="true" cascade="all-delete-orphan">
+			<key column="predefID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.GroupPrefilter" />
+		</bag>
+		<bag name="children" inverse="true" cascade="none" lazy="true">
+			<key column="parent" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.PredefinedAttribute" />
+		</bag>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.User" table="sys_user" lazy="false">
+		<id name="id" column="id">
+			<generator class="identity" />
+		</id>
+		<property name="firstName" column="FirstName" length="50" />
+		<property name="lastName" column="LastName" length="50" />
+		<property name="userName" column="UserName" length="50" />
+		<property name="password" column="Password" length="100" />
+		<property name="SID" column="SID" length="255" />
+		<property name="_active" column="isactive" />
+		<property name="eMail" column="email" />
+		<property name="_hasOfflineClient" column="hasOfflineClient" />
+		<property name="etlUser" column="etlUser" length="50" />
+		<property name="etlPassword" column="etlPassword" length="100" />
+
+		<bag name="groups" inverse="false" table="sys_user_group" lazy="true" cascade="save-update">
+			<key column="UserID" />
+			<many-to-many column="GroupID" class="com.ni3.ag.adminconsole.domain.Group" />
+		</bag>
+		<bag name="settings" inverse="true" table="SYS_SETTINGS_USER" lazy="true" cascade="all-delete-orphan">
+			<key column="ID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.UserSetting" />
+		</bag>
+
+		<bag name="favorites" inverse="true" table="cis_favorites" lazy="true" cascade="all-delete-orphan">
+			<key column="creatorID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.Favorites" />
+		</bag>
+		<bag name="favoritesFolders" inverse="true" table="cis_favorites_folder" lazy="true" cascade="all-delete-orphan">
+			<key column="creatorID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.FavoritesFolder" />
+		</bag>
+		<bag name="userEditions" inverse="true" table="sys_user_edition" lazy="true" cascade="all-delete-orphan">
+			<key column="userID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.UserEdition" />
+		</bag>
+
+		<bag name="userModules" inverse="true" table="sys_module_user" lazy="true" cascade="all-delete-orphan">
+			<key column="userid" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ModuleUser" />
+		</bag>
+
+		<bag name="activities" inverse="true" table="sys_user_activity" lazy="true" order-by="dateTime">
+			<key column="userid" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.UserActivity" />
+			<filter name="dateTimeLessFilter" condition="dateTime &lt;= :dateTime" />
+			<filter name="dateTimeGreaterFilter" condition="dateTime &gt;= :dateTime" />
+			<filter name="removeNotLogs" condition="activityType not like 'N'" />
+		</bag>
+
+	</class>
+	<filter-def name="dateTimeLessFilter">
+		<filter-param name="dateTime" type="java.util.Date" />
+	</filter-def>
+	<filter-def name="dateTimeGreaterFilter">
+		<filter-param name="dateTime" type="java.util.Date" />
+	</filter-def>
+	<filter-def name="removeNotLogs" />
+</hibernate-mapping>

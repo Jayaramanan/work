@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:Ni3Web.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
+	<!-- Autowired to connection provider -->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="${com.ni3.ag.navigator.server.datasource}" />
+	</bean>
+
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<!-- other methods use the default transaction settings (see below) -->
+			<tx:method name="*" propagation="REQUIRED" rollback-for="java.lang.RuntimeException" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="objectManagementServicePointcut" expression="execution(* com.ni3.ag.navigator.server.services.ObjectManagementService.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="objectManagementServicePointcut" />
+	</aop:config>
+
+    <aop:config>
+   		<aop:pointcut id="hibernateDAOMethodsPointcut" expression="execution(* com.ni3.ag.navigator.server.dao.impl.postgres.*.*(..))" />
+   		<aop:advisor advice-ref="txAdvice" pointcut-ref="hibernateDAOMethodsPointcut" />
+   	</aop:config>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:/com/ni3/ag/navigator/shared/domain/SysIam.hbm.xml</value>
+                <value>classpath:/com/ni3/ag/navigator/server/domain/*.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+				<prop key="hibernate.show.sql">false</prop>
+				<!-- <prop key="format_sql">false</prop> -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+			</props>
+		</property>
+	</bean>
+
+	<!-- todo: dirty hack, remove -->
+	<bean id="preFilterObjectData" class="com.ni3.ag.navigator.server.graphXXL.PreFilterObjectData" autowire="byName"
+		scope="prototype" />
+
+	<bean id="userDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.UserDAOImpl" autowire="byName" />
+	<bean id="groupDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.GroupDAOImpl" autowire="byName" />
+	<bean id="userGroupDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.UserGroupDAOImpl" autowire="byName" />
+	<bean id="userSettingsDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.UserSettingsDAOImpl" autowire="byName" />
+	<bean id="userActivityDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.UserActivityDAOImpl" autowire="byName" />
+	<bean id="reportDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ReportDAOImpl" autowire="byName" />
+	<bean id="predefinedAttributesDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.PredefinedAttributesDAOImpl"
+		autowire="byName" />
+	<bean id="iconDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.IconDAOImpl" autowire="byName" />
+	<bean id="iAmDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.IAmDAOImpl" autowire="byName" />
+	<bean id="favoritesFolderDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.FavoritesFolderDAOImpl" autowire="byName" />
+	<bean id="favoriteDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.FavoriteDAOImpl" autowire="byName" />
+	<bean id="contextDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ContextDAOImpl" autowire="byName" />
+	<bean id="attributeDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.AttributeDAOImpl" autowire="byName" />
+	<bean id="contextAttributeDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ContextAttributeDAOImpl" autowire="byName" />
+
+	<bean id="objectUserGroupDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ObjectUserGroupDAOImpl" autowire="byName" />
+	<bean id="objectGroupDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ObjectGroupDAOImpl" autowire="byName" />
+	<bean id="schemaDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.SchemaDAOImpl" autowire="byName" />
+	<bean id="objectDefinitionDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ObjectDefinitionDAOImpl" autowire="byName" />
+	<bean id="objectScopeDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ObjectScopeDAOImpl" autowire="byName" />
+	<!--
+		<bean id="deltaHeaderDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.DeltaHeaderDAOImpl" autowire="byName" />
+	-->
+	<bean id="deltaHeaderDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.DeltaHeaderDAOImpl" autowire="byName" />
+	<bean id="deltaHeaderUserDAO" class="com.ni3.ag.navigator.server.dao.impl.DeltaHeaderUserDAOImpl" autowire="byName" />
+	<bean id="deltaParamDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.DeltaParamDAOImpl" autowire="byName" />
+	<bean id="objectDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ObjectDAOImpl" autowire="byName" />
+	<bean id="objectDisposer" class="com.ni3.ag.navigator.server.dao.impl.postgres.ObjectDeleter" autowire="byName" />
+
+	<bean id="uncommittedDeltasDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.UncommittedDeltasDAOImpl"
+		autowire="byName" />
+
+	<bean id="geoAnalyticsDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.GeoAnalyticsDAOImpl" autowire="byName" />
+	<bean id="gisMapDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.GisMapDAOImpl" autowire="byName" />
+	<bean id="gisTerritoryDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.GisTerritoryDAOImpl" autowire="byName" />
+	<bean id="thematicMapDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ThematicMapDAOImpl" autowire="byName" />
+	<bean id="thematicClusterDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ThematicClusterDAOImpl" autowire="byName" />
+	<bean id="thematicFolderDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ThematicFolderDAOImpl" autowire="byName" />
+	<bean id="gisOverlayDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.GISOverlayDAOImpl" autowire="byName" />
+
+	<bean id="paletteDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.PaletteDAOImpl" autowire="byName" />
+	<bean id="objectConnectionDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ObjectConnectionDAOImpl" autowire="byName" />
+	<bean id="languageDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.LanguageDAOImpl" autowire="byName" />
+	<bean id="chartsDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ChartsDAOImpl" autowire="byName" />
+	<bean id="objectChartDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ObjectChartDAOImpl" autowire="byName" />
+	<bean id="chartAttributeDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.ChartAttributeDAOImpl" autowire="byName" />
+	<bean id="metaphorSetDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.MetaphorSetDAOImpl" autowire="byName" />
+	<bean id="geoCodeErrDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.GeoCodeErrorDAOImpl" autowire="byName" />
+	<bean id="licenseDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.LicenseDAOImpl" autowire="byName" />
+	<bean id="systemStatusDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.SystemStatusDAOImpl" autowire="byName" />
+
+	<bean id="syncGateway" class="com.ni3.ag.navigator.server.gateway.impl.SyncGatewayImpl" autowire="byName" />
+	<bean id="loginGateway" class="com.ni3.ag.navigator.shared.gateway.impl.LoginGatewayCommon" />
+	<bean id="deltaProcessor" class="com.ni3.ag.navigator.server.services.impl.DeltaProcessorImpl" autowire="byName" />
+	<bean id="userService" class="com.ni3.ag.navigator.server.services.impl.UserServiceImpl" autowire="byName" />
+	<bean id="geoAnalyticsService" class="com.ni3.ag.navigator.server.services.impl.GeoAnalyticsServiceImpl" autowire="byName" />
+	<bean id="gisService" class="com.ni3.ag.navigator.server.services.impl.GISServiceImpl" autowire="byName" />
+	<bean id="paletteService" class="com.ni3.ag.navigator.server.services.impl.PaletteServiceImpl" autowire="byName" />
+	<bean id="favoritesFolderService" class="com.ni3.ag.navigator.server.services.impl.FavoritesFolderServiceImpl"
+		autowire="byName" />
+	<bean id="favoritesService" class="com.ni3.ag.navigator.server.services.impl.FavoritesServiceImpl" autowire="byName" />
+	<bean id="activityStreamService" class="com.ni3.ag.navigator.server.services.impl.ActivityStreamServiceImpl" autowire="byName" />
+	<bean id="chartService" class="com.ni3.ag.navigator.server.services.impl.ChartServiceImpl" autowire="byName" />
+	<bean id="prefilterService" class="com.ni3.ag.navigator.server.services.impl.PrefilterServiceImpl" autowire="byName" />
+	<bean id="prefilterDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.PrefilterDAOImpl" autowire="byName" />
+	<bean id="exportService" class="com.ni3.ag.navigator.server.services.impl.ExportServiceImpl" autowire="byName" />
+
+	<!-- This bean is automatically injected into all DAO objects -->
+	<bean id="ssoCache" class="com.ni3.ag.navigator.server.cache.SSOCacheImpl" />
+	<bean id="reportManager" class="com.ni3.ag.navigator.server.reports.impl.JasperReportManagerImpl" autowire="byName" />
+	<bean id="databaseAdapter" class="com.ni3.ag.navigator.server.db.impl.PostgreSqlAdapter" autowire="byName" />
+	<bean id="deltaHeaderService" class="com.ni3.ag.navigator.server.services.impl.DeltaHeaderServiceImpl" autowire="byName" />
+	<bean id="thickClientModuleService" class="com.ni3.ag.navigator.server.services.impl.ThickClientModuleServiceImpl"
+		autowire="byName" />
+	<bean id="metaphorService" class="com.ni3.ag.navigator.server.services.impl.MetaphorServiceImpl" autowire="byName" />
+	<bean id="dynamicAttributeService" class="com.ni3.ag.navigator.server.services.impl.DynamicAttributeServiceImpl"
+		autowire="byName" />
+	<bean id="schemaLoaderService" class="com.ni3.ag.navigator.server.services.impl.SchemaLoaderServiceImpl" autowire="byName" />
+	<bean id="visibilityService" class="com.ni3.ag.navigator.server.services.impl.VisibilityServiceImpl" autowire="byName" />
+	<bean id="translationService" class="com.ni3.ag.navigator.server.services.impl.TranslationServiceImpl" autowire="byName" />
+	
+	<bean id="userGroupCache" class="com.ni3.ag.navigator.server.cache.impl.UserGroupCacheImpl" autowire="byName" />
+
+	<bean id="threadLocalStorage" class="com.ni3.ag.navigator.server.session.ThreadLocalStorageImpl" autowire="byName" />
+	<bean id="passwordSaltGetter" class="com.ni3.ag.navigator.server.passadmin.impl.LocalPasswordSaltGetter" />
+
+	<bean id="geoCoder" class="com.ni3.ag.navigator.server.geocode.coding.GoogleGeoCoder" autowire="byName" />
+	<bean id="geoCacheDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.GeoCacheDAOImpl" autowire="byName" />
+	<bean id="graphEngineFactory" class="com.ni3.ag.navigator.server.services.impl.GraphEngineFactoryImpl" autowire="byName">
+        <property name="graphClassName" value="com.ni3.ag.navigator.server.graphXXL.Graph"/>
+    </bean>
+	<bean id="licenseValidator" class="com.ni3.ag.navigator.server.license.LicenseValidator" autowire="byName" />
+	<bean id="passwordSender" class="com.ni3.ag.navigator.server.passadmin.impl.PasswordSenderImpl" autowire="byName" />
+	<bean id="userDataIntegrityValidator" class="com.ni3.ag.navigator.server.servlets.util.UserDataIntegrityValidator"
+		autowire="byName" />
+	<bean id="synchronizationManager" class="com.ni3.ag.navigator.server.sync.impl.SynchronizationManagerImpl" autowire="byName" />
+
+    <!-- this map must contain all defined attribute datasources -->
+    <util:map id="attributeDataSources">
+        <entry key="defaultDataSource" value-ref="defaultDataSource"/>
+        <entry key="defaultPrimaryDataSource" value-ref="defaultPrimaryDataSource"/>
+    </util:map>
+
+    <bean id="defaultDataSource" class="com.ni3.ag.navigator.server.datasource.postgres.DefaultPostgreSQLDataSource" autowire="byName"/>
+    <bean id="defaultPrimaryDataSource" class="com.ni3.ag.navigator.server.datasource.postgres.DefaultPostgreSQLDataSource" autowire="byName">
+        <property name="primary" value="true"/>
+    </bean>
+
+    <bean id="edgeDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.EdgeDAOImpl" autowire="byName" />
+	<bean id="nodeDAO" class="com.ni3.ag.navigator.server.dao.impl.postgres.NodeDAOImpl" autowire="byName" />
+	<bean id="userDataService" class="com.ni3.ag.navigator.server.services.impl.UserDataServiceImpl" autowire="byName">
+    </bean>
+    <bean id="searchService" class="com.ni3.ag.navigator.server.services.impl.SearchServiceImpl" autowire="byName"/>
+	<bean id="objectManagementService" class="com.ni3.ag.navigator.server.services.impl.ObjectManagementServiceImpl"
+		autowire="byName" />
+
+    <bean id="groupScopeProvider" class="com.ni3.ag.navigator.server.services.impl.GroupScopeProviderImpl" autowire="byName"/>
+    <bean id="cisObjectProviderService" class="com.ni3.ag.navigator.server.services.impl.PostgresCISObjectProviderService" autowire="byName"/>
+
+	<!-- salesforce implementation -->
+<!--	<bean id="salesforceConnectionProvider" class="com.ni3.ag.navigator.server.services.impl.salesforce.SalesforceConnectionProviderImpl" autowire="byName" />-->
+<!--    <bean id="edgeDAO" class="com.ni3.ag.navigator.server.dao.impl.salesforce.SalesforceEdgeDAOImpl" autowire="byName" />-->
+<!--	<bean id="nodeDAO" class="com.ni3.ag.navigator.server.dao.impl.salesforce.SalesforceNodeDAOImpl" autowire="byName" />-->
+<!--	<bean id="userDataService" class="com.ni3.ag.navigator.server.services.impl.salesforce.SalesforceUserDataServiceImpl" autowire="byName" />-->
+<!--    <bean id="searchService" class="com.ni3.ag.navigator.server.services.impl.salesforce.SalesforceSearchServiceImpl" autowire="byName"/>-->
+<!--    <bean id="objectManagementService" class="com.ni3.ag.navigator.server.services.impl.salesforce.SalesforceObjectManagementServiceImpl"-->
+<!--		autowire="byName" />-->
+	<!-- end -->
+
+</beans>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.LineWeight" table="cht_line_weight" lazy="false">
+		<id name="id" column="ID">
+			<generator class="assigned" />
+		</id>
+
+		<property name="label" column="Label" length="50"/>
+		<property name="width" column="Width" precision="5" scale="2" not-null="true"/>
+	</class>
+</hibernate-mapping>

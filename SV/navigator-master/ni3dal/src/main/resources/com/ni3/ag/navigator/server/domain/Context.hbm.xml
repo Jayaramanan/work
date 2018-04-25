@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.navigator.server.domain.Context" table="sys_context" mutable="false">
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="objectDefinition" column="ObjectDefinitionID" unique="true" lazy="false"/>
+		<many-to-one name="pkAttribute" column="pkattrid" lazy="false" />
+
+		<property name="name" column="name" />
+		<property name="tablename" column="tableName" />
+
+		<bag name="attributes" inverse="true" table="sys_context_attributes" lazy="false">
+			<key column="contextId" />
+			<many-to-many class="com.ni3.ag.navigator.server.domain.Attribute" column="attributeid"/>
+		</bag>
+
+	</class>
+</hibernate-mapping>

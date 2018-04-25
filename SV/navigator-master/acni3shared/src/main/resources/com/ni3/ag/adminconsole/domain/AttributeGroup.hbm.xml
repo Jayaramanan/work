@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.AttributeGroup"
+		table="sys_attribute_group">
+		<composite-id>
+			<key-many-to-one name="objectAttribute" column="AttributeID" foreign-key="FK_SYS_Attribute" />
+			<key-many-to-one name="group" column="GroupID" foreign-key="FK_Attribut_GROUP" />
+		</composite-id>
+		<property name="canRead_" column="CanRead" type="integer" />
+		<property name="editingOption_" column="EditingUnlock" type="integer" />
+		<property name="editingOptionLocked_" column="EditingLock" type="integer" />
+	</class>
+</hibernate-mapping>

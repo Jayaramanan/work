@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.GroupPrefilter" table="sys_group_prefilter">
+		<id name="id" column="id">
+			<generator class="identity" />
+		</id>
+		<many-to-one name="group" column="groupid" 
+			class="com.ni3.ag.adminconsole.domain.Group"/>
+		<many-to-one name="predefinedAttribute" column="predefid" 
+			class="com.ni3.ag.adminconsole.domain.PredefinedAttribute"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,8 @@
+GIT : 
+
+git config --global user.email
+
+git config --global user.email "email@example.com"
+
+Old : developer@vetsource.com
+

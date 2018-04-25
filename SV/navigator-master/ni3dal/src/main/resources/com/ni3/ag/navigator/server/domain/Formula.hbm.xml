@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.navigator.server.domain.Formula" table="sys_formula" mutable="false">
+
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+        <many-to-one name="attribute" class="com.ni3.ag.navigator.server.domain.Attribute" column="attribute_id"
+        			unique="true" />
+        <property name="formula" column="formula"/>
+	</class>
+</hibernate-mapping>

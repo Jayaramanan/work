@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:database.properties</value>
+				<value>classpath:database.version</value>
+				<value>classpath:mail.properties</value>
+				<value>classpath:jobs.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
+	<bean id="databaseProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:database.properties" />
+	</bean>
+
+	<bean id="offlineProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:offline.properties" />
+	</bean>
+
+
+	<bean id="routingDatasource" class="com.ni3.ag.adminconsole.server.datasource.ACRoutingDataSource">
+		<property name="props" ref="databaseProperties" />
+		<property name="databaseVersion" value="${com.ni3.ag.adminconsole.db.version}" />
+	</bean>
+
+	<bean id="packagingConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:packaging.properties" />
+	</bean>
+
+
+	<bean id="deploymentVersionService" class="com.ni3.ag.adminconsole.server.service.impl.DeploymentVersionServiceImpl">
+		<property name="deploymentVersion" value="${build.version}" />
+	</bean>
+
+	<!--
+		SQLServer 2005 datasource <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${com.ni3.ag.adminconsole.db.driver}"/> <property name="url"
+		value="${com.ni3.ag.adminconsole.db.url};databaseName=${com.ni3.ag.adminconsole.db.name};"/> <property name="username"
+		value="${com.ni3.ag.adminconsole.db.username}"/> <property name="password" value="${com.ni3.ag.adminconsole.db.password}"/>
+		<property name="initialSize" value="${com.ni3.ag.adminconsole.db.initialSize}"/> <property name="maxActive"
+		value="${com.ni3.ag.adminconsole.db.maxActive}"/> <property name="maxIdle" value="${com.ni3.ag.adminconsole.db.maxIdle}"/>
+		</bean> POSTGRES <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> <property
+		name="driverClassName" value="${com.ni3.ag.adminconsole.db.driver1}" /> <property name="url"
+		value="${com.ni3.ag.adminconsole.db.url1}${com.ni3.ag.adminconsole.db.name1}" /> <property name="username"
+		value="${com.ni3.ag.adminconsole.db.username1}" /> <property name="password"
+		value="${com.ni3.ag.adminconsole.db.password1}" /> <property name="initialSize"
+		value="${com.ni3.ag.adminconsole.db.initialSize1}" /> <property name="maxActive"
+		value="${com.ni3.ag.adminconsole.db.maxActive1}" /> <property name="maxIdle" value="${com.ni3.ag.adminconsole.db.maxIdle1}"
+		/> </bean>
+	-->
+
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="mappingJarLocations" value="WEB-INF/lib/ACNi3Shared-*.jar" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show.sql">false</prop>
+				<!-- <prop key="format_sql">false</prop> -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<aop:config>
+		<aop:pointcut id="handleRequestPointcut" expression="execution(* com.ni3.ag.adminconsole.server.servlet.*.*(..))" />
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="handleRequestPointcut" />
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="handleServicePointcut" expression="execution(* com.ni3.ag.adminconsole.server.service.impl.*.*(..))" />
+		<aop:advisor advice-ref="transactionServiceAdvice" pointcut-ref="handleServicePointcut" />
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="handleDAOPointcut" expression="execution(* com.ni3.ag.adminconsole.server.dao.impl.*.*(..))" />
+		<aop:advisor advice-ref="transactionDAOAdvice" pointcut-ref="handleDAOPointcut" />
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="dataValidatorPointcut" expression="execution(* com.ni3.ag.adminconsole.server.jobs.data.DataValidator.*(..))" />
+		<aop:advisor advice-ref="dataValidatorAdvice" pointcut-ref="dataValidatorPointcut" />
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="dataCleanerPointcut" expression="execution(* com.ni3.ag.adminconsole.server.jobs.data.DataCleaner.cleanData(..))" />
+		<aop:advisor advice-ref="dataCleanerAdvice" pointcut-ref="dataCleanerPointcut" />
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="dataExctractorPointcut" expression="execution(* com.ni3.ag.adminconsole.server.jobs.data.DataExtractor.*(..))" />
+		<aop:advisor advice-ref="dataExctractorAdvice" pointcut-ref="dataExctractorPointcut" />
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="mapExtratorPointcut" expression="execution(* com.ni3.ag.adminconsole.server.mapextraction.MapJobStatusUpdater.*(..))" />
+		<aop:advisor advice-ref="jobStatusAdvice" pointcut-ref="mapExtratorPointcut" />
+	</aop:config>
+
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="handleRequest" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<tx:advice id="transactionServiceAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" rollback-for="com.ni3.ag.adminconsole.validation.ACException" />
+		</tx:attributes>
+	</tx:advice>
+	<tx:advice id="transactionDAOAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="getAdministrators" propagation="REQUIRES_NEW" />
+		</tx:attributes>
+	</tx:advice>
+	<tx:advice id="dataValidatorAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="validate" propagation="REQUIRES_NEW" />
+		</tx:attributes>
+	</tx:advice>
+	<tx:advice id="dataCleanerAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="cleanData" propagation="REQUIRES_NEW" />
+		</tx:attributes>
+	</tx:advice>
+	<tx:advice id="dataExctractorAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="redirectSequences" propagation="REQUIRES_NEW" />
+		</tx:attributes>
+	</tx:advice>
+	<tx:advice id="jobStatusAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="setJobStatus" propagation="REQUIRES_NEW" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- Session factory will get autowired for DAO objects -->
+	<bean id="UserDAO" class="com.ni3.ag.adminconsole.server.dao.impl.UserDAOImpl" autowire="byName" />
+	<bean id="ObjectDefinitionDAO" class="com.ni3.ag.adminconsole.server.dao.impl.ObjectDefinitionDAOImpl" autowire="byName" />
+
+	<bean id="AttributeGroupDAO" class="com.ni3.ag.adminconsole.server.dao.impl.AttributeGroupDAOImpl" autowire="byName" />
+	<bean id="ObjectConnectionDAO" class="com.ni3.ag.adminconsole.server.dao.impl.ObjectConnectionDAOImpl" autowire="byName" />
+	<bean id="LineStyleDAO" class="com.ni3.ag.adminconsole.server.dao.impl.LineStyleDAOImpl" autowire="byName" />
+	<bean id="LineWeightDAO" class="com.ni3.ag.adminconsole.server.dao.impl.LineWeightDAOImpl" autowire="byName" />
+	<bean id="NodeMetaphorDAO" class="com.ni3.ag.adminconsole.server.dao.impl.NodeMetaphorDAOImpl" autowire="byName" />
+	<bean id="PredefinedAttributeDAO" class="com.ni3.ag.adminconsole.server.dao.impl.PredefinedAttributeDAOImpl" autowire="byName" />
+	<bean id="ObjectGroupDAO" class="com.ni3.ag.adminconsole.server.dao.impl.ObjectGroupDAOImpl" autowire="byName" />
+	<bean id="SchemaGroupDAO" class="com.ni3.ag.adminconsole.server.dao.impl.SchemaGroupDAOImpl" autowire="byName" />
+	<bean id="GroupDAO" class="com.ni3.ag.adminconsole.server.dao.impl.GroupDAOImpl" autowire="byName" />
+	<bean id="GroupPrefilterDAO" class="com.ni3.ag.adminconsole.server.dao.impl.GroupPrefilterDAOImpl" autowire="byName" />
+	<bean id="ObjectAttributeDAO" class="com.ni3.ag.adminconsole.server.dao.impl.ObjectAttributeDAOImpl" autowire="byName" />
+	<bean id="LanguageDAO" class="com.ni3.ag.adminconsole.server.dao.impl.LanguageDAOImpl" autowire="byName" />
+	<bean id="ApplicationSettingsDAO" class="com.ni3.ag.adminconsole.server.dao.impl.ApplicationSettingsDAOImpl" autowire="byName" />
+	<bean id="UserLanguagePropertyDAO" class="com.ni3.ag.adminconsole.server.dao.impl.UserLanguagePropertyDAOImpl"
+		autowire="byName" />
+	<bean id="DatabaseVersionDAO" class="com.ni3.ag.adminconsole.server.dao.impl.DatabaseVersionDAOImpl" autowire="byName" />
+	<bean id="IconDAO" class="com.ni3.ag.adminconsole.server.dao.impl.IconDAOImpl" autowire="byName" />
+	<bean id="SysIamDAO" class="com.ni3.ag.adminconsole.server.dao.impl.SysIamDAOImpl" autowire="byName" />
+	<bean id="ChartDAO" class="com.ni3.ag.adminconsole.server.dao.impl.ChartDAOImpl" autowire="byName" />
+	<bean id="SchemaDAO" class="com.ni3.ag.adminconsole.server.dao.impl.SchemaDAOImpl" autowire="byName" />
+	<bean id="LicenseDAO" class="com.ni3.ag.adminconsole.server.dao.impl.LicenseDAOImpl" autowire="byName" />
+	<bean id="MapDAO" class="com.ni3.ag.adminconsole.server.dao.impl.MapDAOImpl" autowire="byName" />
+	<bean id="LayerDAO" class="com.ni3.ag.adminconsole.server.dao.impl.LayerDAOImpl" autowire="byName" />
+	<bean id="NodeDAO" class="com.ni3.ag.adminconsole.server.dao.impl.NodeDAOImpl" autowire="byName" />
+	<bean id="OfflineJobDAO" class="com.ni3.ag.adminconsole.server.dao.impl.OfflineJobDAOImpl" autowire="byName" />
+	<bean id="MapJobDAO" class="com.ni3.ag.adminconsole.server.dao.impl.MapJobDAOImpl" autowire="byName" />
+	<bean id="ObjectDAO" class="com.ni3.ag.adminconsole.server.dao.impl.ObjectDAOImpl" autowire="byName" />
+	<bean id="SettingDAO" class="com.ni3.ag.adminconsole.server.dao.impl.SettingDAOImpl" autowire="byName" />
+	<bean id="ModuleDAO" class="com.ni3.ag.adminconsole.server.dao.impl.ModuleDAOImpl" autowire="byName" />
+	<bean id="GisTerritoryDAO" class="com.ni3.ag.adminconsole.server.dao.impl.GisTerritoryDAOImpl" autowire="byName" />
+
+	<!-- PostgreSQL Favorites -->
+	<bean id="FavoritesDAO" class="com.ni3.ag.adminconsole.server.dao.impl.PostgreFavoritesDAOImpl" autowire="byName" />
+	<!--
+		ORACLE Favorites <bean id="FavoritesDAO" class="com.ni3.ag.adminconsole.server.dao.impl.OracleFavoritesDAOImpl"
+		autowire="byName" />
+	-->
+
+	<bean id="FavoritesFoldersDAO" class="com.ni3.ag.adminconsole.server.dao.impl.FavoritesFoldersDAOImpl" autowire="byName" />
+	<bean id="ReportTemplateDAO" class="com.ni3.ag.adminconsole.server.dao.impl.ReportTemplateDAOImpl" autowire="byName" />
+	<bean id="EdgeDAO" class="com.ni3.ag.adminconsole.server.dao.impl.EdgeDAOImpl" autowire="byName" />
+	<bean id="DeltaHeaderDAO" class="com.ni3.ag.adminconsole.server.dao.impl.DeltaHeaderDAOImpl" autowire="byName" />
+	<bean id="DeltaUserDAO" class="com.ni3.ag.adminconsole.server.dao.impl.DeltaUserDAOImpl" autowire="byName" />
+	<bean id="UserActivityDAO" class="com.ni3.ag.adminconsole.server.dao.impl.UserActivityDAOImpl" autowire="byName" />
+	<bean id="ContextDAO" class="com.ni3.ag.adminconsole.server.dao.impl.ContextDAOImpl" autowire="byName" />
+
+	<bean id="UserTableStructureService" class="com.ni3.ag.adminconsole.server.dbservice.impl.PGUserTableStructureServiceImpl"
+		autowire="byName">
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+
+	<bean id="MetaphorIconDeleteValidationRule" class="com.ni3.ag.adminconsole.server.validation.MetaphorIconDeleteValidationRule"
+		autowire="byName">
+		<property name="nodeMetaphorDAO" ref="NodeMetaphorDAO" />
+	</bean>
+	<bean id="AttributeGroupValidationRule" class="com.ni3.ag.adminconsole.server.validation.AttributeGroupValidationRule"
+		autowire="byName">
+		<property name="attributeGroupDAO" ref="AttributeGroupDAO" />
+	</bean>
+	<bean id="UserDataExistanceValidationRule" class="com.ni3.ag.adminconsole.server.validation.UserDataExistanceValidationRule"
+		autowire="byName">
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+	<bean id="UserTableNameValidationRule" class="com.ni3.ag.adminconsole.validation.rules.UserTableNameValidationRule"
+		autowire="byName" />
+	<bean id="UserAdminGroupNameValidationRule" class="com.ni3.ag.adminconsole.validation.rules.UserAdminGroupNameValidationRule"
+		autowire="byName" />
+	<bean id="dataTypeValidationRule" class="com.ni3.ag.adminconsole.validation.rules.DataTypeValidationRule" autowire="byName" />
+
+	<bean id="AttributeFavoriteReferenceRule" class="com.ni3.ag.adminconsole.server.validation.AttributeFavoriteReferenceRule"
+		autowire="byName">
+		<property name="favoritesDAO" ref="FavoritesDAO" />
+	</bean>
+
+	<bean id="ObjectFavoriteReferenceRule" class="com.ni3.ag.adminconsole.server.validation.ObjectFavoriteReferenceRule"
+		autowire="byName">
+		<property name="favoritesDAO" ref="FavoritesDAO" />
+	</bean>
+
+	<bean id="ChartFavoriteReferenceRule" class="com.ni3.ag.adminconsole.server.validation.ChartFavoriteReferenceRule"
+		autowire="byName">
+		<property name="favoritesDAO" ref="FavoritesDAO" />
+	</bean>
+	<bean id="ObjectChartReferenceRule" class="com.ni3.ag.adminconsole.server.validation.ObjectChartReferenceRule"
+		autowire="byName">
+	</bean>
+	<bean id="predefinedAttributeDeleteRule" class="com.ni3.ag.adminconsole.server.validation.PredefinedAttributeDeleteRule"
+		autowire="byName">
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+	</bean>
+	<bean id="mapJobDeleteRule" class="com.ni3.ag.adminconsole.server.validation.MapJobDeleteRule" autowire="byName" />
+
+
+	<bean name="ExternalDataImporter" class="com.ni3.ag.adminconsole.server.lifecycle.ExternalDataImporter">
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+
+	<bean id="StartupDatabaseGenerator" class="com.ni3.ag.adminconsole.server.lifecycle.StartupDatabaseGenerator"
+		init-method="init">
+		<property name="dataImporter" ref="ExternalDataImporter" />
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+
+	<bean id="QuartzSchedulerStarter" class="com.ni3.ag.adminconsole.server.lifecycle.QuartzSchedulerStarter" init-method="init"
+		destroy-method="destroy">
+		<property name="properties">
+			<bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+				<property name="location" value="classpath:jobs.properties" />
+			</bean>
+		</property>
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="thickClientJobService" ref="thickClientJobService" />
+		<property name="mapJobService" ref="mapJobService" />
+		<property name="navigatorLicenseService" ref="navigatorLicenseService" />
+	</bean>
+
+	<bean id="SyncQuartzJobStarterService" class="com.ni3.ag.adminconsole.server.service.impl.SyncQuartzJobStarterServiceImpl"
+		autowire="byName">
+		<property name="jobStarter" ref="QuartzSchedulerStarter" />
+	</bean>
+
+	<bean id="DataCleaner" class="com.ni3.ag.adminconsole.server.jobs.data.DataCleaner" autowire="byName">
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+
+	<bean id="dataValidator" class="com.ni3.ag.adminconsole.server.jobs.data.DataValidator">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="tasks">
+			<list>
+				<ref local="GroupPrivilegesScopeCheckTask" />
+				<ref local="PredefinedAttributeCheckTask" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userDataExtractor" class="com.ni3.ag.adminconsole.server.jobs.data.UserDataExtractor">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="userDAO" ref="UserDAO" />
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="sequenceValueService" ref="SequenceValueService" />
+	</bean>
+
+	<bean id="ObjectDefinitionService" class="com.ni3.ag.adminconsole.server.service.impl.ObjectDefinitionServiceImpl">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="userDataExistanceRule" ref="UserDataExistanceValidationRule" />
+		<property name="userTableNameRule" ref="UserTableNameValidationRule" />
+		<property name="userTableStructureService" ref="UserTableStructureService" />
+	</bean>
+
+
+	<bean id="loginService" class="com.ni3.ag.adminconsole.server.service.impl.LoginServiceImpl">
+		<property name="userDAO" ref="UserDAO" />
+	</bean>
+
+	<bean id="XMLSchemaExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.SchemaExporter">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="objectExporter" ref="XMLObjectDefinitionExporter" />
+		<property name="groupExporter" ref="XMLGroupExporter" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+	</bean>
+	<bean id="XMLObjectDefinitionExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.ObjectDefinitionExporter">
+		<property name="attributeExporter" ref="XMLAttributeExporter" />
+		<property name="connectionExporter" ref="XMLConnectionExporter" />
+	</bean>
+	<bean id="XMLScopeExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.ScopeExporter">
+		<property name="groupDAO" ref="GroupDAO" />
+	</bean>
+	<bean id="XMLGroupExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.GroupExporter">
+		<property name="userExporter" ref="XMLUserExporter" />
+		<property name="rightsExporter" ref="XMLSchemaRightsExporter" />
+		<property name="scopeExporter" ref="XMLScopeExporter" />
+	</bean>
+	<bean id="XMLAttributeExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.ObjectAttributeExporter">
+		<property name="predefinedDAO" ref="PredefinedAttributeDAO" />
+		<property name="predefinedExporter" ref="XMLPredefinedExporter" />
+	</bean>
+	<bean id="XMLConnectionExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.ConnectionExporter" />
+	<bean id="XMLUserExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.UserExporter" />
+	<bean id="XMLSchemaRightsExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.SchemaRightsExporter">
+		<property name="objectRightsExporter" ref="XMLObjectRightsExporter" />
+	</bean>
+	<bean id="XMLObjectRightsExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.ObjectRightsExporter">
+		<property name="attributeRightsExporter" ref="XMLAttributeRightsExporter" />
+	</bean>
+	<bean id="XMLPredefinedExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.PredefinedAttributeExporter" />
+	<bean id="XMLAttributeRightsExporter" class="com.ni3.ag.adminconsole.server.exporters.xml.AttributeRightsExporter" />
+
+	<bean id="ObjectDefinitionExporter" class="com.ni3.ag.adminconsole.server.exporters.ObjectDefinitionExporter">
+		<property name="startRow" value="0" />
+		<property name="startCol" value="0" />
+	</bean>
+	<bean id="PredefinedAttributeExporter" class="com.ni3.ag.adminconsole.server.exporters.PredefinedAttributeExporter">
+		<property name="objectAttributeDAO" ref="ObjectAttributeDAO" />
+	</bean>
+	<bean id="userSimpleExporter" class="com.ni3.ag.adminconsole.server.exporters.UserSimpleExporter" />
+	<bean id="FormulaExporter" class="com.ni3.ag.adminconsole.server.exporters.FormulaExporter" />
+	<bean id="SchemaExporter" class="com.ni3.ag.adminconsole.server.exporters.SchemaExporter">
+		<property name="userDAO" ref="UserDAO" />
+		<property name="objectAttributeDAO" ref="ObjectAttributeDAO" />
+		<property name="objectExporter" ref="ObjectDefinitionExporter" />
+		<property name="predefinedExporter" ref="PredefinedAttributeExporter" />
+		<property name="userSimpleExporter" ref="userSimpleExporter" />
+		<property name="formulaExporter" ref="FormulaExporter" />
+	</bean>
+	<bean id="Base64DataConverter" class="com.ni3.ag.adminconsole.util.Base64DataConverter" />
+	<bean name="userDataExporter" class="com.ni3.ag.adminconsole.server.exporters.UserDataExporter">
+		<property name="nodeDAO" ref="NodeDAO" />
+		<property name="edgeDAO" ref="EdgeDAO" />
+		<property name="objectDAO" ref="ObjectDAO" />
+		<property name="srcIdCheckTask" ref="SrcIdColumnCheckTask" />
+	</bean>
+	<bean name="xlsUserDataExporter" class="com.ni3.ag.adminconsole.server.exporters.xls.XLSUserDataExporterImpl">
+		<property name="exporter" ref="userDataExporter" />
+		<property name="nodeDAO" ref="NodeDAO" />
+		<property name="allowedCount" value="${com.ni3.ag.adminconsole.export.size}" />
+	</bean>
+	<bean name="csvUserDataExporter" class="com.ni3.ag.adminconsole.server.exporters.csv.CSVUserDataExporterImpl">
+		<property name="exporter" ref="userDataExporter" />
+	</bean>
+	<bean id="ExcelUserDataImporter" class="com.ni3.ag.adminconsole.server.importers.excel.ExcelUserDataImporterImpl">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="userDataImporter" ref="userDataImporter" />
+	</bean>
+
+	<bean id="schemaAdminService" class="com.ni3.ag.adminconsole.server.service.impl.SchemaAdminServiceImpl">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="attributeGroupDAO" ref="AttributeGroupDAO" />
+		<property name="objectConnectionDAO" ref="ObjectConnectionDAO" />
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="userTableStructureService" ref="UserTableStructureService" />
+		<property name="copySchemaService" ref="CopySchemaService" />
+		<property name="attributeGroupRule" ref="AttributeGroupValidationRule" />
+		<property name="servletAddress" value="/servlet/CacheInvalidationServlet" />
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="schemaExporter" ref="SchemaExporter" />
+		<property name="userDAO" ref="UserDAO" />
+		<property name="xlsUserDataExporter" ref="xlsUserDataExporter" />
+		<property name="csvUserDataExporter" ref="csvUserDataExporter" />
+		<property name="csvUserDataImporter" ref="csvUserDataImporter" />
+		<property name="xmlSchemaImporter" ref="DataImporter" />
+		<property name="excelUserDataImporter" ref="ExcelUserDataImporter" />
+		<property name="excelSchemaImporter" ref="ExcelSchemaImporter" />
+		<property name="objectDefinitionService" ref="ObjectDefinitionService" />
+		<property name="xmlSchemaExporter" ref="XMLSchemaExporter" />
+		<property name="nodeDAO" ref="NodeDAO" />
+		<property name="edgeDAO" ref="EdgeDAO" />
+		<property name="objectFavoriteReferenceRule" ref="ObjectFavoriteReferenceRule" />
+		<property name="attributeFavoriteReferenceRule" ref="AttributeFavoriteReferenceRule" />
+		<property name="objectChartReferenceRule" ref="ObjectChartReferenceRule" />
+	</bean>
+
+
+	<bean id="nodeMetaphorService" class="com.ni3.ag.adminconsole.server.service.impl.NodeMetaphorServiceImpl">
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="iconDAO" ref="IconDAO" />
+		<property name="metaphorIconDeleteRule" ref="MetaphorIconDeleteValidationRule" />
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+
+
+	<bean id="databaseSettingsService" class="com.ni3.ag.adminconsole.server.service.impl.DatabaseSettingsServiceImpl">
+		<property name="databaseName" value="${com.ni3.ag.adminconsole.instance1.dbid}" />
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="databaseProperties" ref="databaseProperties" />
+	</bean>
+
+
+	<bean id="objectsConnectionsService" class="com.ni3.ag.adminconsole.server.service.impl.ObjectsConnectionsServiceImpl">
+		<property name="objectConnectionDAO" ref="ObjectConnectionDAO" />
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="lineStyleDAO" ref="LineStyleDAO" />
+		<property name="lineWeightDAO" ref="LineWeightDAO" />
+	</bean>
+
+	<bean id="userAdminService" class="com.ni3.ag.adminconsole.server.service.impl.UserAdminServiceImpl">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="userDAO" ref="UserDAO" />
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="objectGroupDAO" ref="ObjectGroupDAO" />
+		<property name="attributeGroupDAO" ref="AttributeGroupDAO" />
+		<property name="objectConnectionDAO" ref="ObjectConnectionDAO" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="passwordGenerator" ref="passwordGenerator" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="from" value="${com.ni3.ag.adminconsole.mail.from}" />
+		<property name="userLangService" ref="userLanguageService" />
+		<property name="mailSender" ref="mailSender" />
+		<property name="licenseService" ref="licenseService" />
+		<property name="sequenceValueService" ref="SequenceValueService" />
+		<property name="deltaHeaderDAO" ref="DeltaHeaderDAO" />
+		<property name="deltaUserDAO" ref="DeltaUserDAO" />
+		<property name="offlineJobDAO" ref="OfflineJobDAO" />
+		<property name="settingDAO" ref="SettingDAO" />
+	</bean>
+
+	<bean id="predefinedAttributeService" class="com.ni3.ag.adminconsole.server.service.impl.PredefinedAttributeServiceImpl">
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="objectAttributeDAO" ref="ObjectAttributeDAO" />
+		<property name="objectConnectionDAO" ref="ObjectConnectionDAO" />
+		<property name="predefinedDAO" ref="PredefinedAttributeDAO" />
+		<property name="predefinedAttributeDeleteRule" ref="predefinedAttributeDeleteRule" />
+	</bean>
+
+
+	<bean id="settingsService" class="com.ni3.ag.adminconsole.server.service.impl.SettingsServiceImpl">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="applicationSettingsDAO" ref="ApplicationSettingsDAO" />
+		<property name="userDAO" ref="UserDAO" />
+		<property name="languageDAO" ref="LanguageDAO" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+	</bean>
+
+
+	<bean id="languageAdminService" class="com.ni3.ag.adminconsole.server.service.impl.LanguageAdminServiceImpl">
+		<property name="languageDAO" ref="LanguageDAO" />
+		<property name="settingDAO" ref="SettingDAO" />
+		<property name="userLanguagePropertyDAO" ref="UserLanguagePropertyDAO" />
+	</bean>
+
+
+	<bean id="userLanguageService" class="com.ni3.ag.adminconsole.server.service.impl.UserLanguageServiceImpl">
+		<property name="userLanguagePropertyDAO" ref="UserLanguagePropertyDAO" />
+	</bean>
+
+
+	<bean id="databaseVersionService" class="com.ni3.ag.adminconsole.server.service.impl.DatabaseVersionServiceImpl">
+		<property name="routingDataSource" ref="routingDatasource" />
+		<property name="databaseVersion" value="${com.ni3.ag.adminconsole.db.version}" />
+		<property name="databaseVersionDAO" ref="DatabaseVersionDAO" />
+	</bean>
+
+
+	<bean id="chartService" class="com.ni3.ag.adminconsole.server.service.impl.ChartServiceImpl">
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="chartDAO" ref="ChartDAO" />
+		<property name="chartFavoriteReferenceRule" ref="ChartFavoriteReferenceRule" />
+	</bean>
+	<bean id="calculateChartService" class="com.ni3.ag.adminconsole.server.service.impl.CalculateChartServiceImpl">
+		<property name="scriptEngine" ref="scriptEngine" />
+		<property name="nodeDAO" ref="NodeDAO" />
+		<property name="chartDAO" ref="ChartDAO" />
+	</bean>
+	<bean id="scriptEngine" class="com.ni3.ag.adminconsole.server.script.impl.JRubyScriptEngineImpl" autowire="byName" />
+
+
+	<bean id="attributeEditService" class="com.ni3.ag.adminconsole.server.service.impl.AttributeEditServiceImpl">
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="objectDefinitionService" ref="ObjectDefinitionService" />
+		<property name="contextDAO" ref="ContextDAO" />
+	</bean>
+
+	<bean id="licenseService" class="com.ni3.ag.adminconsole.server.service.impl.LicenseServiceImpl">
+		<property name="licenseDAO" ref="LicenseDAO" />
+		<property name="databaseProperties" ref="databaseProperties" />
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="userDAO" ref="UserDAO" />
+	</bean>
+
+	<bean id="navigatorLicenseService" class="com.ni3.ag.adminconsole.server.service.impl.NavigatorLicenseServiceImpl">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="userDAO" ref="UserDAO" />
+		<property name="licenseService" ref="licenseService" />
+	</bean>
+
+	<bean id="checksumEncoder" class="com.ni3.ag.adminconsole.shared.service.impl.CustomChecksumEncoder" />
+
+	<bean id="adminConsoleLicenseService" class="com.ni3.ag.adminconsole.server.service.impl.AdminConsoleLicenseServiceImpl">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="userDAO" ref="UserDAO" />
+		<property name="licenseService" ref="licenseService" />
+		<property name="checksumEncoder" ref="checksumEncoder" />
+	</bean>
+
+	<bean id="TransferUtils" class="com.ni3.ag.adminconsole.server.TransferUtilsImpl" />
+
+	<bean id="TableLocker" class="com.ni3.ag.adminconsole.server.service.impl.TableLockerImpl" autowire="byName" />
+
+	<bean id="ExtractStorageSystem" class="com.ni3.ag.adminconsole.server.jobs.data.ExtractStorageFileSystem" />
+	<bean id="ExtractStorageUser" class="com.ni3.ag.adminconsole.server.jobs.data.ExtractStorageFileSystem" />
+	<bean id="thickClientJobService" class="com.ni3.ag.adminconsole.server.service.impl.ThickClientJobServiceImpl">
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="offlineJobDAO" ref="OfflineJobDAO" />
+		<property name="dataImporter" ref="ExternalDataImporter" />
+		<property name="dataExtractor">
+			<bean class="com.ni3.ag.adminconsole.server.jobs.data.DataExtractor">
+				<property name="userDataExtractor" ref="userDataExtractor" />
+				<property name="schemaAdminService" ref="schemaAdminService" />
+			</bean>
+		</property>
+		<property name="dataCleaner" ref="DataCleaner" />
+		<property name="dataValidator" ref="dataValidator" />
+		<property name="tempDataSource" value="${com.ni3.ag.adminconsole.offline.tmpDataSource}" />
+		<property name="tmpDBName" value="${com.ni3.ag.adminconsole.offline.tmpDataBase.name}" />
+		<property name="tmpDBHost" value="${com.ni3.ag.adminconsole.offline.tmpDataBase.host}" />
+		<property name="tmpDBPort" value="${com.ni3.ag.adminconsole.offline.tmpDataBase.port}" />
+		<property name="tmpDBUser" value="${com.ni3.ag.adminconsole.offline.tmpDataBase.user}" />
+		<property name="tmpDBPass" value="${com.ni3.ag.adminconsole.offline.tmpDataBase.pwd}" />
+		<property name="pgDump" value="${com.ni3.ag.adminconsole.offline.postgres.pgdump}" />
+		<property name="databaseVersionService" ref="databaseVersionService" />
+		<property name="moduleDAO" ref="ModuleDAO" />
+		<property name="transferUtils" ref="TransferUtils" />
+		<property name="deltaHeaderDAO" ref="DeltaHeaderDAO" />
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="locker" ref="TableLocker" />
+		<property name="userDAO" ref="UserDAO" />
+		<!-- Possible values for storage `memory` or `filesystem`. Default value is memory-->
+		<property name="dataStorage" ref="ExtractStorageSystem" />
+		<property name="userDataStorage" ref="ExtractStorageUser" />
+	</bean>
+
+	<bean id="mapJobService" class="com.ni3.ag.adminconsole.server.service.impl.MapJobServiceImpl">
+		<property name="mapJobDAO" ref="MapJobDAO" />
+		<property name="offlineJobDAO" ref="OfflineJobDAO" />
+		<property name="settingDAO" ref="SettingDAO" />
+		<property name="mapExtractor" ref="MapExtractor" />
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="mapJobDeleteRule" ref="mapJobDeleteRule" />
+	</bean>
+
+	<bean id="CopySchemaService" class="com.ni3.ag.adminconsole.server.service.impl.CopySchemaServiceImpl" autowire="byName">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="objectConnectionDAO" ref="ObjectConnectionDAO" />
+		<property name="chartDAO" ref="ChartDAO" />
+		<property name="predefinedAttributeDAO" ref="PredefinedAttributeDAO" />
+		<property name="reportTemplateDAO" ref="ReportTemplateDAO" />
+		<property name="userDAO" ref="UserDAO" />
+		<property name="tableNameRule" ref="UserTableNameValidationRule" />
+	</bean>
+
+	<bean id="csvUserDataImporter" class="com.ni3.ag.adminconsole.server.importers.csv.CSVUserDataImporterImpl" autowire="byName">
+		<property name="binaryDataConverter" ref="Base64DataConverter" />
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="userDataImporter" ref="userDataImporter" />
+	</bean>
+
+	<bean id="userDataImporter" class="com.ni3.ag.adminconsole.server.importers.UserDataImporter" autowire="byName">
+		<property name="nodeDAO" ref="NodeDAO" />
+		<property name="objectDAO" ref="ObjectDAO" />
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+
+	<bean id="DefUserCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.DefUserCheckTask" autowire="byName">
+		<property name="userDAO" ref="UserDAO" />
+	</bean>
+	<bean id="ObjectsTableCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.ObjectsTableCheckTask"
+		autowire="byName" />
+	<bean id="EdgeTableCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.EdgeTableCheckTask" autowire="byName" />
+	<bean id="NodeTableCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.NodeTableCheckTask" autowire="byName" />
+	<bean id="NodeReferenceCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.NodeReferenceCheckTask"
+		autowire="byName" />
+	<bean id="DefaultSchemaCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.DefaultSchemaCheckTask"
+		autowire="byName" />
+	<bean id="DefaultMetaphorSetCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.DefaultMetaphorSetCheckTask"
+		autowire="byName" />
+	<bean id="UserPrivilegesCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.UserPrivilegesCheckTask"
+		autowire="byName">
+		<property name="userDAO" ref="UserDAO" />
+		<property name="objectGroupDAO" ref="ObjectGroupDAO" />
+		<property name="attributeGroupDAO" ref="AttributeGroupDAO" />
+	</bean>
+	<bean id="SrcIdColumnCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.SrcIdColumnCheckTask" autowire="byName">
+		<property name="schemaDAO" ref="SchemaDAO" />
+	</bean>
+	<bean id="NavigatorHostPropertyTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.NavigatorHostPropertyTask">
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+
+	<bean id="SequenceValidityCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.SequenceValidityCheckTask"
+		autowire="byName" />
+
+	<bean id="GroupPrivilegesScopeCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.GroupPrivilegesScopeCheckTask">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+	<bean id="PredefinedAttributeCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.PredefinedAttributeCheckTask">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+	</bean>
+	<bean id="UserTableNameCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.UserTableNameCheckTask">
+		<property name="schemaDAO" ref="SchemaDAO" />
+	</bean>
+
+	<bean id="NavigatorCacheValidityTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.NavigatorCacheValidityTask">
+		<property name="schemaAdminService" ref="schemaAdminService" />
+	</bean>
+	<bean id="ChartPrivilegesCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.ChartPrivilegesCheckTask">
+		<property name="chartDAO" ref="ChartDAO" />
+	</bean>
+	<bean id="OfflineSetupValidationTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.OfflineSetupValidationTask">
+		<property name="userDAO" ref="UserDAO" />
+	</bean>
+	<bean id="PasswordResetTextCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.PasswordResetTextCheckTask">
+		<property name="userDAO" ref="UserDAO" />
+		<property name="userLangService" ref="userLanguageService" />
+		<property name="languageDAO" ref="LanguageDAO" />
+	</bean>
+	<bean id="UserLicenseCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.UserLicenseCheckTask">
+		<property name="userDAO" ref="UserDAO" />
+		<property name="licenseService" ref="navigatorLicenseService" />
+	</bean>
+	<bean id="DeltaHeaderCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.DeltaHeaderCheckTask">
+		<property name="deltaHeaderDAO" ref="DeltaHeaderDAO" />
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="DeltaUserCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.DeltaUserCheckTask">
+		<property name="deltaUserDAO" ref="DeltaUserDAO" />
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="ModuleAmountCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.ModuleAmountCheckTask">
+		<property name="moduleDAO" ref="ModuleDAO" />
+	</bean>
+	<bean id="ValidateFavoritesCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.ValidateFavoritesCheckTask">
+		<property name="databaseVersion" value="${com.ni3.ag.adminconsole.db.version}" />
+		<property name="favoritesDAO" ref="FavoritesDAO" />
+	</bean>
+	<bean id="UserTableDataCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.UserTableDataCheckTask">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="nodeTableCheckTask" ref="NodeTableCheckTask" />
+		<property name="factory" ref="sessionFactory" />
+	</bean>
+	<bean id="UserTablePKCheckTask" class="com.ni3.ag.adminconsole.server.service.impl.diag.UserTablePKCheckTask">
+		<property name="userTableStructureService" ref="UserTableStructureService" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+	</bean>
+	<bean id="DiagnosticTasksHolder" class="com.ni3.ag.adminconsole.server.service.impl.DiagnosticTasksHolderImpl">
+		<property name="tasks">
+			<list>
+				<ref local="ObjectsTableCheckTask" />
+				<ref local="EdgeTableCheckTask" />
+				<ref local="NodeTableCheckTask" />
+				<ref local="NodeReferenceCheckTask" />
+				<ref local="DefaultSchemaCheckTask" />
+				<ref local="DefaultMetaphorSetCheckTask" />
+				<ref local="UserPrivilegesCheckTask" />
+				<ref local="SrcIdColumnCheckTask" />
+				<ref local="NavigatorHostPropertyTask" />
+				<ref local="SequenceValidityCheckTask" />
+				<ref local="GroupPrivilegesScopeCheckTask" />
+				<ref local="PredefinedAttributeCheckTask" />
+				<ref local="UserTableNameCheckTask" />
+				<ref local="NavigatorCacheValidityTask" />
+				<ref local="ChartPrivilegesCheckTask" />
+				<ref local="PasswordResetTextCheckTask" />
+				<ref local="UserLicenseCheckTask" />
+				<ref local="DeltaHeaderCheckTask" />
+				<ref local="DeltaUserCheckTask" />
+				<ref local="DefUserCheckTask" />
+				<ref local="ModuleAmountCheckTask" />
+				<ref local="ValidateFavoritesCheckTask" />
+				<ref local="UserTableDataCheckTask" />
+				<ref local="UserTablePKCheckTask" />
+				<ref local="OfflineSetupValidationTask" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="MapExtractor" class="com.ni3.ag.adminconsole.server.mapextraction.MapExtractor">
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="statusUpdater" ref="mapJobStatusUpdater" />
+		<property name="transferUtils" ref="TransferUtils" />
+	</bean>
+
+	<bean id="mapJobStatusUpdater" class="com.ni3.ag.adminconsole.server.mapextraction.MapJobStatusUpdater">
+		<property name="mapJobDAO" ref="MapJobDAO" />
+	</bean>
+
+	<bean id="diagnosticsService" class="com.ni3.ag.adminconsole.server.service.impl.DiagnosticsServiceImpl">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="taskHolder" ref="DiagnosticTasksHolder" />
+	</bean>
+
+
+
+	<bean id="userDataExportService" class="com.ni3.ag.adminconsole.server.service.impl.UserDataExportServiceImpl">
+		<property name="userDataExtractor" ref="userDataExtractor" />
+	</bean>
+
+	<bean id="JavaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="username" value="${com.ni3.ag.adminconsole.mail.username}" />
+		<property name="password" value="${com.ni3.ag.adminconsole.mail.password}" />
+		<property name="protocol" value="smtps" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtps.user">${com.ni3.ag.adminconsole.mail.username}</prop>
+				<prop key="mail.smtps.password">${com.ni3.ag.adminconsole.mail.password}</prop>
+				<prop key="mail.smtps.host">${com.ni3.ag.adminconsole.mail.smtp}</prop>
+				<prop key="mail.smtps.port">${com.ni3.ag.adminconsole.mail.port}</prop>
+				<prop key="mail.smtps.auth">true</prop>
+				<prop key="mail.smtps.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="versioningService" class="com.ni3.ag.adminconsole.server.service.impl.VersioningServiceImpl">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="moduleDAO" ref="ModuleDAO" />
+		<property name="props" ref="offlineProperties" />
+		<property name="userLanguageService" ref="userLanguageService" />
+		<property name="userDAO" ref="UserDAO" />
+		<property name="mailSender" ref="JavaMailSender" />
+		<property name="settingsFileName" value="settings.properties" />
+		<property name="starterExecutableName" value="_.exe" />
+		<property name="ni3Name" value="ni3.exe" />
+		<property name="ni3ExecutableResourcePath" value="starter/ni3.exe" />
+		<property name="starterExecutableResourcePath" value="starter/_.exe" />
+		<property name="from" value="${com.ni3.ag.adminconsole.mail.from}" />
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+
+	<bean id="acVisibilityService" class="com.ni3.ag.adminconsole.server.service.impl.ACVisibilityServiceImpl">
+		<property name="licenseService" ref="licenseService" />
+		<property name="userDAO" ref="UserDAO" />
+	</bean>
+
+	<bean id="geoAnalyticsService" class="com.ni3.ag.adminconsole.server.service.impl.GeoAnalyticsServiceImpl">
+		<property name="gisTerritoryDAO" ref="GisTerritoryDAO" />
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="layerDAO" ref="LayerDAO" />
+	</bean>
+
+	<bean id="reportsService" class="com.ni3.ag.adminconsole.server.service.impl.ReportsServiceImpl">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="reportTemplateDAO" ref="ReportTemplateDAO" />
+	</bean>
+
+
+	<bean id="passwordGenerator" class="com.ni3.ag.adminconsole.util.SimplePasswordGenerator">
+		<property name="length" value="8" />
+	</bean>
+	<bean id="passwordEncoder" class="com.ni3.ag.adminconsole.shared.service.impl.MD5PasswordEncoder" />
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${com.ni3.ag.adminconsole.mail.smtp}" />
+		<property name="session" ref="mailSession" />
+	</bean>
+	<bean id="smtpAuthenticator" class="com.ni3.ag.adminconsole.util.SmtpAuthenticator">
+		<constructor-arg value="${com.ni3.ag.adminconsole.mail.username}" />
+		<constructor-arg value="${com.ni3.ag.adminconsole.mail.password}" />
+	</bean>
+	<bean id="mailSession" class="javax.mail.Session" factory-method="getInstance">
+		<constructor-arg>
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.socketFactory.port">${com.ni3.ag.adminconsole.mail.port}</prop>
+				<prop key="mail.smtp.socketFactory.fallback">false</prop>
+			</props>
+		</constructor-arg>
+		<constructor-arg ref="smtpAuthenticator" />
+	</bean>
+
+	<bean id="SequenceValueService" class="com.ni3.ag.adminconsole.server.service.impl.SequenceValueServiceImpl">
+		<property name="objectDAO" ref="ObjectDAO" />
+		<property name="favoritesDAO" ref="FavoritesDAO" />
+		<property name="favoritesFolderDAO" ref="FavoritesFoldersDAO" />
+	</bean>
+
+	<!-- xml import -->
+	<!-- rules -->
+	<bean id="PredefAttributeValidationRule" class="com.ni3.ag.adminconsole.validation.rules.PredefAttributeValidationRule" />
+	<bean id="ObjectConnectionImportValidationRule" class="com.ni3.ag.adminconsole.validation.rules.ObjectConnectionImportValidationRule" />
+	<bean id="UserAdminValidationRule" class="com.ni3.ag.adminconsole.validation.rules.UserAdminValidationRule" />
+	<bean id="NodeMetaphorUniqValidationRule" class="com.ni3.ag.adminconsole.validation.rules.NodeMetaphorUniqValidationRule" />
+	<bean id="SchemaAdminFieldValidationRule" class="com.ni3.ag.adminconsole.validation.rules.SchemaAdminFieldValidationRule" />
+	<bean id="SchemaNameValidationRule" class="com.ni3.ag.adminconsole.validation.SchemaNameValidationRule" autowire="byName">
+		<property name="schemaDAO" ref="SchemaDAO" />
+	</bean>
+	<bean id="AttributeGroupValidationRuleXML" class="com.ni3.ag.adminconsole.validation.rules.AttributeGroupValidationRule" />
+	<!-- xml processors -->
+	<bean id="XMLFormulaImporter" class="com.ni3.ag.adminconsole.server.importers.xml.FormulaImporter" autowire="byName">
+	</bean>
+	<bean id="PredefinedAttributeImporter" class="com.ni3.ag.adminconsole.server.importers.xml.PredefinedAttributeImporter"
+		autowire="byName">
+		<property name="predefAttributeValidationRule" ref="PredefAttributeValidationRule" />
+	</bean>
+	<bean id="ConnectionImporter" class="com.ni3.ag.adminconsole.server.importers.xml.ConnectionImporter" autowire="byName">
+		<property name="objectConnectionDAO" ref="ObjectConnectionDAO" />
+		<property name="lineStyleDAO" ref="LineStyleDAO" />
+		<property name="lineWeightDAO" ref="LineWeightDAO" />
+		<property name="objectConnectionImportValidationRule" ref="ObjectConnectionImportValidationRule" />
+	</bean>
+	<bean id="PredefinedRightsImporter" class="com.ni3.ag.adminconsole.server.importers.xml.PredefinedRightsImporter"
+		autowire="byName">
+	</bean>
+	<bean id="AttributeRightsImporter" class="com.ni3.ag.adminconsole.server.importers.xml.AttributeRightsImporter"
+		autowire="byName">
+		<property name="attributeGroupDAO" ref="AttributeGroupDAO" />
+		<property name="attributeGroupValidationRule" ref="AttributeGroupValidationRuleXML" />
+		<property name="predefinedRightsImporter" ref="PredefinedRightsImporter" />
+
+	</bean>
+	<bean id="ObjectRightsImporter" class="com.ni3.ag.adminconsole.server.importers.xml.ObjectRightsImporter" autowire="byName">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="attributeRightsImporter" ref="AttributeRightsImporter" />
+	</bean>
+	<bean id="SchemaRightsImporter" class="com.ni3.ag.adminconsole.server.importers.xml.SchemaRightsImporter" autowire="byName">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="objectRightsImporter" ref="ObjectRightsImporter" />
+	</bean>
+	<bean id="ScopeImporter" class="com.ni3.ag.adminconsole.server.importers.xml.ScopeImporter" autowire="byName">
+	</bean>
+	<bean id="GroupImporter" class="com.ni3.ag.adminconsole.server.importers.xml.GroupImporter" autowire="byName">
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="userImporter" ref="UserImporter" />
+		<property name="schemaRightsImporter" ref="SchemaRightsImporter" />
+		<property name="scopeImporter" ref="ScopeImporter" />
+	</bean>
+	<bean id="ObjectAttributeImporter" class="com.ni3.ag.adminconsole.server.importers.xml.ObjectAttributeImporter"
+		autowire="byName">
+		<property name="objectAttributeDAO" ref="ObjectAttributeDAO" />
+		<property name="predefinedAttributeImporter" ref="PredefinedAttributeImporter" />
+		<property name="formulaImporter" ref="XMLFormulaImporter" />
+		<property name="userTableNameRule" ref="UserTableNameValidationRule" />
+		<property name="schemaAdminService" ref="schemaAdminService" />
+	</bean>
+	<bean id="UserImporter" class="com.ni3.ag.adminconsole.server.importers.xml.UserImporter" autowire="byName">
+		<property name="userDAO" ref="UserDAO" />
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="userAdminValidationRule" ref="UserAdminValidationRule" />
+	</bean>
+	<bean id="ObjectDefinitionImporter" class="com.ni3.ag.adminconsole.server.importers.xml.ObjectDefinitionImporter"
+		autowire="byName">
+		<property name="objectDefinitionDAO" ref="ObjectDefinitionDAO" />
+		<property name="objectAttributeImporter" ref="ObjectAttributeImporter" />
+		<property name="schemaAdminFieldValidationRule" ref="SchemaAdminFieldValidationRule" />
+		<property name="userTableNameRule" ref="UserTableNameValidationRule" />
+	</bean>
+	<bean id="SchemaObjectImporter" class="com.ni3.ag.adminconsole.server.importers.xml.SchemaObjectImporter" autowire="byName">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="objectDefinitionImporter" ref="ObjectDefinitionImporter" />
+		<property name="connectionImporter" ref="ConnectionImporter" />
+		<property name="groupImporter" ref="GroupImporter" />
+		<property name="schemaNameValidationRule" ref="SchemaNameValidationRule" />
+		<property name="userTableStructureService" ref="UserTableStructureService" />
+		<property name="dataSource" ref="routingDatasource" />
+	</bean>
+	<bean id="OwnerImporter" class="com.ni3.ag.adminconsole.server.importers.xml.OwnerImporter" autowire="byName">
+		<property name="userDAO" ref="UserDAO" />
+	</bean>
+	<bean id="DataImporter" class="com.ni3.ag.adminconsole.server.importers.xml.DataImporter" autowire="byName">
+		<property name="schemaObjectImporter" ref="SchemaObjectImporter" />
+		<property name="ownerImporter" ref="OwnerImporter" />
+	</bean>
+
+	<!-- excel schema importer section -->
+	<bean id="ObjectDefinitionNameValidationRule" class="com.ni3.ag.adminconsole.validation.rules.ObjectDefinitionNameValidationRule" />
+	<bean id="ExcelSchemaImporter" class="com.ni3.ag.adminconsole.server.importers.excel.ExcelSchemaImporterImpl">
+		<property name="schemaDAO" ref="SchemaDAO" />
+		<property name="schemaNameValidationRule" ref="SchemaNameValidationRule" />
+		<property name="excelObjectDefinitionImporter" ref="ExcelObjectDefinitionImporter" />
+		<property name="excelPredefinedAttributeImporter" ref="ExcelPredefinedAttributeImporter" />
+		<property name="excelFormulaImporter" ref="ExcelFormulaImporter" />
+		<property name="userTableStructureService" ref="UserTableStructureService" />
+		<property name="schemaAdminService" ref="schemaAdminService" />
+	</bean>
+	<bean id="ExcelObjectDefinitionImporter" class="com.ni3.ag.adminconsole.server.importers.excel.ExcelObjectDefinitionImporter">
+		<property name="objectDefinitionNameValidationRule" ref="ObjectDefinitionNameValidationRule" />
+		<property name="objectDefinitionService" ref="ObjectDefinitionService" />
+		<property name="schemaAdminService" ref="schemaAdminService" />
+		<property name="dataTypeValidationRule" ref="dataTypeValidationRule" />
+	</bean>
+	<bean id="ExcelPredefinedAttributeImporter" class="com.ni3.ag.adminconsole.server.importers.excel.ExcelPredefinedAttributeImporter">
+		<property name="predefAttributeValidationRule" ref="PredefAttributeValidationRule" />
+		<property name="objectAttributeDAO" ref="ObjectAttributeDAO" />
+	</bean>
+	<bean id="ExcelFormulaImporter" class="com.ni3.ag.adminconsole.server.importers.excel.ExcelFormulaImporter">
+		<property name="objectAttributeDAO" ref="ObjectAttributeDAO" />
+	</bean>
+
+	<bean id="addDatasourceService" class="com.ni3.ag.adminconsole.server.service.impl.AddDatasourceServiceImpl">
+		<property name="dataSource" ref="routingDatasource" />
+		<property name="dbGenerator" ref="StartupDatabaseGenerator" />
+	</bean>
+
+	<bean id="userActivityService" class="com.ni3.ag.adminconsole.server.service.impl.UserActivityServiceImpl">
+		<property name="userDAO" ref="UserDAO" />
+		<property name="userActivityDAO" ref="UserActivityDAO" />
+		<property name="userLanguageService" ref="userLanguageService" />
+		<property name="logoImage" value="/reports/Ni3-favicon.png" />
+		<property name="reportTemplate" value="/reports/Monitoring.jrxml" />
+	</bean>
+</beans>

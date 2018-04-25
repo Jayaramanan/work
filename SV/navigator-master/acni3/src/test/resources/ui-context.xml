@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!-- RULES -->
+    <bean id="applicationSettingsValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.ApplicationSettingsValidationRule"/>
+    <bean id="mandatoryAttributeDeleteValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.MandatoryAttributeDeleteValidationRule"/>
+    <bean id="userAdminValidationRule" class="com.ni3.ag.adminconsole.validation.rules.UserAdminValidationRule"/>
+    <bean id="userSettingsValidationRule" class="com.ni3.ag.adminconsole.validation.rules.UserSettingsValidationRule"/>
+    <bean id="generateMandatoryAttributeRule"
+          class="com.ni3.ag.adminconsole.validation.rules.GenerateMandatoryAttributeRule"/>
+    <bean id="groupSettingsValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.GroupSettingsValidationRule"/>
+    <bean id="languageNameValidationRule" class="com.ni3.ag.adminconsole.validation.rules.LanguageNameValidationRule"/>
+    <bean id="languagePropertyValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.LanguagePropertyValidationRule"/>
+    <bean id="nodeMetaphorUniqValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.NodeMetaphorUniqValidationRule"/>
+    <bean id="objectConnectionValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.ObjectConnectionValidationRule"/>
+    <bean id="predefAttributeValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.PredefAttributeValidationRule"/>
+    <bean id="schemaAdminFieldValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.SchemaAdminFieldValidationRule"/>
+    <bean id="userAdminGroupNameValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.UserAdminGroupNameValidationRule"/>
+    <bean id="schemaAdminNameValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.SchemaAdminNameValidationRule"/>
+    <bean id="connectionUniqueValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.ConnectionUniqueValidationRule"/>
+    <bean id="objectChartValidationRule" class="com.ni3.ag.adminconsole.validation.rules.ObjectChartValidationRule"/>
+    <bean id="chartNameValidationRule" class="com.ni3.ag.adminconsole.validation.rules.ChartNameValidationRule"/>
+    <bean id="duplicateObjectChartValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.DuplicateObjectChartValidationRule"/>
+    <bean id="objectChartMandatoryFieldsValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.ObjectChartMandatoryFieldsValidationRule"/>
+    <bean id="chartAttributesMandatoryFieldsValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.ChartAttributesMandatoryFieldsValidationRule"/>
+    <bean id="chartAttributeUniqueValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.ChartAttributeUniqueValidationRule"/>
+    <bean id="deleteSettingsValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.DeleteSettingsValidationRule"/>
+    <bean id="mapJobMandatoryFieldsValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.MapJobMandatoryFieldsValidationRule"/>
+    <bean id="chartSelectionValidationRule"
+          class="com.ni3.ag.adminconsole.validation.rules.ChartSelectionValidationRule"/>
+    <bean id="userPasswordValidationRule" class="com.ni3.ag.adminconsole.validation.rules.UserPasswordValidationRule">
+        <property name="passwordValidator" ref="passwordValidator"/>
+    </bean>
+    <bean name="passwordValidator" class="com.ni3.ag.adminconsole.shared.service.impl.PasswordValidatorImpl"/>
+
+    <!-- CONTROLLERS -->
+    <bean id="loginController" class="com.ni3.ag.adminconsole.client.controller.LoginController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.LoginModel"/>
+        </property>
+    </bean>
+
+
+    <bean id="schemaAdminController"
+          class="com.ni3.ag.adminconsole.client.controller.schemaadmin.SchemaAdminController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.SchemaAdminModel"/>
+        </property>
+    </bean>
+
+    <bean id="attributeEditController"
+          class="com.ni3.ag.adminconsole.client.controller.appconf.attributes.AttributeEditController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.AttributeEditModel"/>
+        </property>
+    </bean>
+
+    <bean id="predefinedAttributeEditController"
+          class="com.ni3.ag.adminconsole.client.controller.appconf.predefattributes.PredefinedAttributeEditController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.PredefinedAttributeEditModel"/>
+        </property>
+    </bean>
+
+    <bean id="objectConnectionController"
+          class="com.ni3.ag.adminconsole.client.controller.connection.ObjectConnectionController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.ObjectConnectionModel"/>
+        </property>
+    </bean>
+
+    <bean id="settingsController" class="com.ni3.ag.adminconsole.client.controller.appconf.settings.SettingsController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.SettingsModel"/>
+        </property>
+    </bean>
+
+    <bean id="nodeMetaphorController"
+          class="com.ni3.ag.adminconsole.client.controller.metaphoradmin.NodeMetaphorController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.NodeMetaphorModel"/>
+        </property>
+    </bean>
+
+    <bean id="userAdminController" class="com.ni3.ag.adminconsole.client.controller.useradmin.UserAdminController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.UserAdminModel"/>
+        </property>
+    </bean>
+
+    <bean id="languageController" class="com.ni3.ag.adminconsole.client.controller.languageadmin.LanguageController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.LanguageModel"/>
+        </property>
+    </bean>
+
+    <bean id="chartController" class="com.ni3.ag.adminconsole.client.controller.charts.ChartController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.ChartModel"/>
+        </property>
+    </bean>
+
+    <bean id="userActivityController"
+          class="com.ni3.ag.adminconsole.client.controller.useractivity.UserActivityController">
+        <property name="model">
+            <bean class="com.ni3.ag.adminconsole.shared.model.impl.UserActivityModel"/>
+        </property>
+    </bean>
+
+    <bean id="attributeInMetaphorUserRule"
+          class="com.ni3.ag.adminconsole.client.validation.AttributeInMetaphorUserRule"/>
+
+
+</beans>

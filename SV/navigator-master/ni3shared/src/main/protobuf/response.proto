@@ -1,0 +1,572 @@
+package response;
+
+option java_package="com.ni3.ag.navigator.shared.proto";
+option java_outer_classname = "NResponse";
+
+message Envelope {
+   enum Status {
+      SUCCESS = 1;
+      FAILED = 2;
+      SESSION_EXPIRED = 3;
+      INVALID_SCHEMA = 4;
+   }
+   required Status status = 1;
+   optional string errorMessage = 2;
+   optional bytes payload = 3;
+}
+
+message User {
+   required int32 userId = 1 [default = -1];
+   optional string userName = 2;
+   optional string firstName = 3;
+   optional string lastName = 4;
+   optional string password = 5;
+   optional string sid = 6;
+}
+
+message Login {
+   enum Status {
+      SUCCESS = 1;
+      INVALID_CREDENTIALS = 2;
+      ERROR_GET_SALT = 3;
+   }
+
+   required Status status = 1;
+   optional string sessionId = 2;
+   optional User user = 3;
+   optional string salt = 4;
+   optional int32 groupId = 5;
+   optional string instance = 6;
+}
+
+message Schemas{
+    repeated Schema schemas = 1;
+}
+
+message Schema {
+    optional int32 id = 1;
+    optional string name = 2;
+    repeated Entity entities = 3;
+}
+
+message Entity {
+   optional int32 id = 1;
+   optional string name = 2;
+   optional int32 objectTypeId = 3;
+   optional int32 sort = 4;
+   optional string description = 5;
+   optional bool canRead = 6;
+   optional bool canCreate = 7;
+   optional bool canUpdate = 8;
+   optional bool canDelete = 9;
+
+   repeated Attribute attributes = 10;
+   repeated Context contexts = 11;
+   repeated UrlOperation urlOperations = 12;
+}
+
+message UrlOperation {
+   required int32 id = 1;
+   optional string label = 2;
+   optional string url = 3;
+   optional string sort = 4;
+}
+
+message Attribute {
+   enum EditOption {
+      NOT_VISIBLE = 0;
+      READ_ONLY = 1;
+      READ_WRITE = 2;
+      MANDATORY = 3;
+   }
+
+   required int32 id = 1;
+   optional string name = 2;
+   optional string label = 3;
+   optional string description = 4;
+   optional bool predefined = 5;
+   optional bool inFilter = 6;
+   optional bool inLabel = 7;
+   optional bool inToolTip = 8;
+   optional bool inAdvancedSearch = 10;
+   optional bool inSimpleSearch = 11;
+   optional int32 inMatrix = 12;
+   optional bool inMetaphor = 13;
+   optional bool inExport = 14;
+   optional bool inPrefilter = 15;
+   optional bool inContext = 16;
+   optional int32 dataTypeId = 17;
+   optional int32 sort = 18;
+   optional int32 sortLabel = 19;
+   optional int32 sortFilter = 20;
+   optional int32 sortSearch = 21;
+   optional int32 sortMatrix = 22;
+   optional bool labelBold = 23;
+   optional bool labelItalic = 24;
+   optional bool labelUnderline = 25;
+   optional bool contentBold = 26;
+   optional bool contentItalic = 27;
+   optional bool contentUnderline = 28;
+   optional string format = 29;
+   optional string editFormat = 30;
+   optional string validCharacters = 31;
+   optional string invalidCharacters = 32;
+   optional string minValue = 33;
+   optional string maxValue = 34;
+   optional string regularExpression = 35;
+   optional string valueDescription = 36;
+   optional bool multivalue = 37;
+   optional bool aggregable = 38;
+   optional bool canRead = 39;
+   optional EditOption editLock = 40;
+   optional EditOption editUnlock = 41;
+   optional bool formula = 42;
+
+   repeated AttributeValue values = 43;
+}
+
+message AttributeValue {
+   required int32 id = 1;
+   optional int32 parentId = 2;
+   optional string label = 3;
+   optional string value = 4;
+   optional int32 sort = 5;
+   optional string haloColor = 6;
+   optional bool haloColorSelected = 7;
+   optional bool toUse = 8;
+}
+
+message Context {
+   required int32 id = 1;
+   optional string name = 2;
+   required int32 pkAttributeId = 3;
+   repeated int32 relatedAttributes = 4;
+}
+
+message SyncResult{
+	enum Status{
+		OK = 1;
+		FAILED = 2;
+		CONNECTION_ERROR = 3;
+		LOCK_ERROR = 4;
+	}
+	
+	required Status status = 1;
+	
+	optional int32 totalCount = 2;
+	optional bool hasMoreToProcess = 3;
+	optional ProcessedDeltas processDeltas = 4;
+	optional Deltas deltas = 5;
+    optional int32 errorCount = 6;
+	repeated int32 userIds = 7;
+	repeated int32 groupIds = 8;
+	repeated UserGroup userGroups = 9;
+    repeated Icon icons = 10;
+    optional int32 okCount = 11;
+    optional int32 warnCount = 12;
+}
+
+message Icon{
+    required int32 id = 1;
+    optional string iconName = 2;
+    optional bytes iconData = 3;
+}
+
+message UserGroup{
+	required int32 userId = 1;
+	required int32 groupId = 2; 
+}
+
+message ProcessedDelta{
+	required int64 id = 1;
+    required int32 status = 2;
+}
+
+message ProcessedDeltas{
+	repeated ProcessedDelta processed = 1;
+}
+
+message Deltas{
+	repeated Delta deltas = 1;
+}
+
+message Delta{
+	required int64 id = 1;
+	optional int32 deltaType = 2;
+	optional int64 timestamp = 3;
+	optional int32 syncStatus = 4;
+	optional int32 creatorId = 5;
+	optional bool isSync = 6;
+	repeated DeltaParam deltaParams = 7;
+}
+
+message DeltaParam{
+	optional string name = 1;
+	optional string value = 2;
+}
+
+message ActivityStream{
+	repeated Activity activities = 1;
+}
+
+message Activity{
+	required int32 deltaType = 1;
+	required User user = 2;
+	required int64 id = 3;
+	required int32 objectId = 4;
+	optional string objectName = 5;
+	optional int64 timestamp = 6;
+}
+
+message Reports{
+	repeated Report reports = 1;
+	optional bytes reportPrint = 2;
+}
+
+message Report{
+	enum ReportType{
+		DYNAMIC = 1;
+		STATIC = 2;
+	}
+
+	required int32 id = 1;
+	optional string name = 2;
+	optional ReportType type = 3;
+	optional bytes preview = 4;
+}
+
+message ThematicData{
+	repeated GisPolygon polygons = 1;
+}
+
+message GisGeometry{
+	repeated GisPolygon polygons = 1;
+}
+
+message GisPolygon{
+	required int32 gisId = 1;
+	optional GisRing polygon = 2;
+	repeated GisRing exclusions = 3;
+}
+
+message GeoAnalytics{
+	repeated GeoThematicFolder folders = 1; 
+	repeated GeoTerritory territories = 2;
+	repeated GeoThematicCluster clusters = 3;
+	repeated int32 geometryIds = 4;
+}
+
+message GeoThematicFolder{
+	required int32 id = 1;
+	optional string name = 2;
+	optional int32 schemaId = 3;
+	repeated GeoThematicMap thematicMaps = 4;
+}
+
+message GeoThematicMap{
+	optional int32 id = 1;
+   	optional string name = 2;
+   	optional int32 groupId = 3;
+   	optional int32 layerId = 4;
+   	optional string attribute = 5;
+   	repeated GeoThematicCluster clusters = 6;			
+}
+
+message GeoThematicCluster{
+	required int32 id = 1;
+	optional double fromValue = 2;
+	optional double toValue = 3;
+	optional string color = 4;
+	optional string gisIds = 5;
+	optional string description = 6;
+}
+
+message GeoTerritory{
+	required int32 id = 1;
+	optional string name = 2;
+	optional double sum = 3;
+	optional int32 nodeCount = 4;
+}
+
+message GIS{
+    optional GisMap map = 1;
+    repeated GisTerritory territories = 2;
+    repeated GisMap maps = 3;
+    repeated GisOverlay overlays = 4;
+    repeated int32 overlayGeometryIds = 5;
+}
+
+message GisOverlay{
+	required int32 id = 1;
+	required int32 schemaId = 2;
+	required string name = 3;
+	optional string lineColor = 4;
+	optional int32 lineWidth = 5;
+	optional bool filled = 6;
+	optional int32 version = 7;
+}
+
+message GisMap{
+	required int32 id = 1;
+	required string name = 2;
+}
+
+message GisTerritory{
+	required int32 id = 1;
+	required string label = 2;
+	required string territory = 3;
+	optional string tableName = 4;
+	optional int32 version = 5;
+}
+
+message GisRing {
+   repeated GisPoint points = 1;
+}
+
+message GisPoint {
+   required double x = 1;
+   required double y = 2;
+}
+
+message Palette{
+    repeated Color colors = 1;
+}
+
+message Color{
+    required int32 sequence = 1;
+    required string color = 2;
+}
+
+message Favorites{
+	enum Result{
+		OK = 0;
+		WARNING_OBSOLETE = 1;
+		ERROR_OBSOLETE = 2;
+		ERROR = -1;
+	}
+    repeated Favorite favorites = 1;
+    optional Result result = 2;
+}
+
+message Favorite{
+    required int32 id = 1;
+	optional string description = 2;
+	optional int32 schemaId = 3;
+	optional string data = 4;
+	optional string layout = 5;
+	optional string name = 6;
+	optional int32 creatorId = 7;
+	optional int32 folderId = 8;
+	optional bool groupFavorite = 9;
+	optional int32 mode = 10;
+}
+
+message ObjectConnections{
+    repeated ObjectConnection objectConnections = 1;
+}
+
+message ObjectConnection{
+	required int32 fromObject = 1;
+	required int32 toObject = 2;
+	required int32 connectionObject = 3;
+	required int32 connectionType = 4;
+	required int32 lineStyle = 5;
+	required float lineWidth = 6;
+	required string color = 7;
+}
+
+message Folders{
+    repeated Folder folders = 1;
+}
+
+message Folder{
+    required int32 id = 1;
+	required int32 parentId = 2;
+	required string folderName = 3;
+	required int32 schemaId = 4;
+	required int32 creatorId = 5;
+	required bool groupFolder = 6;
+	required int32 sortOrder = 7;
+}
+
+message Settings{
+	repeated Setting settings = 1;
+}
+
+message Setting{
+    required int32 userId = 1;
+    required string section = 2;
+    required string property = 3;
+    required string value = 4;
+}
+
+message LanguageItems{
+	repeated LanguageItem items = 1;
+}
+
+message LanguageItem{
+	required int32 id = 1;
+	required string property = 2;
+	required string value = 3;
+}
+
+
+message Charts{
+	repeated Chart charts = 1;
+	repeated ObjectChart objectCharts = 2;
+	repeated ChartAttribute chartAttributes = 3;
+	optional double minVal = 4;
+	optional double maxVal = 5;
+	optional double maxSliceVal = 6;
+}
+
+message Chart{
+	required int32 id = 1;
+	optional string name = 2;
+	optional string comment = 3;
+	optional int32 schemaId = 4;
+	repeated ObjectChart objectCharts = 5;
+}
+
+message ObjectChart{
+	required int32 id = 1;
+	required int32 objectId = 2;
+	required int32 chartId = 3;
+	required int32 minValue = 4;
+	required int32 maxValue = 5;
+	required double minScale = 6;
+	required double maxScale = 7;
+	required bool labelInUse = 8;
+	optional string labelFont = 9;
+	optional string numberFormat = 10;
+	optional int32 displayOperation = 11;
+	required int32 chartType = 12;
+	optional bool isValueDisplayed = 13;
+	optional string fontColor = 14;
+	repeated ChartAttribute chartAttributes = 15;
+}
+
+message ChartAttribute{
+	required int32 id = 1;
+	required int32 objectChartId = 2;
+	required int32 attributeId = 3;
+	required string rgb = 4;
+}
+
+message Icons{
+	optional bytes iconBytes = 1;
+	repeated string iconNames = 2;
+}
+
+message MetaphorSets{
+	repeated string metaphorSets = 1;
+}
+
+message NodeIcons{
+	repeated NodeIcon nodeIcon = 1;
+}
+
+message NodeIcon{
+	required int32 id = 1;
+	required string name = 2;
+}
+
+message Creator{
+	required int32 id = 1;
+}
+
+message ObjectManagement{
+	optional int32 id = 1;
+}
+
+message Prefilter{
+	repeated PrefilterItem item = 1;
+}
+
+message PrefilterItem{
+	required int32 id = 1;
+	required int32 groupId = 2;
+	required int32 schemaId = 3;
+	required int32 objectDefinitionId = 4;
+	required int32 attributeId = 5;
+	required int32 predefinedId = 6;
+}
+
+message ObjectDeleteAccessResult{
+	required bool result = 1;
+}
+
+message License{
+	required bool valid = 1;
+	required bool baseModule = 2;
+	optional bool dataCaptureModule = 3;
+	optional bool chartsModule = 4;
+	optional bool mapsModule = 5;
+	optional bool geoAnalyticsModule = 6;
+	optional bool remoteClientModule = 7;
+	optional bool reportsModule = 8;
+}
+
+message SimpleSearch{
+    repeated DBObject object = 1;
+}
+
+message DBObject{
+    required int32 id = 1;
+    required int32 entityId = 2;
+    optional NodeMetaphor metaphor = 3;
+    repeated DataPair dataPair = 4;
+}
+
+message DataPair{
+    required int32 attributeId = 1;
+    required string value = 2;
+}
+
+message NodeMetaphor{
+	optional MetaphorIcon assignedIcon = 1;
+	repeated string metaphorSets = 2;
+	repeated MetaphorIcon metaphors = 3;
+}
+
+message MetaphorIcon{
+	required string iconName = 1;
+	optional int32 priority = 2;
+}
+
+message Graph{
+	enum Result{
+		OK = 1;
+		TOO_MUCH_NODES = 2;
+		PATH_NOT_FOUND = 3;
+	}
+	optional Result result = 1;
+
+	repeated Node nodes = 2;
+	repeated Edge edges = 3;
+}
+
+message Node{
+	required int32 id = 1;
+	required int32 objectDefinitionId = 2;
+	optional int32 childrenCount = 3; 
+	optional int32 parentCount = 4;
+	optional int32 creatorId = 5;
+	optional int32 creatorGroupId = 6;
+	optional int32 status = 7;
+}
+
+message Edge{
+	required int32 id = 1;
+	required int32 objectDefinitionId = 2;
+	optional int32 connectionType = 3;
+	optional double strength = 4;
+	optional int32 inPath = 5;
+	optional int32 directed = 6;
+	optional int32 favoriteId = 7;
+	optional int32 creatorId = 8;
+	optional int32 creatorGroupId = 9;
+	optional int32 status = 10;
+	optional Node fromNode = 11;
+	optional Node toNode = 12;
+}

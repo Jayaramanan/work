@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<typedef class="com.ni3.ag.adminconsole.domain.GenericEnumUserType" name="deltaType">
+		<param name="enumClassName">com.ni3.ag.adminconsole.domain.DeltaType</param>
+	</typedef>
+	<typedef class="com.ni3.ag.adminconsole.domain.GenericEnumUserType" name="syncStatus">
+		<param name="enumClassName">com.ni3.ag.adminconsole.domain.SyncStatus</param>
+	</typedef>
+
+	<class name="com.ni3.ag.adminconsole.domain.DeltaHeader" table="sys_delta_header" lazy="false">
+		<id name="id" column="id">
+			<generator class="identity" />
+		</id>
+		<property name="timestamp" column="timestamp" />
+		<property name="deltaType" column="deltaType" type="deltaType" />
+		<property name="syncStatus" column="status" type="syncStatus" />
+		<property name="creator" column="creatorid" />
+		<property name="HACK_sync" column="issync" />
+
+		<bag name="params" inverse="true" cascade="all-delete-orphan">
+			<key column="deltaid" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.DeltaParam" />
+		</bag>
+	</class>
+</hibernate-mapping>
+

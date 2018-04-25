@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.Metaphor" table="sys_metaphor">
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="schema" column="SchemaID" />
+		<many-to-one name="objectDefinition" column="ObjectDefinitionID" />
+		<many-to-one name="icon" column="IconID" />
+
+		<property name="priority" column="Priority" />
+		<property name="metaphorSet">
+			<column name="MetaphorSet" default="'Default'" length="100" />
+		</property>
+		<property name="iconName" column="IconName" length="255" />
+		<property name="description" column="Description" length="255" />
+
+		<bag name="metaphorData" inverse="true" cascade="all-delete-orphan">
+			<key column="ID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.MetaphorData" />
+		</bag>
+	</class>
+</hibernate-mapping>

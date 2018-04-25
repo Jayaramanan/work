@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.SchemaGroup" table="sys_schema_group">
+		<composite-id>
+			<key-many-to-one name="schema" column="SchemaID" />
+			<key-many-to-one name="group" column="GroupID" />
+		</composite-id>
+
+		<property name="canRead_" column="CanRead" type="integer" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Build-Jdk: 1.6.0_65
+Built-By: ilya
+Permissions: all-permissions
+Created-By: Apache Maven
+Main-Class: com.ni3.ag.navigator.client.gui.Ni3
+Archiver-Version: Plexus Archiver
+Application-Name: Ni3 Navigator

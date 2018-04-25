@@ -1,0 +1,481 @@
+package request;
+
+option java_package="com.ni3.ag.navigator.shared.proto";
+option java_outer_classname = "NRequest";
+
+/**
+* Action messages
+*/
+
+message Login {
+   enum Action {
+      LOGIN_BY_PASSWORD = 1;
+      LOGIN_BY_SID = 2;
+      LOGIN_BY_SSO = 3;
+      RESET_PASSWORD = 4;
+      CHANGE_PASSWORD = 5;
+      LOGOUT = 6;
+      GET_SALT_FOR_USER = 7;
+   }
+
+   required Action action = 1;
+
+   optional int32 userId = 2;
+   optional string userName = 3;
+   optional string password = 4;
+   optional string sid = 5;
+   optional string sso = 6;
+   optional string newPassword = 7;
+   optional string email = 8;
+   optional bool sync = 9;
+}
+
+message FavoriteManagement {
+	enum Action {
+      CREATE = 1;
+      DELETE = 2;
+      UPDATE = 3;
+      COPY = 4;
+      GET_ALL_FOR_SCHEMA = 5;
+      GET_FAVORITE_DATA = 6;
+      VALIDATE_VERSION = 7;
+   }
+   
+   required Action action = 1;
+   optional Favorite favorite = 2;
+   optional int32 schemaId = 3;
+   optional int32 id = 4;
+}
+
+message FavoritesFolderManagement{
+    enum Action{
+        GET_ALL_FOLDERS = 1;
+        CREATE = 2;
+        DELETE = 3;
+        UPDATE = 4;
+    }
+    required Action action = 1;
+    optional int32 schemaId = 2;
+    optional FavoritesFolder folder = 3;
+}
+
+message Favorite {
+	optional int32 id = 1;
+	optional string description = 2;
+	optional int32 schemaId = 3;
+	optional string data = 4;
+	optional string layout = 5;
+	optional string name = 6;
+	optional int32 creatorId = 7;
+	optional int32 folderId = 8;
+	optional bool groupFavorite = 9;
+	optional int32 mode = 10;
+}
+
+message FavoritesFolder {
+	optional int32 id = 1;
+	optional string name = 2;
+	optional int32 schemaId = 3;
+	optional int32 sort = 4;
+	optional int32 parentFolderId = 5;
+	optional bool groupFolder = 6;
+}
+
+message Synchronize {
+	enum Action{
+		CHECK_TABLE_LOCK = 1;
+		CHECK_CONNECTIVITY = 2;
+		GET_COUNT_TO_PUSH = 3;
+		PUSH_DELTAS = 4;
+		PROCESS_OFFLINE_DELTAS = 5;
+		LOGOUT_MASTER = 6;
+		GET_COUNT_TO_ROLLON = 7;
+		GET_MASTER_DELTAS_COUNT = 8;
+		ROLLON_MASTER_DELTAS = 9;
+		GET_MASTER_DELTAS = 10;
+		COMMIT_PROCESSED_DELTAS = 11;
+		GET_MASTER_USERS = 12;
+        //SYNC_IMAGES = 13;
+        CALL_SYNC_IMAGES = 14;
+        GET_MASTER_ICONS = 15;
+		PREPARE_DATA = 16;
+	}
+	
+	required Action action = 1;
+	
+	optional Deltas deltas = 2;
+	optional ProcessedDeltas processedIds = 3;
+    optional string metaphorPath = 4;
+}
+
+/**
+* Data Structures
+*/
+
+message Schema {
+	enum Action{
+		GET_SCHEMA_DATA = 1;
+		GET_SCHEMAS = 2;
+		GET_CONNECTIONS = 3;
+		GET_METAPHOR_SETS = 4;
+		GET_PREFILTER_DATA = 5;
+	}
+
+	required Action action = 1;
+	optional int32 definitionId = 2;
+	optional int32 schemaId = 3;
+	optional int32 languageId = 4;
+	optional string metaphorSetName = 5;
+}
+
+message DeltaParam{
+	required int64 id = 1;	
+	optional string name = 2;
+	optional string value = 3;
+}
+
+message DeltaHeader{
+	required int64 id = 1;
+	optional int32 deltaType = 2;
+	optional int64 timestamp = 3;
+	optional int32 syncStatus = 4;
+	optional int32 creator = 5;
+	optional bool isSync = 6;
+	repeated DeltaParam params = 7;
+}
+
+message Deltas{
+	repeated DeltaHeader deltas = 1;
+}
+
+
+
+message ProcessedDelta{
+    required int64 id = 1;
+    required int32 status = 2;
+}
+
+message ProcessedDeltas{
+	repeated ProcessedDelta processed = 1;
+}
+
+message ActivityStream{
+	required int32 count = 1;
+	required int32 schemaId = 2; 
+    required int64 lastId = 3;
+}
+
+message Reports{
+	enum Action{
+		GET_ALL = 1;
+		GET_PRINT = 2;
+	}
+	required Action action = 1;
+	optional Report report = 2;
+}
+
+message Report{
+	enum ReportFormat{
+		XLS = 1;
+		PDF = 2;
+		HTML = 3;
+	}
+
+	required ReportFormat reportFormat = 1;
+	required int32 id = 2;
+	optional bytes graphImage = 3;
+	optional bytes mapImage = 4;
+	optional bytes logoImage = 5;
+
+	repeated ReportData data = 6;
+}
+
+message ReportData{
+	required int32 entityId = 1;
+	required string name = 2;
+	optional bool hasMetaphor = 3;
+	optional bool isNumericMetaphor = 4;
+	repeated ReportAttribute attributes = 5;
+	repeated ReportRow rows = 6;
+}
+
+message ReportAttribute{
+	required int32 id = 1;
+	required string name = 2;
+	required string label = 3;
+	optional bool isDynamic = 4;
+}
+
+message ReportRow{
+	repeated string values = 1;
+	optional bytes metaphor = 2;
+	optional int32 index = 3;
+}
+
+message GeoAnalytics{
+	enum Action{
+		GET_FOLDERS_WITH_THEMATIC_MAPS = 1;
+		GET_THEMATIC_MAP_WITH_CLUSTERS = 2;
+		GET_GEO_TERRITORIES = 3;
+		GET_GEOMETRY_IDS_BY_THEMATIC_MAP = 4;
+		GET_THEMATIC_DATA_BY_GIS_IDS = 5;
+		GET_GEO_TERRITORIES_BY_LAYER = 6;
+		GET_GEO_TERRITORIES_FOR_DYNAMIC_ATTRIBUTE = 7;
+		GET_THEMATIC_MAP_BY_NAME = 8;
+		SAVE_THEMATIC_MAP_WITH_CLUSTERS = 9;
+		DELETE_THEMATIC_MAP = 10;
+		GET_DEFAULT_FOLDER_ID = 11;
+	}
+
+	enum Source{
+		DATABASE = 1;
+		NODE_SET = 2;
+	}
+
+	required Action action = 1;
+	optional int32 attributeId = 2;
+	optional Source source = 3;
+	optional int32 gisTerritoryId = 4;
+	optional GeoThematicMap thematicMap = 5;
+	optional int32 thematicMapId = 6;
+	optional int32 entityId = 7;
+	optional int32 schemaId = 8;
+	repeated int32 gisIds = 9;
+	repeated int32 nodeIds = 10;
+	repeated double values = 11;
+}
+
+message GeoThematicMap{
+	optional int32 id = 1;
+	optional int32 folderId = 2;
+   	optional string name = 3;
+   	optional int32 layerId = 4;
+   	optional string attribute = 5;
+   	repeated GeoThematicCluster clusters = 6;			
+}
+
+message GeoThematicCluster{
+	optional int32 id = 1;
+	optional double fromValue = 2;
+	optional double toValue = 3;
+	optional string color = 4;
+	optional string gisIds = 5;
+	optional string description = 6;
+}
+
+message GeoMap{
+    required int32 id = 1;
+    required int32 schemaId = 2;
+}
+
+message ObjectManagement{
+    enum Action{
+        UPDATE_NODE_METAPHOR = 1;
+        UPDATE_NODE_GEO_COORDS = 2;
+        DELETE = 4;
+        INSERT_NODE = 5;
+        INSERT_EDGE = 6;
+        UPDATE_NODE = 7;
+        UPDATE_EDGE = 8;
+        MERGE_NODE = 9;
+        SET_CONTEXT = 10;
+        CLEAR_CONTEXT = 11;
+        CLONE_CONTEXT = 12;
+        CHECK_CAN_DELETE_NODE = 13;
+    }
+
+    required Action action = 1;
+
+    optional int32 nodeId = 2;
+    optional string iconName = 3;
+    optional double latitude = 4;
+    optional double longitude = 5;
+    optional GeoCoords geoCoords = 6;
+    optional int32 schemaId = 7;
+    optional int32 objectId = 8;
+    optional int32 groupId = 9;
+    optional int32 entityId = 10;
+    optional int32 contextId = 11;
+    optional int32 oldFavoriteId = 12;
+    optional int32 favoriteId = 13;
+    optional int32 fromId = 14;
+    optional int32 toId = 15;
+
+    repeated int32 nodeIds = 16;
+    repeated int32 edgeIds = 17;
+    repeated int32 attributeIds = 18;
+    repeated string values = 19;
+}
+
+message GeoCoords{
+    required double lon = 1;
+    required double lat = 2;
+}
+
+message GIS{
+    enum Action{
+        GET_MAP = 1;
+        GET_TERRITORIES = 2;
+        GET_MAPS = 3;
+        GET_OVERLAYS = 4;
+        GET_OVERLAY_DATA = 5;
+        GET_OVERLAY_GEOMETRY = 7;
+    }
+    required Action action = 1;
+    optional int32 mapId = 2;
+    optional int32 schemaId = 3;
+    optional int32 overlayId = 4;
+    optional int32 overlayGeometryId = 5;
+}
+
+message Palette{
+    enum Action{
+        GET_PALETTE = 1;
+    }
+
+    required Action action = 1;
+    optional int32 id = 2;
+}
+
+message Settings{
+	enum Action{
+		GET_ALL_SETTINGS = 1;
+		SAVE_USER_SETTING = 2;
+	}
+
+	required Action action = 1;
+	optional string section = 2;
+	optional string property = 3;
+	optional string value = 4;
+}
+
+message Language{
+	enum Action{
+		GET_TRANSLATIONS = 1;
+	}
+
+	required Action action = 1;
+	optional int32 id = 2;
+}
+
+message Charts{
+	enum Action{
+		GET_CHARTS = 1;
+		GET_OBJECT_CHARTS = 2;
+		GET_CHART_ATTRIBUTES = 3;
+        GET_CHART_WITH_PARAMETERS = 4;
+        GET_CHART_LIMITS = 5;
+	}
+	required Action action = 1;
+	optional int32 schemaId = 2;
+	optional int32 chartId = 3;
+    optional string arguments = 4;
+    repeated int32 attributeIds = 5;
+    optional int32 entity = 6;
+}
+
+message Icons{
+	enum Action{
+		GET_ICON_BY_NAME = 1;
+		GET_ICON_NAMES = 2;
+	}
+	required Action action = 1;
+	optional string iconName = 2;
+}
+
+message License{
+	enum Action{
+		GET_LICENSE = 1;
+	}
+	required Action action = 1;	
+}
+
+message Search{
+    enum Action{
+       PERFORM_SIMPLE_SEARCH = 1;
+       PERFORM_ADVANCED_SEARCH = 2;
+       PERFORM_GET_LIST = 3;
+       PERFORM_GET_LIST_CONTEXT = 4;
+       PERFORM_GET_LIST_UNKNOWN = 5;
+    }
+
+    required Action action = 1;
+
+    optional string term = 2;
+    optional int32 schemaId = 3;
+    optional Filter preFilter = 4;
+
+    optional string geoSearchCriteria = 5;
+    optional int32 queryType = 6;
+    optional int32 limit = 7;
+
+    optional int32 contextId = 8;
+    optional string contextKey = 9;
+
+    optional bool includeDeleted = 10;
+
+    repeated SearchSection section = 11;
+    repeated Missing missing = 12;
+}
+
+message Filter{
+    repeated int32 valueId = 3;
+}
+
+message Missing{
+    optional int32 entityId = 1;
+    repeated int32 id = 2;
+}
+
+message SearchSection{
+    required int32 entity = 1;
+    repeated SearchCondition condition = 2;
+    repeated SearchOrder order = 3;
+}
+
+message SearchCondition{
+    required int32 attributeId = 1;
+    required string operation = 2;
+    required string term = 3;
+}
+
+message SearchOrder{
+    required int32 attributeId = 1;
+    required bool asc = 2;
+}
+
+message CalculateDynamicAttributes{
+    repeated DynamicAttribute dynamicAttribute = 1;
+}
+
+message DynamicAttribute{
+    required int32 fakeId = 1;
+    required int32 fromEntity = 2;
+    required int32 fromAttribute = 3;
+    required string operation = 4;
+    required int32 schemaId = 5;
+    repeated int32 id = 6;
+}
+
+message Graph{
+ 	enum Action{
+ 		GET_NODES = 1;
+ 		GET_EDGES = 2;
+ 		GET_NODES_WITH_EDGES = 3;
+ 		RELOAD_NODE = 4;
+ 		FIND_PATH = 5;
+ 		GET_FAVORITES_EDGES = 6;
+ 		GET_NODES_BY_EDGES = 7;
+ 	}
+
+ 	required Action action = 1;
+ 	required int32 schemaId = 2;
+ 	optional Filter dataFilter = 3;
+ 	optional int32 nodeId = 4;
+ 	optional int32 nodeToId = 5;
+ 	optional int32 maxNodeCount = 6;
+ 	optional int32 maxPathLenght = 7;
+ 	optional int32 pathLengthOverrun = 8;
+ 	optional int32 favoriteId = 9;
+ 	repeated int32 objectIds = 10;
+}

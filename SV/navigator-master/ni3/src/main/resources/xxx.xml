@@ -1,0 +1,345 @@
+<NI3 version='3.00' SchemaID='2' ChartID='-3' MapID='2' ThematicDataSetID='0' Mode='1' MetaphorSet='Default' ChartType='12-1,14-1'
+	NumericMetaphors='false'>
+	<DynamicChart>
+		<Entity EntityID='12' AttributeID='167' Color='#007ba7' />
+		<Entity EntityID='12' AttributeID='168' Color='#7fff00' />
+		<Entity EntityID='12' AttributeID='169' Color='#dfff00' />
+		<Entity EntityID='12' AttributeID='170' Color='#00ffff' />
+		<Entity EntityID='12' AttributeID='173' Color='#50c878' />
+		<Entity EntityID='12' AttributeID='174' Color='#1e90ff' />
+		<Entity EntityID='14' AttributeID='137' Color='#e97451' />
+		<Entity EntityID='14' AttributeID='138' Color='#f0dc82' />
+		<Entity EntityID='14' AttributeID='139' Color='#7fffd4' />
+		<Entity EntityID='14' AttributeID='140' Color='#fbceb1' />
+		<Entity EntityID='14' AttributeID='141' Color='#a9d3d9' />
+		<Entity EntityID='14' AttributeID='142' Color='#c1f903' />
+	</DynamicChart>
+	<Graph layout='Spring' UnknowPosition='-559.0,-436.0,2274.0,1481.0' MaxExpandLevel='0' EdgeCount='0' NodeCount='71'>
+		null
+		<Edges List=''>
+		</Edges>
+		<Nodes
+			List='76391,97157,104255,113728,163959,168076,223109,227479,27215006,27215007,27215008,27215009,27215011,27215013,27215014,27215015,27215016,27215017,27215018,27215019,27215024,27215025,27215026,27215027,27215029,27215030,27215031,27215032,27215037,27215038,27215039,27215040,27215042,27215046,27215047,27215048,27215049,27215050,27215053,27215054,27215055,27215056,27215057,27215058,27215059,27215060,27215061,27220072,27220073,27220075,27539810,27539811,27539812,29837790,29837791,29837794,256130,35774721,35812170,35866324,35900708,35901042,35934434,35934497,35937139,35971187,35975950,36008707,36009627,44415,56163'>
+			<Node ID='76391' Leading='true' Position='201.449105309081,201.11114897844908' ContractedRelativesCount='0'
+				ChildrenCount='0' FathersCount='9' F='3.024186723302228E-11,1.1530920345941502E-11' Degree='0' Selected='false'
+				SelectedFrom='false' SelectedTo='false' Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true'
+				status='0' Contracted='false' ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false'
+				InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='97157' Leading='true' Position='36.997739571696336,138.4074943235413' ContractedRelativesCount='0'
+				ChildrenCount='6' FathersCount='15' F='-1.78321700930461E-11,1.835315870063378E-11' Degree='0' Selected='false'
+				SelectedFrom='false' SelectedTo='false' Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true'
+				status='0' Contracted='false' ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false'
+				InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='104255' Leading='true' Position='77.47766836331192,486.336515961513' ContractedRelativesCount='0'
+				ChildrenCount='3' FathersCount='7' F='-3.85161791191791E-8,-2.4892460407152902E-8' Degree='0' Selected='false'
+				SelectedFrom='false' SelectedTo='false' Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true'
+				status='0' Contracted='false' ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false'
+				InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='113728' Leading='true' Position='-13.07174941818137,421.48610480995836' ContractedRelativesCount='0'
+				ChildrenCount='0' FathersCount='4' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='163959' Leading='true' Position='284.1893028904976,351.24982620822726' ContractedRelativesCount='0'
+				ChildrenCount='5' FathersCount='22' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='168076' Leading='true' Position='397.72944242599635,662.2563079178182' ContractedRelativesCount='0'
+				ChildrenCount='3' FathersCount='4' F='4.307791441926216E-8,1.949745099157355E-8' Degree='0' Selected='false'
+				SelectedFrom='false' SelectedTo='false' Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true'
+				status='0' Contracted='false' ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false'
+				InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='223109' Leading='true' Position='164.03108020801713,97.24498008559526' ContractedRelativesCount='0'
+				ChildrenCount='0' FathersCount='44' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='227479' Leading='true' Position='134.3457359513764,335.01240068680767' ContractedRelativesCount='0'
+				ChildrenCount='0' FathersCount='58' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215006' Leading='true' Position='1206.752051066372,946.6768808320417' ContractedRelativesCount='0'
+				ChildrenCount='70' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215007' Leading='true' Position='375.53677078074895,804.5439996284846' ContractedRelativesCount='0'
+				ChildrenCount='42' FathersCount='9' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='true' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215008' Leading='true' Position='1398.2473114093848,877.6792207151339' ContractedRelativesCount='0'
+				ChildrenCount='86' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215009' Leading='true' Position='992.9337646096906,743.8017622316003' ContractedRelativesCount='0'
+				ChildrenCount='67' FathersCount='5' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215011' Leading='true' Position='731.1869014158556,108.21170025118587' ContractedRelativesCount='0'
+				ChildrenCount='64' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='true' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215013' Leading='true' Position='1213.352380548759,345.9395433652551' ContractedRelativesCount='0'
+				ChildrenCount='52' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215014' Leading='true' Position='1036.0041504607927,-149.86949714148204' ContractedRelativesCount='0'
+				ChildrenCount='69' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215015' Leading='true' Position='840.5216622581659,534.1265683365112' ContractedRelativesCount='0'
+				ChildrenCount='82' FathersCount='1' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215016' Leading='true' Position='564.8798356440639,6.866286425399583' ContractedRelativesCount='0'
+				ChildrenCount='93' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215017' Leading='true' Position='1240.2069946611837,-279.7848284679823' ContractedRelativesCount='0'
+				ChildrenCount='104' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215018' Leading='true' Position='969.272392576454,205.3863176813767' ContractedRelativesCount='0'
+				ChildrenCount='131' FathersCount='19' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215019' Leading='true' Position='1344.6961321876163,498.76504789534874' ContractedRelativesCount='0'
+				ChildrenCount='27' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215024' Leading='true' Position='940.1753845970788,9.943114117199803' ContractedRelativesCount='0'
+				ChildrenCount='32' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215025' Leading='true' Position='1228.6842902766095,691.040367264675' ContractedRelativesCount='0'
+				ChildrenCount='132' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215026' Leading='true' Position='1510.920839343928,141.4575930604523' ContractedRelativesCount='0'
+				ChildrenCount='30' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215027' Leading='true' Position='664.9011235018785,600.6469521658513' ContractedRelativesCount='0'
+				ChildrenCount='45' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215029' Leading='true' Position='1368.4365228113445,377.2744351289977' ContractedRelativesCount='0'
+				ChildrenCount='32' FathersCount='12' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215030' Leading='true' Position='737.6193783929785,-192.43626296310367' ContractedRelativesCount='0'
+				ChildrenCount='71' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215031' Leading='true' Position='1222.6299997121407,493.7655340439365' ContractedRelativesCount='0'
+				ChildrenCount='22' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215032' Leading='true' Position='1066.7416125739242,434.64263898972456' ContractedRelativesCount='0'
+				ChildrenCount='81' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215037' Leading='true' Position='364.0332642788293,148.56563375738983' ContractedRelativesCount='0'
+				ChildrenCount='58' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215038' Leading='true' Position='904.4019068966559,-91.30720904036131' ContractedRelativesCount='0'
+				ChildrenCount='55' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215039' Leading='true' Position='856.9589300851864,29.783267952001438' ContractedRelativesCount='0'
+				ChildrenCount='23' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215040' Leading='true' Position='871.1872281997684,1124.6851945444648' ContractedRelativesCount='0'
+				ChildrenCount='426' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215042' Leading='true' Position='1408.0028331486444,-77.22750990234114' ContractedRelativesCount='0'
+				ChildrenCount='70' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215046' Leading='true' Position='1329.2012427537738,186.5890296356615' ContractedRelativesCount='0'
+				ChildrenCount='85' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215047' Leading='true' Position='169.59411661387995,-34.671730397392906' ContractedRelativesCount='0'
+				ChildrenCount='68' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215048' Leading='true' Position='734.4093253086029,-26.88839693213475' ContractedRelativesCount='0'
+				ChildrenCount='47' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215049' Leading='true' Position='1050.14933181744,936.4877255769426' ContractedRelativesCount='0'
+				ChildrenCount='86' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215050' Leading='true' Position='336.0767050844054,508.2821618474046' ContractedRelativesCount='0'
+				ChildrenCount='61' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215053' Leading='true' Position='1467.5024144513,73.53776520851271' ContractedRelativesCount='0'
+				ChildrenCount='42' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215054' Leading='true' Position='1519.3546527945584,616.7602260189253' ContractedRelativesCount='0'
+				ChildrenCount='183' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215055' Leading='true' Position='1551.5920638079137,285.9573907757551' ContractedRelativesCount='0'
+				ChildrenCount='90' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215056' Leading='true' Position='789.8674168193177,329.9518102736392' ContractedRelativesCount='0'
+				ChildrenCount='28' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215057' Leading='true' Position='402.31963436761976,1013.6739621315202' ContractedRelativesCount='0'
+				ChildrenCount='51' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215058' Leading='true' Position='1172.149150687988,0.4841253808746273' ContractedRelativesCount='0'
+				ChildrenCount='126' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215059' Leading='true' Position='854.5852509930479,707.8174307815947' ContractedRelativesCount='0'
+				ChildrenCount='6' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215060' Leading='true' Position='584.7701932858546,167.26592935392077' ContractedRelativesCount='0'
+				ChildrenCount='38' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27215061' Leading='true' Position='531.478276347254,661.6064835855981' ContractedRelativesCount='0'
+				ChildrenCount='115' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27220072' Leading='true' Position='518.0077221565876,-246.209764794129' ContractedRelativesCount='0'
+				ChildrenCount='59' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27220073' Leading='true' Position='1095.9378979130438,1076.7449787604846' ContractedRelativesCount='0'
+				ChildrenCount='31' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27220075' Leading='true' Position='1148.5405796942186,532.1967824011844' ContractedRelativesCount='0'
+				ChildrenCount='42' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27539810' Leading='true' Position='787.8088814084612,-4.339428067340566' ContractedRelativesCount='0'
+				ChildrenCount='23' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27539811' Leading='true' Position='384.7306842777698,594.8807223638252' ContractedRelativesCount='0'
+				ChildrenCount='19' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='27539812' Leading='true' Position='1304.2701201758634,977.4968141049155' ContractedRelativesCount='0'
+				ChildrenCount='24' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='29837790' Leading='true' Position='559.621601088841,386.2602677878809' ContractedRelativesCount='0'
+				ChildrenCount='187' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='29837791' Leading='true' Position='622.872085733308,922.9320543570583' ContractedRelativesCount='0'
+				ChildrenCount='171' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='true' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='29837794' Leading='true' Position='1265.7692297352512,520.9384473972337' ContractedRelativesCount='0'
+				ChildrenCount='51' FathersCount='0' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='256130' Leading='true' Position='-13.932266696302026,15.761766874431657' ContractedRelativesCount='0'
+				ChildrenCount='0' FathersCount='6' F='-1.240962888005015E-11,-2.9883651109230414E-11' Degree='0' Selected='false'
+				SelectedFrom='false' SelectedTo='false' Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true'
+				status='0' Contracted='false' ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false'
+				InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='35774721' Leading='true' Position='-39.01125844823187,583.6797438456455' ContractedRelativesCount='0'
+				ChildrenCount='0' FathersCount='55' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='1' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='35812170' Leading='true' Position='237.38818129692265,589.684412947393' ContractedRelativesCount='0'
+				ChildrenCount='2' FathersCount='18' F='-1.175648157970179E-9,2.1493021813323785E-9' Degree='0' Selected='false'
+				SelectedFrom='false' SelectedTo='false' Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true'
+				status='1' Contracted='false' ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false'
+				InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='35866324' Leading='true' Position='-138.55903588162334,-124.00650391225045' ContractedRelativesCount='0'
+				ChildrenCount='1' FathersCount='58' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='1' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='35900708' Leading='true' Position='-296.3625802881412,399.21048322028014' ContractedRelativesCount='0'
+				ChildrenCount='1' FathersCount='27' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='1' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='35901042' Leading='true' Position='21.969338362240265,796.1723837963606' ContractedRelativesCount='0'
+				ChildrenCount='1' FathersCount='21' F='-3.3860878545510786E-9,3.2457059262469556E-9' Degree='0' Selected='false'
+				SelectedFrom='false' SelectedTo='false' Highlighted='false' ShowChart='false' ShowChart='true' ScaleFactor='0.66' Fixed='true'
+				status='1' Contracted='false' ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false'
+				InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='35934434' Leading='true' Position='319.5586254109673,-162.64569612820435' ContractedRelativesCount='0'
+				ChildrenCount='3' FathersCount='25' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='1' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='35934497' Leading='true' Position='-188.08191239759338,822.9940186778234' ContractedRelativesCount='0'
+				ChildrenCount='0' FathersCount='72' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='1' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='35937139' Leading='true' Position='247.51816977732423,753.847520299611' ContractedRelativesCount='0'
+				ChildrenCount='1' FathersCount='56' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='1' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='35971187' Leading='true' Position='-299.501837622479,97.98315161041378' ContractedRelativesCount='0'
+				ChildrenCount='2' FathersCount='31' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='1' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='35975950' Leading='true' Position='-95.37053632452198,150.11042687592158' ContractedRelativesCount='0'
+				ChildrenCount='0' FathersCount='45' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='1' Contracted='false'
+				ExpandedManualy='false' FilteredOut='true' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='36008707' Leading='true' Position='-82.65918054093716,335.22355497448666' ContractedRelativesCount='0'
+				ChildrenCount='0' FathersCount='21' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='1' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='36009627' Leading='true' Position='-238.76850115496885,614.3899387310886' ContractedRelativesCount='0'
+				ChildrenCount='1' FathersCount='17' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='1' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='44415' Leading='true' Position='1446.7418390391251,425.78146891890594' ContractedRelativesCount='0'
+				ChildrenCount='1' FathersCount='9' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='false' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+			<Node ID='56163' Leading='true' Position='702.7865744307462,750.4566882726922' ContractedRelativesCount='0'
+				ChildrenCount='0' FathersCount='112' F='0.0,0.0' Degree='0' Selected='false' SelectedFrom='false' SelectedTo='false'
+				Highlighted='false' ShowChart='false' ShowChart='true' ScaleFactor='0.66' Fixed='true' status='0' Contracted='false'
+				ExpandedManualy='false' FilteredOut='false' OutOfDegree='false' Inactive='false' InvisibleEdges='' Roots='' Marked='false' />
+		</Nodes>
+		<Roots
+			List='76391,97157,104255,113728,163959,168076,223109,227479,27215006,27215007,27215008,27215009,27215011,27215013,27215014,27215015,27215016,27215017,27215018,27215019,27215024,27215025,27215026,27215027,27215029,27215030,27215031,27215032,27215037,27215038,27215039,27215040,27215042,27215046,27215047,27215048,27215049,27215050,27215053,27215054,27215055,27215056,27215057,27215058,27215059,27215060,27215061,27220072,27220073,27220075,27539810,27539811,27539812,29837790,29837791,29837794,256130,35774721,35812170,35866324,35900708,35901042,35934434,35934497,35937139,35971187,35975950,36008707,36009627,44415,56163' />
+		<ExpandedManualy List='' />
+	</Graph>
+	<GraphPanelSettings OrgX='-672' OrgY='-427' ZoomTo='1.0' Height='646' Width='992' ZoomExtent='0.4363054778088765'
+		Alpha='0.75' Npt1='-559,-436' Npt2='1715,1045' AffineTransformation='243.81543382646933,190.16889244302277,0.4363054778088765,0.4363054778088765' />
+	<MapSettings Zoom='6' NodeScale='1.0' EdgeScale='1.0' MapPositionX='8470' MapPositionY='5211' />
+	<Filter PropagateFilter='true' CurrentFavoritesOnly='true' ConnectedOnly='false' NoEmptyCharts='false' NoSingles='false'
+		FilterFrom='true' FilterTo='true' NoFocus='false'>
+		<Expanded List='0,1,6,32,33' />
+		<Halo List='' />
+		<ChartFilter EntityID='12' Check='1' Min='1.0' Max='40.0'>
+			<Attribute Index='0' Min='1.0' Max='20.0' />
+			<Attribute Index='2' Min='0.0' Max='1.0' />
+			<Attribute Index='4' Min='0.0' Max='1.0' />
+		</ChartFilter>
+		<ChartFilter EntityID='14' Check='0' Min='200.0' Max='829.0'>
+			<Attribute Index='1' Min='31.0' Max='175.0' />
+			<Attribute Index='2' Min='199.0' Max='434.0' />
+			<Attribute Index='3' Min='0.0' Max='113.0' />
+			<Attribute Index='4' Min='0.0' Max='12.0' />
+			<Attribute Index='5' Min='18.0' Max='152.0' />
+		</ChartFilter>
+	</Filter>
+	<Prefilter PropagateFilter='true' CurrentFavoritesOnly='true' ConnectedOnly='false' NoEmptyCharts='false'
+		NoSingles='false' FilterFrom='true' FilterTo='true' NoFocus='false'>
+		<Expanded List='' />
+		<Halo List='' />
+	</Prefilter>
+	<CommandPanel directedGraph='true' EdgeThickness='false' EdgeLabels='false' showLabels='false' />
+</NI3>

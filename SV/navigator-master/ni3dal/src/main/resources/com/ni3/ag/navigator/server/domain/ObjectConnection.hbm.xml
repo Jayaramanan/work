@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.navigator.server.domain.ObjectConnection" table="sys_object_connection" mutable="false" lazy="false">
+
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="fromObject" column="fromobject" not-null="true" lazy="false"/>
+        <many-to-one name="toObject" column="toobject" not-null="true" lazy="false"/>
+        <many-to-one name="connectionObject" column="objectid" lazy="false"/>
+        <property name="connectionType" column="connectiontypeid"/>
+        <property name="color" column="rgb"/>
+        <property name="lineStyle_" column="linestyleid"/>
+        <many-to-one name="lineWidth_" column="lineweightid" lazy="false"/>
+	</class>
+</hibernate-mapping>

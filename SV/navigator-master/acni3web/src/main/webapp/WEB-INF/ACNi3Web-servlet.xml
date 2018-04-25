@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<bean name="/loginService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="loginService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.LoginService" />
+	</bean>
+	<bean name="/schemaAdminService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="schemaAdminService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.SchemaAdminService" />
+	</bean>
+	<bean name="/nodeMetaphorService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="nodeMetaphorService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.NodeMetaphorService" />
+	</bean>
+	<bean name="/databaseSettingsService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="databaseSettingsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.DatabaseSettingsService" />
+	</bean>
+	<bean name="/objectsConnectionsService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="objectsConnectionsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.ObjectsConnectionsService" />
+	</bean>
+	<bean name="/userAdminService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="userAdminService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.UserAdminService" />
+	</bean>
+	<bean name="/predefinedAttributeService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="predefinedAttributeService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.PredefinedAttributeService" />
+	</bean>
+	<bean name="/settingsService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="settingsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.SettingsService" />
+	</bean>
+	<bean name="/languageAdminService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="languageAdminService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.LanguageAdminService" />
+	</bean>
+	<bean name="/userLanguageService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="userLanguageService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.UserLanguageService" />
+	</bean>
+	<bean name="/databaseVersionService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="databaseVersionService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.DatabaseVersionService" />
+	</bean>
+	<bean name="/chartService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="chartService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.ChartService" />
+	</bean>
+	<bean name="/attributeEditService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="attributeEditService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.AttributeEditService" />
+	</bean>
+	<bean name="/licenseService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="licenseService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.LicenseService" />
+	</bean>
+	<bean name="/navigatorLicenseService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="navigatorLicenseService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.NavigatorLicenseService" />
+	</bean>
+	<bean name="/adminConsoleLicenseService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="adminConsoleLicenseService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.AdminConsoleLicenseService" />
+	</bean>
+	<bean name="/thickClientJobService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="thickClientJobService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.ThickClientJobService" />
+	</bean>
+	<bean name="/mapJobService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="mapJobService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.MapJobService" />
+	</bean>
+	<bean name="/diagnosticsService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="diagnosticsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.DiagnosticsService" />
+	</bean>
+	<bean name="/userDataExportService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="userDataExportService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.UserDataExportService" />
+	</bean>
+	<bean name="/addDatasourceService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="addDatasourceService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.AddDatasourceService" />
+	</bean>
+	<bean name="/syncQuartzJobStarterService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="SyncQuartzJobStarterService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.SyncQuartzJobStarterService" />
+	</bean>
+	<bean name="/versioningService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="versioningService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.VersioningService" />
+	</bean>
+	<bean name="/acVisibilityService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="acVisibilityService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.ACVisibilityService" />
+	</bean>
+	<bean name="/geoAnalyticsService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="geoAnalyticsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.GeoAnalyticsService" />
+	</bean>
+	<bean name="/reportsService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="reportsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.ReportsService" />
+	</bean>
+	<bean name="/deploymentVersionService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="deploymentVersionService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.DeploymentVersionService" />
+	</bean>
+	<bean name="/userActivityService" class="com.ni3.ag.adminconsole.remoting.ACHttpInvokerServiceExporter">
+		<property name="service" ref="userActivityService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.UserActivityService" />
+	</bean>
+</beans>

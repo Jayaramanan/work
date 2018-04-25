@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.Group" table="sys_group">
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+		<property name="name" column="Name" length="50" />
+		<property name="nodeScope" column="NodeScope" type="character" />
+		<property name="edgeScope" column="EdgeScope" type="character" />
+
+		<bag name="users" inverse="true" table="sys_user_group" cascade="save-update">
+			<key column="GroupID" />
+			<many-to-many column="UserID" class="com.ni3.ag.adminconsole.domain.User">
+				<filter name="offlineClientUsersFilter" condition="hasofflineclient = 1" />
+			</many-to-many>
+		</bag>
+
+		<bag name="chartGroups" inverse="true" cascade="all-delete-orphan">
+			<key column="groupID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ChartGroup" />
+		</bag>
+
+		<bag name="objectGroups" inverse="true" cascade="all-delete-orphan">
+			<key column="groupID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ObjectGroup" />
+		</bag>
+
+		<bag name="schemaGroups" inverse="true" cascade="all-delete-orphan">
+			<key column="groupID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.SchemaGroup" />
+		</bag>
+
+		<bag name="attributeGroups" inverse="true" cascade="all-delete-orphan">
+			<key column="groupID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.AttributeGroup" />
+		</bag>
+
+		<bag name="predefAttributeGroups" inverse="true" cascade="all-delete-orphan">
+			<key column="groupID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.GroupPrefilter" />
+		</bag>
+
+		<bag name="groupSettings" inverse="true" cascade="all-delete-orphan">
+			<key column="ID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.GroupSetting" />
+		</bag>
+
+		<one-to-one name="groupScope" class="com.ni3.ag.adminconsole.domain.GroupScope" fetch="join" lazy="false"
+			cascade="all" />
+
+	</class>
+	<filter-def name="offlineClientUsersFilter" />
+</hibernate-mapping>

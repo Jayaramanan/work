@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.navigator.server.domain.ObjectDefinition" table="sys_object" mutable="false" lazy="false">
+
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+        <many-to-one name="schema" column="SchemaID" />
+        <property name="objectTypeId" column="ObjectTypeID" />
+		<property name="name" column="Name" length="50" />
+        <property name="description" column="Description" type="text" />
+        <property name="sort" column="sort" length="25" />
+
+		<bag name="attributes" cascade="none" inverse="true" order-by="sort" lazy="false">
+			<key column="ObjectDefinitionID" />
+			<one-to-many class="com.ni3.ag.navigator.server.domain.Attribute" />
+		</bag>
+
+        <bag name="contexts">
+            <key column="objectdefinitionid"/>
+            <one-to-many class="com.ni3.ag.navigator.server.domain.Context"/>
+        </bag>
+
+        <bag name="objectPermissions" inverse="true" lazy="false">
+      			<key column="objectID" />
+      			<one-to-many class="com.ni3.ag.navigator.server.domain.ObjectDefinitionGroup" />
+      	</bag>
+
+        <bag name="urlOperations">
+            <key column="objectid"/>
+            <one-to-many class="com.ni3.ag.navigator.shared.domain.UrlOperation"/>
+        </bag>
+        
+        <bag name="metaphors" inverse="true">
+            <key column="objectDefinitionId"/>
+            <one-to-many class="com.ni3.ag.navigator.server.domain.Metaphor"/>
+        </bag>
+	</class>
+</hibernate-mapping>

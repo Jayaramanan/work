@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Graph</title>
+    <script type="text/javascript" src="lib/arr.js"></script>
+    <script type="text/javascript" src="lib/d3.v2.js"></script>
+    <script type="text/javascript" src="lib/md5.js"></script>
+    <script type="text/javascript" src="lib/typedarray.js"></script>
+    <script type="text/javascript" src="lib/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="lib/jquery-ui-1.8.23.custom.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.splitter-0.3.js"></script>
+    <script type="text/javascript" src="lib/jquery.contextMenu.js"></script>
+    <script type="text/javascript" src="lib/jquery.checkboxtree.js"></script>
+    <script type="text/javascript" src="lib/OpenLayers.js"></script>
+    <script type="text/javascript" src="proto/protobuf.js"></script>
+    <script type="text/javascript" src="proto/pbj.js"></script>
+    <script type="text/javascript" src="proto/output/request.proto.js"></script>
+    <script type="text/javascript" src="proto/output/response.proto.js"></script>
+    <script type="text/javascript" src="util/utility.js"></script>
+    <script type="text/javascript" src="model/app_model.js"></script>
+    <script type="text/javascript" src="graph.js"></script>
+    <script type="text/javascript" src="matrix.js"></script>
+    <script type="text/javascript" src="map_openlayers.js"></script>
+    <script type="text/javascript" src="filter_tree.js"></script>
+    <script type="text/javascript" src="filter_panel.js"></script>
+    <script type="text/javascript" src="chart_select_dialog.js"></script>
+    <script type="text/javascript" src="create_edit_dialog.js"></script>
+    <script type="text/javascript" src="dynamic_chart_dialog.js"></script>
+    <script type="text/javascript" src="advanced_search_dialog.js"></script>
+    <script type="text/javascript" src="advanced_search_panel.js"></script>
+    <script type="text/javascript" src="advanced_node_search_panel.js"></script>
+    <script type="text/javascript" src="entities_selection_dialog.js"></script>
+    <script type="text/javascript" src="advanced_connected_node_search_panel.js"></script>
+    <script type="text/javascript" src="advanced_nodes_with_edges_search_panel.js"></script>
+    <script type="text/javascript" src="about.js"></script>
+    <script type="text/javascript" src="change_schema_dialog.js"></script>
+    <script type="text/javascript" src="graph_command_panel.js"></script>
+    <script type="text/javascript" src="favorites_dialog.js"></script>
+    <script type="text/javascript" src="favorite_loader.js"></script>
+    <script type="text/javascript" src="ni3_container.js"></script>
+    <script type="text/javascript" src="application.js"></script>
+    <script type="text/javascript" src="gateway/gateway.js"></script>
+    <script type="text/javascript" src="gateway/login_gateway.js"></script>
+    <!--<script type="text/javascript" src="gateway/login_gateway_json.js"></script>-->
+    <script type="text/javascript" src="toolbar.js"></script>
+    <script type="text/javascript" src="gateway/object_management_gateway.js"></script>
+
+    <link href="lib/css/jquery.splitter.css" rel="stylesheet"/>
+    <link href="lib/css/ui-lightness/jquery-ui-1.8.23.custom.css" rel="stylesheet" type="text/css"/>
+    <link href="lib/css/jquery.contextMenu.css" rel="stylesheet" type="text/css"/>
+    <link href="lib/css/jquery.checkboxtree.css" rel="stylesheet" type="text/css"/>
+    <link href="lib/css/ni3-ui.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<form name="loginForm" id="loginForm">
+    <p>
+        Username: <input type="text" name="username"/>
+    </p>
+
+    <p>
+        Password: <input type="password" name="password"/>
+    </p>
+
+    <p style="display:none">
+        <!-- ServerUrl: -<input type="text" name="url" size=50 value="http://navigator-x64.office.ni3.net:4322/Ni3Web"/>
+-->
+   <input type="text" name="url" size=50 value="http://localhost:8080/Ni3Web"/>
+ 
+</p>
+
+    <p>
+        <input type="button" value="Login" onClick="app.doLogin(document.loginForm.username.value,
+        document.loginForm.password.value,
+        document.loginForm.url.value)">
+    </p>
+</form>
+
+</body>
+</html>

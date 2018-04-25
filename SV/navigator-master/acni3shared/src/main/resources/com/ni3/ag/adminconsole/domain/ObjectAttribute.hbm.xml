@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.ObjectAttribute" table="sys_object_attributes">
+
+		<id name="id" column="ID">
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="objectDefinition" column="ObjectDefinitionID" not-null="true" />
+
+		<property name="sort" column="Sort" />
+		<property name="name" column="Name" length="50" />
+		<property name="label" column="Label" length="50" />
+		<property name="predefined_" column="Predefined" type="integer" />
+		<property name="description" column="Description" type="text" />
+
+		<property name="dataType_" column="DatatypeID" />
+
+		<property name="inFilter_" column="InFilter" type="integer" />
+		<property name="inSimpleSearch_" column="InSimpleSearch" type="integer" />
+		<property name="inAdvancedSearch_" column="inAdvancedSearch" type="integer" />
+
+		<property name="inLabel_" column="InLabel" type="integer" />
+		<property name="inToolTip_" column="InToolTip" type="integer" />
+
+		<property name="inMetaphor_" column="InMetaphor" type="integer" />
+		<property name="labelBold_" type="integer">
+			<column name="LabelBold" default="0" />
+		</property>
+		<property name="labelItalic_" type="integer">
+			<column name="LabelItalic" default="0" />
+		</property>
+		<property name="labelUnderline_" type="integer">
+			<column name="LabelUnderline" default="0" />
+		</property>
+		<property name="contentBold_" type="integer">
+			<column name="ContentBold" default="0" />
+		</property>
+		<property name="contentItalic_" type="integer">
+			<column name="ContentItalic" default="0" />
+		</property>
+		<property name="contentUnderline_" type="integer">
+			<column name="ContentUnderline" default="0" />
+		</property>
+		<property name="created" column="Created" />
+		<many-to-one name="createdBy" column="CreatedBy" />
+
+		<property name="inTable" column="InTable" />
+		<property name="inExport_" column="InExport" type="integer" />
+		<property name="inPrefilter_" column="InPreFilter" type="integer" />
+		<property name="format" column="Format" length="50" />
+		<property name="labelSort" column="Label_sort" />
+		<property name="filterSort" column="Filter_sort" />
+		<property name="searchSort" column="Search_sort" />
+		<property name="matrixSort" column="Matrix_sort" />
+		<property name="inMatrix" column="InMatrix" />
+		<property name="multivalue" column="multivalue" />
+		<property name="inContext_" column="inContext" />
+		<property name="isAggregable" column="isaggregable" />
+
+		<property name="minValue" column="minval" />
+		<property name="maxValue" column="maxval" />
+		<property name="editFormat" column="editformat" length="50" />
+		<property name="formatValidCharacters" column="formatvalidcharacters" />
+		<property name="formatInvalidCharacters" column="formatinvalidcharacters" />
+
+		<bag name="predefinedAttributes" inverse="true" cascade="all-delete-orphan">
+			<key column="attributeID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.PredefinedAttribute" />
+		</bag>
+		<bag name="attributeGroups" inverse="true" cascade="all-delete-orphan">
+			<key column="attributeID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.AttributeGroup" />
+		</bag>
+		<bag name="contextAttributes" inverse="true" cascade="all-delete-orphan">
+			<key column="attributeID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ContextAttribute" />
+		</bag>
+		<one-to-one name="formula" class="com.ni3.ag.adminconsole.domain.Formula" property-ref="attribute" cascade="all" />
+        <property name="dataSource" column="datasource"/>
+	</class>
+</hibernate-mapping>

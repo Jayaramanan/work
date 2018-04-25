@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.Chart" table="sys_chart">
+		<id name="id">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+
+		<property name="name" column="Name" length="50" />
+		<property name="comment" column="Comment" length="255" />
+		<many-to-one name="schema" column="SchemaID" class="com.ni3.ag.adminconsole.domain.Schema" />
+
+		<bag name="chartGroups" inverse="true" cascade="all-delete-orphan">
+			<key column="chartID" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ChartGroup" />
+		</bag>
+
+		<bag name="objectCharts" inverse="true" cascade="all-delete-orphan">
+			<key column="chartid" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ObjectChart" />
+		</bag>
+	</class>
+</hibernate-mapping>

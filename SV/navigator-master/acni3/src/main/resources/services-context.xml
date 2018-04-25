@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<bean name="ACHttpInvokerRequestExecutor" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerRequestExecutor" />
+
+	<bean id="loginService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/loginService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.LoginService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+	</bean>
+
+	<bean id="schemaAdminService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/schemaAdminService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.SchemaAdminService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="schemaAdminController" />
+	</bean>
+
+	<bean id="nodeMetaphorService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/nodeMetaphorService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.NodeMetaphorService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="nodeMetaphorController" />
+	</bean>
+
+	<bean id="databaseSettingsService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/databaseSettingsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.DatabaseSettingsService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+	</bean>
+
+	<bean id="objectsConnectionsService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/objectsConnectionsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.ObjectsConnectionsService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="objectConnectionController" />
+	</bean>
+
+	<bean id="userAdminService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/userAdminService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.UserAdminService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="objectConnectionController" />
+	</bean>
+
+	<bean id="predefinedAttributeService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/predefinedAttributeService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.PredefinedAttributeService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="predefinedAttributeEditController" />
+	</bean>
+
+	<bean id="settingsService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/settingsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.SettingsService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="settingsController" />
+	</bean>
+
+	<bean name="deploymentVersionService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/deploymentVersionService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.DeploymentVersionService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+	</bean>
+
+	<bean id="languageAdminService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/languageAdminService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.LanguageAdminService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="languageController" />
+	</bean>
+
+	<bean id="RealUserLanguageService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"
+		autowire="byName">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/userLanguageService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.UserLanguageService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+	</bean>
+
+	<!-- autowire="byName" -->
+	<bean id="userLanguageService" class="com.ni3.ag.adminconsole.client.service.CachedUserLanguageServiceImpl">
+		<property name="realService" ref="RealUserLanguageService"></property>
+	</bean>
+
+	<bean name="databaseVersionService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/databaseVersionService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.DatabaseVersionService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+	</bean>
+
+	<bean name="chartService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/chartService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.ChartService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="chartController" />
+	</bean>
+
+	<bean name="attributeEditService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/attributeEditService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.AttributeEditService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="attributeEditController" />
+	</bean>
+
+	<bean name="licenseService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/licenseService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.LicenseService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="licenseAdminController" />
+	</bean>
+
+	<bean name="navigatorLicenseService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/navigatorLicenseService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.NavigatorLicenseService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="navigatorLicenseController" />
+	</bean>
+
+	<bean name="adminConsoleLicenseService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/adminConsoleLicenseService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.AdminConsoleLicenseService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="adminConsoleLicenseController" />
+	</bean>
+
+	<bean name="diagnosticsService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/diagnosticsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.DiagnosticsService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="diagnosticsController" />
+	</bean>
+
+	<bean name="thickClientJobService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/thickClientJobService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.ThickClientJobService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="thickClientController" />
+	</bean>
+
+	<bean name="mapJobService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/mapJobService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.MapJobService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="mapJobController" />
+	</bean>
+
+	<bean name="userDataExportService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/userDataExportService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.UserDataExportService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="thickClientController" />
+	</bean>
+
+	<bean name="addDatasourceService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/addDatasourceService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.AddDatasourceService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="schemaAdminController" />
+	</bean>
+
+	<bean name="versioningService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/versioningService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.VersioningService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+		<property name="controller" ref="versioningController" />
+	</bean>
+
+	<bean name="acVisibilityService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/acVisibilityService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.ACVisibilityService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+	</bean>
+
+	<bean name="geoAnalyticsService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/geoAnalyticsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.GeoAnalyticsService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+	</bean>
+
+	<bean name="reportsService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/reportsService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.ReportsService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+	</bean>
+
+	<bean name="userActivityService" class="com.ni3.ag.adminconsole.client.remoting.ACHttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${com.ni3.ag.adminconsole.server.serverUrl}/userActivityService" />
+		<property name="serviceInterface" value="com.ni3.ag.adminconsole.shared.service.def.UserActivityService" />
+		<property name="httpInvokerRequestExecutor" ref="ACHttpInvokerRequestExecutor" />
+	</bean>
+</beans>
+

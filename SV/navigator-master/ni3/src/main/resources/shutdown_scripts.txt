@@ -1,0 +1,2 @@
+/C "start /MIN /B ./pgsql/bin/pg_ctl.exe -D ./data stop"
+/C "start ./jre6/bin/java.exe -DSTOP.PORT=8078 -DSTOP.KEY=mysecret1 -jar start.jar --stop"

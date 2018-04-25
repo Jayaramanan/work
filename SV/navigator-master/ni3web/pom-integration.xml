@@ -1,0 +1,179 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ni3.ag</groupId>
+	<artifactId>Ni3Web</artifactId>
+	<packaging>war</packaging>
+	<name>Ni3Web</name>
+	<version>${module.version}</version>
+	<parent>
+		<groupId>com.ni3.ag</groupId>
+		<artifactId>ni3all</artifactId>
+		<relativePath>../pom.xml</relativePath>
+		<version>${module.version}</version>
+	</parent>
+
+	<build>
+		<finalName>${customFinalName}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+						  <tasks>
+							<move file="target/test-classes/spring-beans-integration.xml" tofile="target/test-classes/spring-beans.xml" />
+						  </tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<!--Skip the default running of this plug-in -->
+				    <skip>true</skip>
+					<excludes>
+						<exclude>IT*.java</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>unit-tests</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<!-- skip unit tests -->
+							<skip>true</skip>
+						</configuration>
+					</execution>
+					<execution>
+						<id>integration-tests</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>false</skip>
+							<excludes>
+								<exclude>none</exclude>
+							</excludes>
+							<includes>
+								<include>**/*IntegrationTest.java</include>
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<!-- Ni3 Platform shared libraries -->
+		<dependency>
+			<groupId>com.ni3.ag</groupId>
+			<artifactId>Ni3Shared</artifactId>
+			<version>${module.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ni3.ag</groupId>
+			<artifactId>ACNi3Shared</artifactId>
+			<version>2.2.044</version>
+		</dependency>
+
+		<!-- infrastructure libraries -->
+		<dependency>
+			<groupId>tomcat</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>5.5.23</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.4-701.jdbc4</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.13</version>
+		</dependency>
+
+		<!-- 3rd party libraries which are used in the project -->
+		<dependency>
+			<groupId>com.smardec</groupId>
+			<artifactId>license4j</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jruby.embed</groupId>
+			<artifactId>jruby-embed</artifactId>
+			<version>0.1.2</version>
+
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate</artifactId>
+			<version>3.2.7.ga</version>
+
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+			<version>2.5.5</version>
+		</dependency>
+		<dependency>
+			<groupId>jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>1.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>2.4.0a</version>
+		</dependency>
+	</dependencies>
+
+	<reporting>
+	</reporting>
+
+	<properties>
+		<buildVersion>${maven.build.timestamp}</buildVersion>
+		<!-- This property is required to implement custom war file naming for 
+			Hudson builds (INF-162) -->
+		<customFinalName>Ni3Web</customFinalName>
+	</properties>
+</project>

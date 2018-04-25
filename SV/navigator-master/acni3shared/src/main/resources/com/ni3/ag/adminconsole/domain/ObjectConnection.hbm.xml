@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.ObjectConnection" table="sys_object_connection">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">seq_sys_object_connection</param>
+			</generator>
+		</id>
+
+		<many-to-one name="fromObject" column="FromObject" not-null="true" />
+		<many-to-one name="toObject" column="ToObject" not-null="true" />
+		<many-to-one name="object" column="ObjectID" />
+		<many-to-one name="connectionType" column="ConnectionTypeID" not-null="true" />
+		<property name="lineStyle_" column="LineStyleID" />
+		<many-to-one name="lineWeight" column="LineWeightID" />
+
+		<property name="rgb" column="RGB" length="7" />
+	</class>
+</hibernate-mapping>

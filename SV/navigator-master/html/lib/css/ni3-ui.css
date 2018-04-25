@@ -1,0 +1,259 @@
+html, body {
+    height: 98%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px
+}
+
+.link {
+    stroke: #ccc;
+}
+
+.nodetext {
+    pointer-events: none;
+    font: 10px sans-serif;
+}
+
+.counter {
+    pointer-events: none;
+    font: 8px sans-serif;
+}
+
+.tooltip {
+    background-color: #ffa;
+    border: 1px solid #cc9;
+    padding: 3px;
+    font-size: 13px;
+    -moz-box-shadow: 2px 2px 11px #666;
+    -webkit-box-shadow: 2px 2px 11px #666;
+}
+
+#loginForm {
+    padding: 10px;
+}
+
+#vsplitter {
+    border: 5px solid #AAAAAA;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    top: 45px;
+    position: absolute;
+}
+
+.vsplitbar {
+    width: 5px;
+    background: #aaa;
+}
+
+.hsplitbar {
+    width: 5px;
+    background: #aaa;
+}
+
+table.matrixTable {
+    border: 1px inset gray;
+    border-collapse: collapse;
+    padding: 1px;
+    width: 100%;
+}
+
+table.matrixTable td {
+    border: 1px inset gray;
+    border-collapse: collapse;
+    padding: 1px;
+    white-space: nowrap;
+}
+
+table.matrixTable th {
+    border: 1px inset gray;
+    background-color: #d3d3d3;
+}
+
+#matrixPanel, #tabsPanel, #filterPanel, #filterTreePanel {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#tabsPanel {
+    font-size: 62.5%;
+}
+
+div.matrixTableDiv {
+    top: 30px;
+    right: 1px;
+    bottom: 1px;
+    left: 0;
+    overflow: auto;
+    position: absolute;
+}
+
+.metaphorColumn img {
+    max-height: 24px;
+}
+
+.separator {
+    margin: 1px;
+    height: 100%;
+    border-right: 1px dotted #aaaaaa;
+}
+
+#toolbar {
+    margin: 3px;
+}
+
+.toolbarLabel {
+    font-size: 80%;
+    vertical-align: 2px;
+}
+
+#toolbarTable td {
+    padding: 0 2px;
+    margin: 2px;
+}
+
+.ui-dialog {
+    font-size: 75%;
+}
+
+#dialogTable {
+    width: 100%;
+}
+
+#entityRowTable {
+    width: 100%;
+    font-size: 120%;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.multiPredefinedDiv {
+    overflow: auto;
+    max-height: 94px;
+    border: 1px inset #aaaaaa
+}
+
+#filterPanel {
+    font-size: 60%;
+    background: #eeeeee;
+}
+
+#filterTree, #dataFilterTree {
+    margin-top: -4px;
+}
+
+.filterUl {
+    padding-left: 10px;
+    border: none;
+    background: #eeeeee;
+}
+
+table.searchNodeTable {
+    font-size: 100%;
+    border: 1px inset gray;
+    border-collapse: collapse;
+    padding: 1px;
+    width: 100%;
+}
+
+table.searchNodeTable td {
+    border: none;
+    border-collapse: collapse;
+    padding: 1px;
+    white-space: nowrap;
+}
+
+table.searchNodeTable th {
+    border: none;
+    background-color: #d3d3d3;
+}
+
+.searchToken {
+    width: 96%;
+    margin: 1px;
+}
+
+#fTree_DataFilter, #fTree_DisplayFilter {
+    top: 65px;
+    right: 1px;
+    bottom: 1px;
+    left: 5px;
+    overflow: auto;
+    position: absolute;
+}
+
+#fTreeHeader_DataFilter, #fTreeHeader_DisplayFilter {
+    width: 100%;
+    min-width: 200px;
+    margin-left: -10px;
+    margin-top: -5px;
+}
+
+#fTreeHeader_DataFilter input {
+    margin: 0 3px 0 0;
+}
+
+#filterTabsHeader {
+    width: 100%;
+    min-width: 200px;
+}
+
+#alphaSlider {
+    float: left;
+    height: 200px;
+    margin: 8px;
+    width: 5px;
+}
+
+#nodeSpaceSlider {
+    float: left;
+    position: relative;
+    height: 200px;
+    margin: 8px;
+    width: 5px;
+}
+
+.ui-slider .ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: .7em;
+    height: .7em;
+    cursor: default;
+}
+
+.searchOptionPanel {
+    font-size: 130%;
+}
+
+.searchLimitSelect {
+    margin-left: 5px;
+    margin-right: 20px;
+}
+
+.searchPutOnGraphSelect {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.searchChangeTypeA {
+    margin-left: 20px;
+}
+
+.mandatoryField{
+    color: red;
+}
+
+.favoriteTitle{
+    margin-left: 5px;
+}
+
+.olHandlerBoxSearchBox {
+    border: 2px solid #999999;
+    position: absolute;
+    background-color: white;
+    opacity: 0.50;
+    font-size: 1px;
+    filter: alpha(opacity=50);
+}

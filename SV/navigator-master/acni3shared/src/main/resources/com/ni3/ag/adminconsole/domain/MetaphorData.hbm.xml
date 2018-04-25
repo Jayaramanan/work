@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.MetaphorData" table="sys_metaphor_data">
+		<id name="id" column="keyID">
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="metaphor" column="id" />
+		<many-to-one name="attribute" column="AttributeID" />
+		<many-to-one name="data" column="data" />
+	</class>
+</hibernate-mapping>

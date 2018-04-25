@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.ObjectChart" table="sys_object_chart">
+
+		<id name="id">
+			<column name="id" />
+			<generator class="identity">
+				<param name="sequence_name">sys_object_chart_id_seq</param>
+			</generator>
+		</id>
+
+		<many-to-one name="chart" column="ChartID" />
+		<many-to-one name="object" column="ObjectID" />
+		<property name="minValue" column="MinValue" />
+		<property name="maxValue" column="MaxValue" />
+		<property name="minScale" column="MinScale" scale="4" precision="12" />
+		<property name="maxScale" column="MaxScale" scale="4" precision="12" />
+		<property name="labelInUse_" column="LabelInUse" />
+		<property name="labelFontSize" column="LabelFontSize" length="25" />
+		<property name="numberFormat" column="NumberFormat" length="25" />
+		<property name="chartType_" column="ChartType" />
+		<property name="displayOperation_" column="DisplayOperation" />
+		<property name="isValueDisplayed_" column="IsValueDisplayed" />
+		<property name="fontColor" column="FontColor" />
+
+		<bag name="chartAttributes" inverse="true" cascade="all-delete-orphan">
+			<key column="objectchartid" />
+			<one-to-many class="com.ni3.ag.adminconsole.domain.ChartAttribute" />
+		</bag>
+
+	</class>
+</hibernate-mapping>

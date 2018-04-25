@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.Edge" table="cis_edges">
+		<id name="id">
+			<column name="id" />
+			<generator class="assigned" />
+		</id>
+
+		<property name="fromId">
+			<column name="fromid" not-null="true" />
+		</property>
+
+		<property name="toId">
+			<column name="toid" not-null="true" />
+		</property>
+
+		<property name="connectionType">
+			<column name="connectiontype" />
+		</property>
+
+		<property name="strength">
+			<column name="strength" precision="5" />
+		</property>
+
+		<property name="directed" column="directed" />
+
+		<property name="inPath">
+			<column name="inpath" />
+		</property>
+
+		<property name="comment" type="text">
+			<column name="cmnt" />
+		</property>
+
+		<property name="userId">
+			<column name="userid" />
+		</property>
+
+		<many-to-one class="com.ni3.ag.adminconsole.domain.ObjectDefinition" name="edgeType">
+			<column name="edgetype" not-null="true" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

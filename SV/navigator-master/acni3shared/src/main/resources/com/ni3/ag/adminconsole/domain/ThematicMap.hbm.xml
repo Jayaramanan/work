@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.ThematicMap" table="geo_thematicmap">
+		<id name="id">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+
+        <many-to-one name="folder" column="folderid" class="com.ni3.ag.adminconsole.domain.ThematicFolder"/>
+        <property name="name" column="Name" length="50" />
+        <many-to-one name="group" column="groupid"/>
+        <property name="layerId" column="layerid"/>
+        <property name="attribute" column="attribute"/>
+        <bag name="clusters">
+            <key column="thematicmapid"/>
+            <one-to-many class="com.ni3.ag.adminconsole.domain.ThematicCluster"/>
+        </bag>
+	</class>
+</hibernate-mapping>

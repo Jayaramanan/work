@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.UserActivity" table="sys_user_activity" lazy="true">
+		<id name="id" column="id">
+			<generator class="assigned" />
+		</id>
+		<many-to-one name="user" column="userid" />
+
+		<property name="httpHeader" column="httpHeader" />
+		<property name="request" column="request" />
+		<property name="ipAddress" column="ipAddress" />
+		<property name="dateTime" column="dateTime" />
+		<property name="activityType" column="activitytype" />
+
+		<filter name="userIdMinusOne" condition="userid &lt;&gt; :user" />
+		<filter name="dateTimeLessFilter" condition="dateTime &lt;= :dateTime" />
+		<filter name="dateTimeGreaterFilter" condition="dateTime &gt;= :dateTime" />
+		<filter name="removeNotLogs" condition="activityType not like 'N'" />
+
+	</class>
+	<filter-def name="userIdMinusOne">
+		<filter-param name="user" type="java.lang.Integer" />
+	</filter-def>
+	<filter-def name="dateTimeLessFilter">
+		<filter-param name="dateTime" type="java.util.Date" />
+	</filter-def>
+	<filter-def name="dateTimeGreaterFilter">
+		<filter-param name="dateTime" type="java.util.Date" />
+	</filter-def>
+	<filter-def name="removeNotLogs" />
+</hibernate-mapping>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.ChartGroup" table="sys_chart_group">
+		<id name="id" column="id">
+			<generator class="identity" />
+		</id>
+		<many-to-one name="group" column="GroupID" />
+		<many-to-one name="chart" column="ChartID" />
+	</class>
+</hibernate-mapping>

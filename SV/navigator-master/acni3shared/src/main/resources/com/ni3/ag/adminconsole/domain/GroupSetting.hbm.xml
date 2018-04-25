@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.GroupSetting" table="sys_settings_group" lazy="false">
+		<composite-id>
+			<key-many-to-one name="group" column="id" lazy="false"/>
+			<key-property name="prop" column="Prop" length="50"/>
+			<key-property name="section" column="Section" length="10"/>
+		</composite-id>
+		<property name="value" column="Value" length="500"/>
+	</class>
+</hibernate-mapping>

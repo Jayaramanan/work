@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE jnlp PUBLIC "-//Sun Microsystems, Inc//DTD JNLP Descriptor 6.0.10//EN" "http://java.sun.com/dtd/JNLP-6.0.dtd">
+<jnlp spec="1.6+" codebase="https://eu1.ni3.net/merck_binleys/" >  
+	<information>    
+		<title>Ni3 Navigator v3.3 (Binleys Merck)</title>    
+		<vendor>Ni3 AG</vendor>    
+		<description>Ni3 Navigator</description>  
+	</information>  
+	<security>    
+		<all-permissions/>  
+	</security>  
+	<resources>    
+		<j2se version="1.6.0+" java-vm-args="-Xms128m -Xmx512m" href="http://java.sun.com/products/autodl/j2se"/>    
+		<jar href="Ni3.jar" main="true" download="eager"/>
+		
+	</resources>  
+	<application-desc main-class="com.ni3.ag.navigator.client.gui.Ni3">
+		<argument>ServerURL=https://eu1.ni3.net</argument>
+		<argument>ServerContextRoot=merck_binleys_33_Ni3Web</argument>
+		<argument>MetaphorURL=https://eu1.ni3.net/merck_binleys/metaphor</argument>
+		<argument>ImagesURL=https://eu1.ni3.net/merck_binleys/images</argument>
+	</application-desc>
+</jnlp>

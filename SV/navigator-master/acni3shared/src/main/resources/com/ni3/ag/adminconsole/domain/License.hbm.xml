@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.License" table="sys_licenses" lazy="false">
+		<id name="id">
+			<column name="id" />
+			<generator class="identity">
+				<param name="sequence_name">sys_licenses_id_seq</param>
+			</generator>
+		</id>
+		<property name="license" column="license" type="text" />
+		<property name="product" column="product" length="50" />
+	</class>
+</hibernate-mapping>

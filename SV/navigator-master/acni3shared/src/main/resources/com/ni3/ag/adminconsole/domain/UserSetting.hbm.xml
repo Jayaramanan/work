@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ni3.ag.adminconsole.domain.UserSetting" table="sys_settings_user" lazy="false">
+		<composite-id>			
+			<key-many-to-one name="user" column="ID" foreign-key="SYS_SETTINGS_USER_fk"/>
+			<key-property name="section" column="Section" length="10"/>
+			<key-property name="prop" column="Prop" length="50"/>
+		</composite-id>
+		<property name="value" column="Value" length="500"/>
+	</class>
+</hibernate-mapping>
