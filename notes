@@ -32,5 +32,22 @@ TimeZone:
 timedatectl list-timezones
 sudo timedatectl set-timezone asia/calcutta
 
-
 -----------------------------------------
+Shared folder:
+
+http://confluence.aws.vetsource.com/pages/viewpage.action?spaceKey=~nilay&title=Vetsource+Essentials#VetsourceEssentials-Createsharedfolderinwindowsvm
+
+-------------------------------------------------------
+Credential:
+
+1. vetsource Jira:
+	jkumar
+	welcome@123
+2. Slack
+	jayaraman@asahitechnologies.com
+	welcome@123
+3. TeamViewer (unattended access)
+	jayaraman@asahitechnologies.com
+	welcome@123
+
+
