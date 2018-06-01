@@ -6,3 +6,31 @@ git config --global user.email "email@example.com"
 
 Old : developer@vetsource.com
 
+------------------------------------------
+Slack :
+
+sudo apt-get update
+sudo apt-get install snapd
+sudo snap install slack --classic
+sudo apt purge snapd snap-confine && sudo apt install -y snapd (If any issue)
+
+----------------------------------------------------------------------
+Node:
+
+sudo rm -rf /usr/local/bin/npm /usr/local/share/man/man1/node* /usr/local/lib/dtrace/node.d ~/.npm ~/.node-gyp /opt/local/bin/node /opt/local/include/node /opt/local/lib/node_modules 
+
+sudo rm -rf /usr/local/lib/node*
+
+sudo rm -rf /usr/local/include/node*
+
+sudo rm -rf /usr/local/bin/node*
+
+------------------------------------------------------------------------
+
+TimeZone:
+
+timedatectl list-timezones
+sudo timedatectl set-timezone asia/calcutta
+
+
+-----------------------------------------
