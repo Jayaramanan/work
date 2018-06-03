@@ -10,8 +10,11 @@ import { AuthService } from '../providers/auth-service/auth-service';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { firebaseConfig } from '../config/firebase-config';
+import { environment } from '../config/firebase-config';
 import { ChatroomPage } from '../pages/chatroom/chatroom';
+import { ChatServiceProvider } from '../providers/chat-service/chat-service';
+import {  AngularFireDatabaseModule } from 'angularfire2/database';
+import { PeopleServiceProvider } from '../providers/chat-service/people-service';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { ChatroomPage } from '../pages/chatroom/chatroom';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
@@ -35,7 +39,9 @@ import { ChatroomPage } from '../pages/chatroom/chatroom';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthService
+    AuthService,
+    ChatServiceProvider,
+    PeopleServiceProvider
   ]
 })
 export class AppModule {}
