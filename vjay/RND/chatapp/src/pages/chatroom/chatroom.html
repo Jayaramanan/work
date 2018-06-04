@@ -14,8 +14,11 @@
 
 
 <ion-content padding> 
-    
-    <ion-card class="me-text" *ngFor="let chat of chatHistory">
+    <ion-card [ngClass]="{
+          'me-text' : (chat.author==='You'),
+          'other-text': (chat.author!=='You')
+      }"
+     *ngFor="let chat of chatHistory">
       <ion-card-header>
         {{chat.author}}    
       </ion-card-header>

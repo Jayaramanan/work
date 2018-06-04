@@ -14,18 +14,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ChatServiceProvider {
   private baseUrl = "/beta/chatBox"
-  private baseUrl2 = '/fishcoll/edible'
-
-  fishData :AngularFireList<any>;
   chatHistory: AngularFireList<any>;
 
   constructor(private db : AngularFireDatabase) {
     //this.getChatBox();
   }
 
-  load(){
-    return this.fishData = this.db.list(this.baseUrl2);
-  } 
+
   getChatBox(){
      this.chatHistory = this.db.list(this.baseUrl); 
     console.log(this.chatHistory);

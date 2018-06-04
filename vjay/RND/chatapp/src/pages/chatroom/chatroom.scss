@@ -2,5 +2,11 @@ page-chatroom {
     .me-text{
         width: 50%;
         float: right;
+        background: lightgreen;
+    }
+    .other-text{
+        width: 50%;
+        float: left;
+        background: lightcyan;
     }
 }

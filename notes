@@ -48,6 +48,13 @@ Credential:
 	welcome@123
 3. TeamViewer (unattended access)
 	jayaraman@asahitechnologies.com
+
+
+Angular fire:
+
+1. Observable issue : need to update the ngrx. Check angular change log.
+
+npm i rxjs@^6.0 rxjs-compat
 	welcome@123
 
 
