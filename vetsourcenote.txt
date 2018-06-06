@@ -1,0 +1,6 @@
+1. Build project
+cd /home/developer/src/vs/web/scriptright
+sudo rm -rf target
+cd /home/developer/src/vs
+mvn clean install -Dmaven.test.skip=true
+
