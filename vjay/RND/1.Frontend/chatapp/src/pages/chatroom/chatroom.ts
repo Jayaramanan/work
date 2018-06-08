@@ -4,6 +4,7 @@ import { ChatObj } from '../../providers/chat-service/chatObj.model';
 import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { PeopleServiceProvider } from '../../providers/chat-service/people-service';
+declare let ga: Function;
 
 /**
  * Generated class for the ChatroomPage page.
@@ -71,6 +72,7 @@ export class ChatroomPage  implements OnInit {
     chatObj.authorEmail = this.authService.currentUser.email
     chatObj.msg = this.chatMsg;
     chatObj.media = null;  
+    ga('send', {hitType: 'event', eventCategory: 'Messageing Frequency', eventAction: 'msg', user: this.authService.currentUser.displayName });
     this.chatservice.insertChat(chatObj);
   }
 

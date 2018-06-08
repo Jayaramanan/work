@@ -170,22 +170,24 @@ var ChatroomPage = /** @class */ (function () {
         chatObj.authorEmail = this.authService.currentUser.email;
         chatObj.msg = this.chatMsg;
         chatObj.media = null;
+        ga('send', { hitType: 'event', eventCategory: 'Messageing Frequency', eventAction: 'msg', user: this.authService.currentUser.displayName });
         this.chatservice.insertChat(chatObj);
     };
     ChatroomPage.prototype.deleteChatObj = function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */]),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */])
     ], ChatroomPage.prototype, "content", void 0);
     ChatroomPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-chatroom',template:/*ion-inline-start:"/home/developer/Documents/vjay/RND/chatapp/src/pages/chatroom/chatroom.html"*/'<!--\n  Generated template for the ChatroomPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>chatroom</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding> \n    <ion-card [ngClass]="{\n          \'me-text\' : (chat.author===\'You\'),\n          \'other-text\': (chat.author!==\'You\')\n      }"\n     *ngFor="let chat of chatHistory">\n      <ion-card-header>\n        {{chat.author}}    \n      </ion-card-header>\n      <ion-card-content>\n          {{chat.msg}}\n      </ion-card-content>  \n    </ion-card>\n\n\n</ion-content>\n<ion-footer>\n    <form (ngSubmit)="chat()">\n  <ion-input type="text" [(ngModel)]="chatMsg" name="nickname" required=""></ion-input>\n  <button ion-button small round color="secondary" type="submit">Enter</button>\n  </form>\n</ion-footer>'/*ion-inline-end:"/home/developer/Documents/vjay/RND/chatapp/src/pages/chatroom/chatroom.html"*/
+            selector: 'page-chatroom',template:/*ion-inline-start:"/home/developer/Documents/vjay/RND/1.Frontend/chatapp/src/pages/chatroom/chatroom.html"*/'<!--\n  Generated template for the ChatroomPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>chatroom</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding> \n    <ion-card [ngClass]="{\n          \'me-text\' : (chat.author===\'You\'),\n          \'other-text\': (chat.author!==\'You\')\n      }"\n     *ngFor="let chat of chatHistory">\n      <ion-card-header>\n        {{chat.author}}    \n      </ion-card-header>\n      <ion-card-content>\n          {{chat.msg}}\n      </ion-card-content>  \n    </ion-card>\n\n\n</ion-content>\n<ion-footer>\n    <form (ngSubmit)="chat()">\n  <ion-input type="text" [(ngModel)]="chatMsg" name="nickname" required=""></ion-input>\n  <button ion-button small round color="secondary" type="submit">Enter</button>\n  </form>\n</ion-footer>'/*ion-inline-end:"/home/developer/Documents/vjay/RND/1.Frontend/chatapp/src/pages/chatroom/chatroom.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_chat_service_chat_service__["a" /* ChatServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_chat_service_chat_service__["a" /* ChatServiceProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_auth_service_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_auth_service_auth_service__["a" /* AuthService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__providers_chat_service_people_service__["a" /* PeopleServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_chat_service_people_service__["a" /* PeopleServiceProvider */]) === "function" && _f || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_chat_service_chat_service__["a" /* ChatServiceProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_auth_service_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_chat_service_people_service__["a" /* PeopleServiceProvider */]])
     ], ChatroomPage);
     return ChatroomPage;
-    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=chatroom.js.map
@@ -278,10 +280,9 @@ var ChatServiceProvider = /** @class */ (function () {
     };
     ChatServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */]])
     ], ChatServiceProvider);
     return ChatServiceProvider;
-    var _a;
 }());
 
 //# sourceMappingURL=chat-service.js.map
@@ -397,7 +398,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/home/developer/Documents/vjay/RND/chatapp/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n        Sign in      \n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <button ion-button full (click)="signinWithgoogle()" *ngIf="!isSignedIn" >Signin with google</button>\n  <button ion-button full (click)="navigateChat()" *ngIf="isSignedIn"  >Continue as {{currentEmail}}</button>\n  <button ion-button full (click)="signOut()" *ngIf="isSignedIn" >Logout</button>\n</ion-content>\n'/*ion-inline-end:"/home/developer/Documents/vjay/RND/chatapp/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/home/developer/Documents/vjay/RND/1.Frontend/chatapp/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n        Sign in      \n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <button ion-button full (click)="signinWithgoogle()" *ngIf="!isSignedIn" >Signin with google</button>\n  <button ion-button full (click)="navigateChat()" *ngIf="isSignedIn"  >Continue as {{currentEmail}}</button>\n  <button ion-button full (click)="signOut()" *ngIf="isSignedIn" >Logout</button>\n</ion-content>\n'/*ion-inline-end:"/home/developer/Documents/vjay/RND/1.Frontend/chatapp/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_auth_service_auth_service__["a" /* AuthService */]])
     ], HomePage);
@@ -557,7 +558,7 @@ var MyApp = /** @class */ (function () {
         });
     }
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/home/developer/Documents/vjay/RND/chatapp/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/home/developer/Documents/vjay/RND/chatapp/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/home/developer/Documents/vjay/RND/1.Frontend/chatapp/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/home/developer/Documents/vjay/RND/1.Frontend/chatapp/src/app/app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
