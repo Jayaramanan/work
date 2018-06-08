@@ -3,4 +3,9 @@ cd /home/developer/src/vs/web/scriptright
 sudo rm -rf target
 cd /home/developer/src/vs
 mvn clean install -Dmaven.test.skip=true
+100634
 
+2. To list the docker images
+docker ps -a
+
+Some changes
