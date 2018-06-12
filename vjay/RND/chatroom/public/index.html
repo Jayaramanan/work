@@ -1,63 +1,59 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <script data-ionic="inject">
-    (function(w){var i=w.Ionic=w.Ionic||{};i.version='3.9.2';i.angular='5.2.10';i.staticDir='build/';})(window);
-  </script>
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-WSP79NF');</script>
-  <!-- End Google Tag Manager -->
-  <meta charset="UTF-8">
-  <title>Ionic App</title>
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="msapplication-tap-highlight" content="no">
-
-  <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4e8ef7">
-
-  <!-- add to homescreen for ios -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <!-- cordova.js required for cordova apps (remove if not needed) -->
-  <script src="cordova.js"></script>
-
-  <!-- un-comment this code to enable service worker
+  <!-- Google Analytics -->
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('service worker installed'))
-        .catch(err => console.error('Error', err));
-    }
-  </script>-->
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  <link href="build/main.css" rel="stylesheet">
+  ga('create', 'UA-120589131-1', 'auto');
+  ga(function(tracker) {
+	  console.log(tracker);
+  });	
+  ga('send', 'pageview');
+  </script>
+<!-- End Google Analytics -->
+  <meta charset="UTF-8">
+  <title>Demo GA </title>
+  <script>
+	function demo(){
+		console.log(ga);
+		var name = document.getElementById("itemName").value;
+		var freqObj = document.getElementById("autoship_Freq");
+		console.log(freqObj.value);
+		console.log(freqObj);
+		console.log(freqObj.options[freqObj.selectedIndex].text);	
+		var freqVal = freqObj.options[freqObj.selectedIndex].text;
+		console.log(name);
+		ga('send', {
+		  hitType: 'event',
+		  eventCategory: 'Add to AutoShip',
+		  eventAction: 'Every '+freqVal,
+		  eventLabel: name
+		});	
+	}
 
+  </script>		
+	
 </head>
 <body>  
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WSP79NF"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <!-- Ionic's root component and where the app will loadd -->
-  <ion-app></ion-app>
-
-  <!-- The polyfills js is generated during the build process -->
-  <script src="build/polyfills.js"></script>
-
-  <!-- The vendor js is generated during the build process
-       It contains all of the dependencies in node_modules -->
-  <script src="build/vendor.js"></script>
-
-  <!-- The main bundle js is generated during the build process -->
-  <script src="build/main.js"></script>
-
+	Item name : <input id="itemName" type="text"/><br>
+	Select Autoship frequency : 
+	<select id="autoship_Freq" onchange="autoshipFrequencyChange()">
+		<option value="one_week">One week</option>
+		<option value="two_week">Two week</option>
+		<option value="three_week">Three week</option>
+		<option value="30_Days">30 Days</option>
+		<option value="five_week">Five week</option>
+		<option value="six_week">Six week</option>
+	</select> <br>
+	<input type="button" onClick="demo()" value="Submit">
+	<script>
+		function autoshipFrequencyChange(){
+			console.log("asdsa");		
+		}
+	</script>
 </body>
 </html>

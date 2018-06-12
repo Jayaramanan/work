@@ -9,3 +9,51 @@ mvn clean install -Dmaven.test.skip=true
 docker ps -a
 
 Some changes again
+
+3. To update the schema (Run migrator script)
+
+ -> go to dockerscript path
+ -> $docker attach tomcat-vs
+ -> $./updateSchemas.sh
+
+--------------------------------------------------------
+
+Sticky notes
+
+Check list :
+1. Check for status  and current working branch.
+	git status
+
+2.  Commit the code
+	git commit -m ''<COMMENT>" filename1 filename2
+
+3. Git pull for any latest change in remote branch
+	git pull
+
+4. Git push the code to branch.
+	git push
+
+5. Open review in upsource
+	http://upsource.aws.vetsource.com/vs/review/VS-CR-4335
+
+6. Change the status to ready for review in Jira and add the upsource link as comment
+
+7. Ping in Asahi-chatter about review .
+ 
+
+
+------------------------------------------------------------------------------------
+
+Credential :
+
+1. VCA test site :
+	
+	Your Username is: MathewJ_1
+	Your Password is: mj838
+
+----------------------------------------------------
+
+1. Ignore ecomm node modules file 
+
+	git ls-files -z | xargs -0 git update-index --assume-unchanged
+
