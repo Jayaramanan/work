@@ -1,14 +1,38 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+        <ion-toolbar color="primary">
+          <ion-buttons start>
+            <button ion-button>
+              Home
+            </button>
+            <button ion-button (click)="navigateTo('fish')">
+                Fish
+            </button>
+            <button ion-button>
+                Crab 
+            </button>
+            <button ion-button>
+                Lobster
+            </button>
+            <button ion-button>
+                contact us  
+            </button>
+          </ion-buttons>
+      
+          <ion-title>Welcome to Kent Farm </ion-title>
+      
+          <ion-buttons end>
+            <button ion-button icon-only>
+                <ion-icon name="cart"></ion-icon>
+            </button>
+          </ion-buttons>
+      
+        </ion-toolbar>
 </ion-header>
-
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content padding>   
+      <ion-slides *ngIf="adLists && adLists.length" autoplay="3000" loop="true" speed="500" pager="true" >
+          <ion-slide *ngFor = "let ad of adLists">              
+              <img [src] ="ad" style="object-fit: contain;"/> <!--src="assets/imgs/ad1.jpg"/> -->
+          </ion-slide>
+      </ion-slides>
 </ion-content>
+  

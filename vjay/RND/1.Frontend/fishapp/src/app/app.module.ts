@@ -12,12 +12,14 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environment/environment';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { CartpagePage } from '../pages/cartpage/cartpage';
+import { FishPage } from '../pages/fish/fish';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    CartpagePage
+    CartpagePage,
+    FishPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { CartpagePage } from '../pages/cartpage/cartpage';
   entryComponents: [
     MyApp,
     HomePage,
-    CartpagePage
+    CartpagePage,
+    FishPage
   ],
   providers: [
     StatusBar,
