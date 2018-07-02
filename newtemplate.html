@@ -1,0 +1,398 @@
+<html>
+  <head>
+    <title>
+      AutoShip Cancel Notification VCA
+    </title>
+  </head>
+  
+  <body>
+    
+      <table cellpadding="0" cellspacing="0"  style="color: #555; font-family: Arial, Helvetica, sans-serif; line-height: 22px; letter-spacing: 0.2; font-size: 12pt; max-width: 640px; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; margin-left: auto; margin-right: auto; border: 1px solid #ccc;">
+        
+	   <tr>
+          <td align="center">
+            <img src="http://www.vetsource.com/images/email/vca-2016.jpg" alt="VCA" />
+          </td>
+        </tr>
+	   
+	    <tr>
+          <td height="10">
+            <!-- spacer -->
+          </td>
+        </tr>
+	   
+	   <tr>
+          <td align="center">
+			<h3 style="color: #00468b;">
+				${companyName}
+			</h3>
+          </td>
+        </tr>	   
+
+	   <tr>
+          <td align="center">
+            <img src="http://www.vetsource.com/images/email/vca-hd-banner-1.jpg" alt="HOME DELIVERY - NEVER FORGET IT!" />
+          </td>
+        </tr>
+	   
+	    <tr>
+          <td height="25">
+            <!-- spacer -->
+          </td>
+        </tr>	   
+        
+	   <tr>
+          <td align="left">
+            <h2 style="color: #00aeef;">
+              AutoShip Cancel Notification
+            </h2>
+          </td>
+        </tr>
+	   
+	    <tr>
+          <td height="25">
+            <!-- spacer -->
+          </td>
+        </tr>	   
+	   
+        <tr>
+          <td>
+            Dear <span id="customer">${user.firstName} ${user.lastName}</span>,
+          </td>
+        </tr>
+	   
+	    <tr>
+          <td height="15">
+            <!-- spacer -->
+          </td>
+        </tr>
+	   
+        <tr>
+          <td>
+            We are sending this e-mail to notify you that your AutoShip of your pet's
+            medication has been cancelled as of ${cancelDate}.
+          </td>
+        </tr>
+	   
+	    <tr>
+          <td height="15">
+            <!-- spacer -->
+          </td>
+        </tr>
+	   
+        <tr>
+          <td>
+			This Autoship cancellation includes the following item(s):
+          </td>
+        </tr>
+	   
+		<tr>
+		     <td height="15">
+			       <!-- spacer -->
+		     </td>
+        </tr>
+	   
+		<tr>
+			<td>
+	
+				<table cellpadding="0" cellspacing="0" style="color: #555; font-family: Arial, Helvetica, sans-serif; line-height: 22px; letter-spacing: 0.2; font-size: 12pt; width: 100%;">
+				   <tr>
+						<th colspan="2" align="left" style="color: #333; background: #e2f4fd; padding-top: 5px; padding-bottom: 5px; padding-left: 10px;">Product(s)</th>
+						<th align="left" style="color: #333; background: #e2f4fd;  padding-top: 5px; padding-bottom: 5px; padding-left: 10px;">Pet</th>
+                        <th align="left" style="color: #333; background: #e2f4fd;  padding-top: 5px; padding-bottom: 5px; padding-left: 10px;">Qty</th>
+                        <th align="right" width="50" style="color: #333; background: #e2f4fd;  padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 20px;">Price</th>
+					</tr>
+				
+					#foreach($itementry in $items)
+					#set ($item = $itementry.get(0))
+					#set ($pet = $itementry.get(1))
+					#set ($catalogItem = $itementry.get(2))
+				
+					<tr>
+                        <td valign="top" style="padding-left: 10px; padding-top: 10px;">
+							<img src="http://www.vetsource.com/${catalogItem.tinyImage}"/>
+						</td>
+
+                        <td valign="top"  style="padding-left: 10px; padding-top: 10px;">
+							<span style="color: #074689; display: block;">${catalogItem.display}</span>
+
+                            <span style="font-size: 12px; display: block;">Item: ${catalogItem.partNumber}</span>
+                        </td>
+
+                        <td valign="top"  style="padding-left: 10px; padding-top: 10px;">
+							${pet.name}
+						</td>
+
+                        <td valign="top"  style="padding-left: 10px; padding-top: 10px;">
+                            ${catalogItem.quantity}
+                        </td>
+
+                        <td valign="top" align="right" style="padding-left: 10px; padding-top: 10px; padding-right: 10px;">
+                            $${catalogItem.price}
+                        </td>
+					</tr>
+					
+					<tr>
+						<td colspan="5"><hr /></td>
+					</tr>
+			
+					#end
+			    </table>
+	
+			</td>
+		</tr>
+	
+		<tr>
+		     <td height="15">
+			       <!-- spacer -->
+		     </td>
+        </tr>
+		
+        <tr>
+          <td valign="middle">
+          Cancellation Reason: ${cancellationReason}
+          </td>
+        </tr>
+	   
+	    <tr>
+          <td height="15">
+            <!-- spacer -->
+          </td>
+        </tr>	   
+
+        <tr>
+          <td>
+            If this is incorrect or should you have any questions, please call VetSource
+            Customer Service at (877)738-4443.
+          </td>
+        </tr>
+	        <tr>
+            <td height="15">
+            <!-- spacer -->
+          </td>
+         </tr>
+        #if ($compoundedByWedgewood == true)
+        <tr>
+            <td>
+                If you have questions about your medication, please contact our partner,
+                Wedgewood Pharmacy at (877)909-9656
+            </td>
+        </tr>
+        #end
+
+
+
+	    <tr>
+          <td height="15">
+            <!-- spacer -->
+          </td>
+        </tr>
+	    
+        <tr>
+          <td>
+            <hr />
+          </td>
+        </tr>
+
+	    <tr>
+          <td height="15">
+            <!-- spacer -->
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            We appreciate your business and look forward to helping you in the future.
+          </td>
+        </tr>
+	   
+	    <tr>
+          <td height="10">
+            <!-- spacer -->
+          </td>
+        </tr>	   
+
+        <tr>
+          <td>
+            <br>Thank you,
+          </td>
+        </tr>
+
+	    <tr>
+          <td height="15">
+            <!-- spacer -->
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+                ${companyName}
+                <br />
+                <span style="color: #00469b;">
+					<a href="${www}" style="color: #00469b; text-decoration: none;">${www}</a>
+				</span>
+          </td>
+        </tr>
+	
+	    <tr>
+			<td height="30">
+				<!-- spacer -->
+			</td>
+        </tr>	
+	
+	   <tr>
+          <td align="center">
+			<a href="${www}" style="text-decoration: none;">
+				<img src="http://www.vetsource.com/images/email/vca-dental-banner-1.jpg" alt="Check out our online store now!" />
+			</a>
+          </td>
+        </tr>	
+	
+	    <tr>
+			<td height="30">
+				<!-- spacer -->
+			</td>
+        </tr>
+	    
+	    <tr>
+			<td height="20" style="background: #e2f4fd;">
+				<!-- spacer -->
+			</td>
+        </tr>
+	    
+		<tr>
+			<td style="background: #e2f4fd; text-align: center;" align="center">
+				<span style="color: #00469b; font-weight: bold; display: block;">
+					${companyName}
+				</span>
+
+                <span style="color: #00469b; display: block;">
+				    ${address.addressOne}, $!{address.addressTwo} ${address.city}, ${address.region} ${address.postalCode}
+			    </span>
+
+                <span style="color: #00469b; display: block;">
+                    P &bull; ${phone}
+			    </span>
+			</td>
+        </tr>
+		
+		
+		<tr>
+			<td height="20" style="background: #e2f4fd;">
+				<!-- spacer -->
+			</td>
+        </tr>
+		
+	    <tr>
+          <td height="30">
+            <!-- spacer -->
+          </td>
+        </tr>		
+	
+	<tr>
+          <td align="center">
+            <img src="http://www.vetsource.com/images/email/vca-2016.jpg" alt="VCA" />
+          </td>
+        </tr>
+	   
+	    <tr>
+          <td height="10">
+            <!-- spacer -->
+          </td>
+        </tr>	   	
+
+		<tr>
+			<td style="text-align: center;" align="center">
+				<span style="color: #00469b; font-weight: bold;">
+					AT VCA ANIMAL HOSPITALS, WE NEVER FORGET IT
+				</span>
+			</td>
+        </tr>	
+	
+	    <tr>
+          <td height="20">
+            <!-- spacer -->
+          </td>
+        </tr>
+
+        <!-- social links -->
+        <tr>
+			<td align="center">
+				<a href="https://www.facebook.com/VCAAnimalHospitals/" title="Facebook" style="outline: none; text-decoration: none; display: inline-block; margin-right: 5px;">
+					<img src="http://vetsource.com/images/email/vca-facebook.png" alt="Facebook" width="30px"/>
+				</a>
+                <a href="https://twitter.com/VCAPetHealth" title="Twitter" style="outline: none; text-decoration: none; display: inline-block; margin-right: 5px;">
+                    <img src="http://vetsource.com/images/email/vca-twitter.png" alt="Twitter" width="30px"/>
+				</a>
+                <a href="https://www.youtube.com/user/VCAAnimalHospitals" title="YouTube" style="outline: none; text-decoration: none; display: inline-block; margin-right: 5px;">
+                    <img src="http://vetsource.com/images/email/vca-youtube.png" alt="YouTube" width="30px"/>
+				</a>
+                <a href="https://www.pinterest.com/vcahospitals/" title="Pinterest" style="outline: none; text-decoration: none; display: inline-block; margin-right: 5px;">
+                    <img src="http://vetsource.com/images/email/vca-pinterest.png" alt="Pinterest" width="30px"/>
+				</a>
+                <a href="https://www.instagram.com/explore/locations/297099065/vca-animal-hospitals/" title="Instagram" style="outline: none; text-decoration: none; display: inline-block;">
+                    <img src="http://vetsource.com/images/email/vca-instagram.png" alt="Instagram" width="30px"/>
+				</a>
+			</td>
+		</tr>
+		<!-- /social links -->
+
+          <tr>
+              <td height="15">
+                  <!-- spacer -->
+              </td>
+          </tr>
+	    
+	    <tr>
+          <td align="center">
+	            <span style="font-size: 9pt; color: #666;">&copy; 2017 VCA Inc.</span>
+			  <br />
+			<span style="font-size: 9pt; color: #666;">
+				VCA Animal Hospitals, 12401 W. Olympic Blvd., Los Angeles, CA  90064
+			</span>
+          </td>
+        </tr>
+	    
+	    <tr>
+          <td height="10">
+            <!-- spacer -->
+          </td>
+        </tr>	    
+
+	    #if ($compoundedByWedgewood == true )
+	        <tr>
+                <td align="center">
+                    <img src="http://www.vetsource.com/images/email/ww-vetsource-compounding.jpg"/>
+                </td>
+            </tr>
+	    #else
+	        <tr>
+                <td align="center">
+			        <span style="font-size: 9pt; color: #666;">
+				         VCA Home Delivery Powered by:
+			        </span>
+                </td>
+            </tr>
+
+    	    <tr>
+                <td height="10">
+                    <!-- spacer -->
+                </td>
+            </tr>
+
+            <tr>
+                <td align="center">
+                    <img src="http://www.vetsource.com/images/vs-hd.png" alt="Vetsource Home Delivery" width="150"/>
+                </td>
+            </tr>
+        #end
+	    <tr>
+          <td height="10">
+            <!-- spacer -->
+          </td>
+        </tr>		   
+
+      </table>
+
+  </body>
+</html>

@@ -15,6 +15,7 @@ Some changes again
  -> go to dockerscript path
  -> $docker attach tomcat-vs
  -> $./updateSchemas.sh
+sh /apps/schemamanager/bin/EpostSchemaManager.sh
 
 --------------------------------------------------------
 

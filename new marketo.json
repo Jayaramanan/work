@@ -1,0 +1,4681 @@
+{
+	"variables": [],
+	"info": {
+		"name": "New marketo API",
+		"_postman_id": "5a32b341-482b-5da7-cc84-94041a695afe",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication API",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{url}}/identity/oauth/token?grant_type=client_credentials&client_id={{client_id}}&client_secret={{client_secret}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"identity",
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"equals": true
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_id}}",
+									"equals": true
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activities API",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Paging Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"nextPageToken\", jsonData.nextPageToken);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/activities/pagingtoken.json?access_token={{access_token}}&sinceDatetime=2001-01-01",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"activities",
+								"pagingtoken.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "sinceDatetime",
+									"value": "2001-01-01",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Add Custom Activities",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/activities/external.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"activities",
+								"external.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n   \"CustomActivity\": { \r\n      \"activityDate\": \"2017-09-07\",\r\n      \"activityTypeId\": \"100026\",\r\n      \"activityName\": \"My Test Custom Activity\",\r\n      \"leadId\": \"1013478\",\r\n      \"apiName\": \"testCustomActivity_c\",\r\n      \"productID\": \"ABC8383\",\r\n      \"dealerName\": \"Dealer Company\"\r\n\t}\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Activity Types",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/activities/types.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"activities",
+								"types.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Deleted Leads",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"if (responseBody.has(“nextPageToken”)) {",
+									"postman.setEnvironmentVariable(\"nextPageToken\", jsonData.nextPageToken);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/activities/deletedleads.json?access_token={{access_token}}&nextPageToken={{nextPageToken}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"activities",
+								"deletedleads.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "nextPageToken",
+									"value": "{{nextPageToken}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Lead Activities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"if (responseBody.has('nextPageToken'))",
+									"{",
+									"postman.setEnvironmentVariable(\"nextPageToken\", jsonData.nextPageToken);",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/activities.json?access_token={{access_token}}&nextPageToken={{nextPageToken}}&batchSize=300&activityTypeIds=1,2,6,7,8,9,10,13,100026",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"activities.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "nextPageToken",
+									"value": "{{nextPageToken}}",
+									"equals": true
+								},
+								{
+									"key": "batchSize",
+									"value": "300",
+									"equals": true
+								},
+								{
+									"key": "activityTypeIds",
+									"value": "1,2,6,7,8,9,10,13,100026",
+									"equals": true,
+									"description": "Saved 1,2,6,7,8,9,10,13"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Lead Changes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"if (responseBody.has('nextPageToken'))",
+									"{",
+									"postman.setEnvironmentVariable(\"nextPageToken\", jsonData.nextPageToken);",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/activities/leadchanges.json?access_token={{access_token}}&nextPageToken={{nextPageToken}}&fields=company",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"activities",
+								"leadchanges.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "nextPageToken",
+									"value": "{{nextPageToken}}",
+									"equals": true
+								},
+								{
+									"key": "fields",
+									"value": "company",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Asset API",
+			"description": "",
+			"item": [
+				{
+					"name": "Folders",
+					"description": "",
+					"item": [
+						{
+							"name": "Get Folder by Id",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/folder/3.json?type=Folder&access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"folder",
+										"3.json"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "Folder",
+											"equals": true
+										},
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get Folder by Name",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/folder/byName.json?access_token={{access_token}}&name=Marketing%20Activities",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"folder",
+										"byName.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										},
+										{
+											"key": "name",
+											"value": "Marketing%20Activities",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Browse Folders",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/folders.json?access_token={{access_token}}&root={\"id\":3,\"type\":\"Folder\"}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"folders.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										},
+										{
+											"key": "root",
+											"value": "{\"id\":3,\"type\":\"Folder\"}",
+											"equals": true,
+											"description": "Can be \"Marketing Activities\", \"Design Studio\", or \"Lead Database\""
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Programs",
+					"description": "",
+					"item": [
+						{
+							"name": "Channels",
+							"description": "",
+							"item": [
+								{
+									"name": "Get Channels",
+									"request": {
+										"url": {
+											"raw": "{{url}}/rest/asset/v1/channels.json?access_token={{access_token}}&offset=0",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"rest",
+												"asset",
+												"v1",
+												"channels.json"
+											],
+											"query": [
+												{
+													"key": "access_token",
+													"value": "{{access_token}}",
+													"equals": true
+												},
+												{
+													"key": "offset",
+													"value": "0",
+													"equals": true
+												}
+											],
+											"variable": []
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": "http://developers.marketo.com/documentation/asset-api/get-email-content-by-id"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Channels by Name",
+									"request": {
+										"url": {
+											"raw": "{{url}}/rest/asset/v1/channel/byName.json?access_token={{access_token}}&name=Webinar",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"rest",
+												"asset",
+												"v1",
+												"channel",
+												"byName.json"
+											],
+											"query": [
+												{
+													"key": "access_token",
+													"value": "{{access_token}}",
+													"equals": true
+												},
+												{
+													"key": "name",
+													"value": "Webinar",
+													"equals": true
+												}
+											],
+											"variable": []
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": "http://developers.marketo.com/documentation/asset-api/get-email-content-by-id"
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Tags",
+							"description": "",
+							"item": [
+								{
+									"name": "Get Tags",
+									"request": {
+										"url": {
+											"raw": "{{url}}/rest/asset/v1/tagTypes.json?access_token={{access_token}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"rest",
+												"asset",
+												"v1",
+												"tagTypes.json"
+											],
+											"query": [
+												{
+													"key": "access_token",
+													"value": "{{access_token}}",
+													"equals": true
+												}
+											],
+											"variable": []
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
+									},
+									"response": []
+								},
+								{
+									"name": "Get Tags by Name",
+									"request": {
+										"url": {
+											"raw": "{{url}}/rest/asset/v1/tagType/byName.json?access_token={{access_token}}&name=Make",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"rest",
+												"asset",
+												"v1",
+												"tagType",
+												"byName.json"
+											],
+											"query": [
+												{
+													"key": "access_token",
+													"value": "{{access_token}}",
+													"equals": true
+												},
+												{
+													"key": "name",
+													"value": "Make",
+													"equals": true
+												}
+											],
+											"variable": []
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Get Program by Id",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/program/1011.json?access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"program",
+										"1011.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": "http://developers.marketo.com/documentation/asset-api/get-email-content-by-id"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Program by Name",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/program/byName.json?access_token={{access_token}}&name=Test%20Inmar",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"program",
+										"byName.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										},
+										{
+											"key": "name",
+											"value": "Test%20Inmar",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Browse Programs",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/programs.json?access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"programs.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Browse Programs by Tag Type",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/program/byTag.json?access_token={{access_token}}&tagType=Channel&tagValue=Email%20Send",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"program",
+										"byTag.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										},
+										{
+											"key": "tagType",
+											"value": "Channel",
+											"equals": true
+										},
+										{
+											"key": "tagValue",
+											"value": "Email%20Send",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Email Templates",
+					"description": "",
+					"item": [],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Emails",
+					"description": "",
+					"item": [
+						{
+							"name": "Get Email Content By Id",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/email/1002/content.json?access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"email",
+										"1002",
+										"content.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": "http://developers.marketo.com/documentation/asset-api/get-email-content-by-id"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Email Content by Id",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/email/1062/content.json?access_token={{access_token}}&subject={\"type\":\"Text\",\"value\":\"Gettysburg Address\"}&fromEmail={\"type\":\"Text\",\"value\":\"abe@testmail.com\"}&fromName={\"type\":\"Text\",\"value\":\"Abe Lincoln\"}&replyTo={\"type\":\"Text\",\"value\":\"replies@testmail.com\"}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"email",
+										"1062",
+										"content.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										},
+										{
+											"key": "subject",
+											"value": "{\"type\":\"Text\",\"value\":\"Gettysburg Address\"}",
+											"equals": true
+										},
+										{
+											"key": "fromEmail",
+											"value": "{\"type\":\"Text\",\"value\":\"abe@testmail.com\"}",
+											"equals": true
+										},
+										{
+											"key": "fromName",
+											"value": "{\"type\":\"Text\",\"value\":\"Abe Lincoln\"}",
+											"equals": true
+										},
+										{
+											"key": "replyTo",
+											"value": "{\"type\":\"Text\",\"value\":\"replies@testmail.com\"}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update Email Content in Editable Section",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/email/4/content/eNoteContent.json?access_token={{access_token}}&type=Text&value=<b>Hello Bold Content</b>",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"email",
+										"4",
+										"content",
+										"eNoteContent.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										},
+										{
+											"key": "type",
+											"value": "Text",
+											"equals": true
+										},
+										{
+											"key": "value",
+											"value": "<b>Hello Bold Content</b>",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": "http://developers.marketo.com/documentation/asset-api/update-email-content-in-editable-section/"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Email Content in Editable Section (Simpler)",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/email/1293/content/enoteMainContent.json?access_token={{access_token}}&type=Text&value=<h1>Hello World!</h1>",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"email",
+										"1293",
+										"content",
+										"enoteMainContent.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										},
+										{
+											"key": "type",
+											"value": "Text",
+											"equals": true
+										},
+										{
+											"key": "value",
+											"value": "<h1>Hello World!</h1>",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": "http://developers.marketo.com/documentation/asset-api/update-email-content-in-editable-section/"
+							},
+							"response": []
+						},
+						{
+							"name": "Approve Email By ID",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/email/4/approveDraft.json?access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"email",
+										"4",
+										"approveDraft.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Transactional Email",
+					"description": "",
+					"item": [],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Landing Page Templates",
+					"description": "",
+					"item": [],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Landing Pages",
+					"description": "",
+					"item": [],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Snippets",
+					"description": "",
+					"item": [
+						{
+							"name": "Get Snippets by ID",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/snippet/{id}.json?status=approved&access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"snippet",
+										"{id}.json"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "approved",
+											"equals": true
+										},
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Browse Snippets",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/snippets.json?maxReturn=3&access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"snippets.json"
+									],
+									"query": [
+										{
+											"key": "maxReturn",
+											"value": "3",
+											"equals": true
+										},
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update Snippet by ID",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/snippet/1/content.json?access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"snippet",
+										"1",
+										"content.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Listing-262002",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "HTML",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "content",
+											"value": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n          <style type=\"text/css\">\n        @page { margin: 0; }\n        body { margin: 0; }\n        img { border: 0; }\n\n        table {\n          border-collapse: collapse;\n          border-spacing: 0;\n          page-break-inside: avoid;\n        }\n\n        td.email-footer a {\n          text-decoration: none;\n        }\n\n        td.email-footer a img {\n          border: 0;\n        }\n      </style>\n    \n    <style type=\"text/css\">\n      @import url('http://friedmanflyers.azurewebsites.net/flyers/css/fonts/fonts.css');\n    </style>\n  </head>\n\n  <body marginwidth=\"0\" marginheight=\"0\"bgcolor=\"#ebebeb\">\n      <div style=\"display: none;\" ><br>Available: ± 8,012 SF restaurant building<br>Vacant building is move-in ready with full kitchen and equipment, tables, chairs, walk-in coolers, etc.<br>Class C resort liquor license; allows Sunday sales, entertainment and after-hours food<br>Building is in fantastic condition, constructed 2002<br>Located in bustling downtown Mount Clemens<br>Excellent visibility at the intersection of North Main Street and Gratiot Avenue<br>Facility features large kitchen, serving area, and private party room with fireplace<br>New landscaping and sprinkler system<br>Site includes attached parking lot with ample customer parking<br>Sale asking price $800,000; call for lease rates</div>\n    <table width=\"700\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"table-layout: fixed; width: 700px\">\n      <tr>\n        <td height=\"30\" align=\"right\" style=\"font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 7pt\">\n          <a href=\"http://www.friedmanrealestate.com\" target=\"_blank\">website</a> \n        </td>\n      </tr>\n      <tr>\n        <td width=\"700\" align=\"center\">\n          <table width=\"700\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-0.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-1.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-2.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-3.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-4.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-5.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-6.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-7.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-8.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-9.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n          </table>\n        </td>\n      </tr>\n      <tr>\n        <td width=\"700\">\n            <table width=\"700\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-spacing: 0\">\n              <tr>\n                <td style=\"width: 100%; padding-top: 25px; font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 15px; color: black; text-align: center\">Friedman Integrated Real Estate Solutions &copy; 2018</td>\n              </tr>            \n              <tr>\n                <td style=\"width: 100%; padding-top: 25px; font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 9px; color: black; text-align: center\">You are receiving this email because you shared your information with Friedman Integrated Real Estate Solutions.</td>\n              </tr>           \n              <tr>\n                <td style=\"width: 100%; padding-top: 16px; font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 9px; color: black; text-align: center\">The information contained herein has been provided by the owner of the property or by an alternate source we deem reliable. We have no reason to doubt its</td>\n              </tr>           \n              <tr>\n                <td style=\"width: 100%; padding-top: 16px; font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 9px; color: black; text-align: center\">accuracy, but we cannot guarantee it. All information should be verified prior to purchase and/or lease.</td>\n              </tr>           \n              <tr>\n                <td style=\"width: 100%; padding-top: 16px; font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 9px; color: black; text-align: center\">If you would no longer like to receive emails from Friedman, please <a href=\"*|UNSUB|*\">unscubscribe here</a>.</td>\n              </tr>\n              <tr>\n                    <td style=\"width: 100%; padding-top: 25px; text-align: center;\">\n                      <a href=\"http://www.facebook.com/pages/Friedman-Integrated-Real-Estate-Solutions/183133155056997\" target=\"_blank\" style=\"padding-right: 5px; text-decoration: none\">\n                        <img src=\"http://friedmanflyers.azurewebsites.net/flyers/img/footer/icons/fb.png\" border=\"0\" alt=\"\">\n                      </a>\n                      <a href=\"http://twitter.com/friedmannews\" target=\"_blank\" style=\"padding-right: 5px; text-decoration: none\">\n                        <img src=\"http://friedmanflyers.azurewebsites.net/flyers/img/footer/icons/tw.png\" border=\"0\" alt=\"\">\n                      </a>\n                      <a href=\"http://www.linkedin.com/company/68809\" target=\"_blank\" style=\"padding-right: 5px; text-decoration: none\">\n                        <img src=\"http://friedmanflyers.azurewebsites.net/flyers/img/footer/icons/li.png\" border=\"0\" alt=\"\">\n                      </a>\n                      <a href=\"http://www.youtube.com/friedmanrealestate\" target=\"_blank\" style=\"padding-right: 5px; text-decoration: none\">\n                        <img src=\"http://friedmanflyers.azurewebsites.net/flyers/img/footer/icons/yt.png\" border=\"0\" alt=\"\">\n                      </a>\n                      <a href=\"http://pinterest.com/friedmancre/\" target=\"_blank\" style=\"padding-right: 5px; text-decoration: none\">\n                        <img src=\"http://friedmanflyers.azurewebsites.net/flyers/img/footer/icons/pt.png\" border=\"0\" alt=\"\">\n                      </a>\n                    </td>\n              </tr>\n          </table>\n        </td>\n      </tr>\n    </table>\n  </body>\n</html>\n\n",
+											"description": "",
+											"type": "text"
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update Snippet Metadata",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/snippet/1.json?access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"snippet",
+										"1.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Flyer-262002",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Flyer for Property 262002",
+											"description": "",
+											"type": "text"
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Dynamic Content",
+					"description": "",
+					"item": [
+						{
+							"name": "Update Dynamic Email Content by Id",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/email/1/dynamicContent/eNoteContent.json?access_token={{access_token}}&segment=Default&type=Text&value=CustomEnoteStuffFromRest",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"email",
+										"1",
+										"dynamicContent",
+										"eNoteContent.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										},
+										{
+											"key": "segment",
+											"value": "Default",
+											"equals": true
+										},
+										{
+											"key": "type",
+											"value": "Text",
+											"equals": true
+										},
+										{
+											"key": "value",
+											"value": "CustomEnoteStuffFromRest",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Forms",
+					"description": "",
+					"item": [],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Tokens",
+					"description": "",
+					"item": [
+						{
+							"name": "Get Program Tokens",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/folder/1026/tokens.json?folderType=Program&access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"folder",
+										"1026",
+										"tokens.json"
+									],
+									"query": [
+										{
+											"key": "folderType",
+											"value": "Program",
+											"equals": true
+										},
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update Program Tokens",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/folder/1026/tokens.json?folderType=Program&access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"folder",
+										"1026",
+										"tokens.json"
+									],
+									"query": [
+										{
+											"key": "folderType",
+											"value": "Program",
+											"equals": true
+										},
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "htmlCode",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "text",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "value",
+											"value": "\n<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n\n    <title>Listing Flyer - #262002</title>\n\n          <style type=\"text/css\">\n        @page { margin: 0; }\n        body { margin: 0; }\n        img { border: 0; }\n\n        table {\n          border-collapse: collapse;\n          border-spacing: 0;\n          page-break-inside: avoid;\n        }\n\n        td.email-footer a {\n          text-decoration: none;\n        }\n\n        td.email-footer a img {\n          border: 0;\n        }\n      </style>\n    \n    <style type=\"text/css\">\n      @import url('http://friedmanflyers.azurewebsites.net/flyers/css/fonts/fonts.css');\n    </style>\n  </head>\n\n  <body marginwidth=\"0\" marginheight=\"0\"bgcolor=\"#ebebeb\">\n      <div style=\"display: none;\" ><br>Available: ± 8,012 SF restaurant building<br>Vacant building is move-in ready with full kitchen and equipment, tables, chairs, walk-in coolers, etc.<br>Class C resort liquor license; allows Sunday sales, entertainment and after-hours food<br>Building is in fantastic condition, constructed 2002<br>Located in bustling downtown Mount Clemens<br>Excellent visibility at the intersection of North Main Street and Gratiot Avenue<br>Facility features large kitchen, serving area, and private party room with fireplace<br>New landscaping and sprinkler system<br>Site includes attached parking lot with ample customer parking<br>Sale asking price $800,000; call for lease rates</div>\n    <table width=\"700\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"table-layout: fixed; width: 700px\">\n      <tr>\n        <td height=\"30\" align=\"right\" style=\"font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 7pt\">\n          <a href=\"http://www.friedmanrealestate.com\" target=\"_blank\">website</a> \n        </td>\n      </tr>\n      <tr>\n        <td width=\"700\" align=\"center\">\n          <table width=\"700\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-0.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-1.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-2.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-3.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-4.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-5.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-6.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-7.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-8.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n            <tr>\n              <td width=\"700\" align=\"center\" valign=\"top\" style=\"margin: 0; padding: 0\">\n                <a href=\"http://www.friedmanrealestate.com/property-search/?propertyId=262002-sale-143-north-main-street\" target=\"_blank\" style=\"text-decoration: none; border: 0\">\n                  <img src=\"http://friedmanflyers.azurewebsites.net/flyers/262002/image-9.png\" width=\"700\" alt=\"Custom flyer content\" style=\"display: block; border: 0\">\n                </a>\n              </td>\n            </tr>\n          </table>\n        </td>\n      </tr>\n      <tr>\n        <td width=\"700\">\n            <table width=\"700\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-spacing: 0\">\n              <tr>\n                <td style=\"width: 100%; padding-top: 25px; font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 15px; color: black; text-align: center\">Friedman Integrated Real Estate Solutions &copy; 2018</td>\n              </tr>            \n              <tr>\n                <td style=\"width: 100%; padding-top: 25px; font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 9px; color: black; text-align: center\">You are receiving this email because you shared your information with Friedman Integrated Real Estate Solutions.</td>\n              </tr>           \n              <tr>\n                <td style=\"width: 100%; padding-top: 16px; font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 9px; color: black; text-align: center\">The information contained herein has been provided by the owner of the property or by an alternate source we deem reliable. We have no reason to doubt its</td>\n              </tr>           \n              <tr>\n                <td style=\"width: 100%; padding-top: 16px; font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 9px; color: black; text-align: center\">accuracy, but we cannot guarantee it. All information should be verified prior to purchase and/or lease.</td>\n              </tr>           \n              <tr>\n                <td style=\"width: 100%; padding-top: 16px; font-family: GOTHIC, Helvetica, Arial, sans-serif; font-size: 9px; color: black; text-align: center\">If you would no longer like to receive emails from Friedman, please <a href=\"*|UNSUB|*\">unscubscribe here</a>.</td>\n              </tr>\n              <tr>\n                    <td style=\"width: 100%; padding-top: 25px; text-align: center;\">\n                      <a href=\"http://www.facebook.com/pages/Friedman-Integrated-Real-Estate-Solutions/183133155056997\" target=\"_blank\" style=\"padding-right: 5px; text-decoration: none\">\n                        <img src=\"http://friedmanflyers.azurewebsites.net/flyers/img/footer/icons/fb.png\" border=\"0\" alt=\"\">\n                      </a>\n                      <a href=\"http://twitter.com/friedmannews\" target=\"_blank\" style=\"padding-right: 5px; text-decoration: none\">\n                        <img src=\"http://friedmanflyers.azurewebsites.net/flyers/img/footer/icons/tw.png\" border=\"0\" alt=\"\">\n                      </a>\n                      <a href=\"http://www.linkedin.com/company/68809\" target=\"_blank\" style=\"padding-right: 5px; text-decoration: none\">\n                        <img src=\"http://friedmanflyers.azurewebsites.net/flyers/img/footer/icons/li.png\" border=\"0\" alt=\"\">\n                      </a>\n                      <a href=\"http://www.youtube.com/friedmanrealestate\" target=\"_blank\" style=\"padding-right: 5px; text-decoration: none\">\n                        <img src=\"http://friedmanflyers.azurewebsites.net/flyers/img/footer/icons/yt.png\" border=\"0\" alt=\"\">\n                      </a>\n                      <a href=\"http://pinterest.com/friedmancre/\" target=\"_blank\" style=\"padding-right: 5px; text-decoration: none\">\n                        <img src=\"http://friedmanflyers.azurewebsites.net/flyers/img/footer/icons/pt.png\" border=\"0\" alt=\"\">\n                      </a>\n                    </td>\n              </tr>\n          </table>\n        </td>\n      </tr>\n    </table>\n  </body>\n</html>\n\n",
+											"description": "",
+											"type": "text"
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Files",
+					"description": "",
+					"item": [
+						{
+							"name": "Get Asset by Name",
+							"request": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/file/byName.json?access_token={{access_token}}&name=arc2_blue.png",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"file",
+										"byName.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}",
+											"equals": true
+										},
+										{
+											"key": "name",
+											"value": "arc2_blue.png",
+											"equals": true
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": "http://developers.marketo.com/documentation/asset-api/get-email-content-by-id"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Campaigns",
+					"description": "",
+					"item": [],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Bulk Activity Export API",
+			"description": "",
+			"item": [
+				{
+					"name": "1-Create Bulk Activity Extract Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"export_id\", jsonData.result[0].exportId);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/activities/export/create.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"activities",
+								"export",
+								"create.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n   \"format\": \"CSV\",\r\n   \"filter\": { \r\n      \"createdAt\": { \r\n         \"startAt\": \"2017-06-01\",\r\n         \"endAt\": \"2017-06-30\"\r\n      },\r\n      \"activityTypeIds\": [ \r\n         1,\r\n         12,\r\n         13\r\n      ]\r\n   }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "2-Queue Bulk Activity Extract Job",
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/activities/export/{{export_id}}/enqueue.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"activities",
+								"export",
+								"{{export_id}}",
+								"enqueue.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "3-Status Bulk Activity Extract Job",
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/activities/export/{{export_id}}/status.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"activities",
+								"export",
+								"{{export_id}}",
+								"status.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n   \"format\": \"CSV\",\r\n   \"filter\": { \r\n      \"createdAt\": { \r\n         \"startAt\": \"2017-06-01\",\r\n         \"endAt\": \"2017-06-30\"\r\n      },\r\n      \"activityTypeIds\": [ \r\n         1,\r\n         12,\r\n         13\r\n      ]\r\n   }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "4-Retrieve Bulk Activity Extract Job",
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/activities/export/{{export_id}}/file.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"activities",
+								"export",
+								"{{export_id}}",
+								"file.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n   \"format\": \"CSV\",\r\n   \"filter\": { \r\n      \"createdAt\": { \r\n         \"startAt\": \"2017-06-01\",\r\n         \"endAt\": \"2017-06-30\"\r\n      },\r\n      \"activityTypeIds\": [ \r\n         1,\r\n         12,\r\n         13\r\n      ]\r\n   }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Q-Query Bulk Activity Extract Job List",
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/activities/export.json?status=Completed,Failed&access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"activities",
+								"export.json"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Completed,Failed",
+									"equals": true
+								},
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "X-Cancel Bulk Activity Extract Job",
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/activities/export/{{export_id}}/cancel.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"activities",
+								"export",
+								"{{export_id}}",
+								"cancel.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n   \"format\": \"CSV\",\r\n   \"filter\": { \r\n      \"createdAt\": { \r\n         \"startAt\": \"2017-06-01\",\r\n         \"endAt\": \"2017-06-30\"\r\n      },\r\n      \"activityTypeIds\": [ \r\n         1,\r\n         12,\r\n         13\r\n      ]\r\n   }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bulk Lead Export API",
+			"description": "",
+			"item": [
+				{
+					"name": "1-Create Bulk Lead Extract Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"export_id\", jsonData.result[0].exportId);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/leads/export/create.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"leads",
+								"export",
+								"create.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"fields\": [\r\n      \"firstName\",\r\n      \"lastName\",\r\n      \"id\",\r\n      \"email\",\r\n      \"address\",\r\n      \"city\",\r\n      \"state\",\r\n      \"postalCode\"\r\n   ],\r\n   \"format\": \"CSV\",\r\n   \"columnHeaderNames\": {\r\n      \"firstName\": \"First Name\",\r\n      \"lastName\": \"Last Name\",\r\n      \"id\": \"Marketo Id\",\r\n      \"email\": \"Email Address\",\r\n      \"address\": \"Address\",\r\n      \"city\": \"City\",\r\n      \"state\": \"State\",\r\n      \"postalCode\": \"Postal Code\"\r\n   },\r\n   \"filter\": {\r\n   \t  \"smartListId\": \"3333\"\r\n   }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "2-Queue Bulk Lead Extract Job",
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/leads/export/{{export_id}}/enqueue.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"leads",
+								"export",
+								"{{export_id}}",
+								"enqueue.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "3-Status Bulk Lead Extract Job",
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/leads/export/{{export_id}}/status.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"leads",
+								"export",
+								"{{export_id}}",
+								"status.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n   \"format\": \"CSV\",\r\n   \"filter\": { \r\n      \"createdAt\": { \r\n         \"startAt\": \"2017-06-01\",\r\n         \"endAt\": \"2017-06-30\"\r\n      },\r\n      \"activityTypeIds\": [ \r\n         1,\r\n         12,\r\n         13\r\n      ]\r\n   }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "4-Retrieve Bulk Lead Extract Job",
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/leads/export/{{export_id}}/file.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"leads",
+								"export",
+								"{{export_id}}",
+								"file.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n   \"format\": \"CSV\",\r\n   \"filter\": { \r\n      \"createdAt\": { \r\n         \"startAt\": \"2017-06-01\",\r\n         \"endAt\": \"2017-06-30\"\r\n      },\r\n      \"activityTypeIds\": [ \r\n         1,\r\n         12,\r\n         13\r\n      ]\r\n   }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Q-Query Bulk Lead Extract Job List",
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/leads/export.json?status=Completed,Failed&access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"leads",
+								"export.json"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Completed,Failed",
+									"equals": true
+								},
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "X-Cancel Bulk Lead Extract Job",
+					"request": {
+						"url": {
+							"raw": "{{url}}/bulk/v1/leads/export.json?status=Completed,Failed&access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bulk",
+								"v1",
+								"leads",
+								"export.json"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Completed,Failed",
+									"equals": true
+								},
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n   \"format\": \"CSV\",\r\n   \"filter\": { \r\n      \"createdAt\": { \r\n         \"startAt\": \"2017-06-01\",\r\n         \"endAt\": \"2017-06-30\"\r\n      },\r\n      \"activityTypeIds\": [ \r\n         1,\r\n         12,\r\n         13\r\n      ]\r\n   }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Campaigns API",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Campaigns",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/campaigns.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"campaigns.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Campaign by Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/campaigns/1019.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"campaigns",
+								"1019.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Schedule Campaign",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/campaigns/1206/schedule.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"campaigns",
+								"1206",
+								"schedule.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"input\":\n      {\n         \"runAt\": \"2015-08-24T11:15:00-0700\",\n         \"cloneToProgramName\": \"Questex Test Program\",\n         \"tokens\" : [\n            {\n               \"name\": \"{{my.emailname}}\",\n               \"value\": \"monday\"\n            }\n        ]\n      }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Request Campaign",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/campaigns/1206/schedule.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"campaigns",
+								"1206",
+								"schedule.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"input\":\n      {\n         \"runAt\": \"2015-08-24T11:15:00-0700\",\n         \"cloneToProgramName\": \"Questex Test Program\",\n         \"tokens\" : [\n            {\n               \"name\": \"{{my.emailname}}\",\n               \"value\": \"monday\"\n            }\n        ]\n      }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Transaction Email Example",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/campaigns/1067/trigger.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"campaigns",
+								"1067",
+								"trigger.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"input\":\n      {\n         \"leads\" : [\n    \t\t{\n        \t   \"id\" : 1000035\n    \t\t}\n\t\t],\n         \"tokens\" : [\n            {\n               \"name\": \"{{my.OrderNo}}\",\n               \"value\": \"123456\"\n            },\n             {\n               \"name\": \"{{my.ItemNo}}\",\n               \"value\": \"ITM838388\"\n            },\n             {\n               \"name\": \"{{my.OrderDate}}\",\n               \"value\": \"10/02/2017\"\n            },\n             {\n               \"name\": \"{{my.ShipDate}}\",\n               \"value\": \"10/15/2017\"\n            },\n             {\n               \"name\": \"{{my.ItemPrice}}\",\n               \"value\": \"25.95\"\n            }\n        ]\n      }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Companies API - DISABLED W/CRM SYNC",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Companies",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/companies.json?access_token={{access_token}}&filterType=company&filterValues=IBM",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"companies.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "filterType",
+									"value": "company",
+									"equals": true
+								},
+								{
+									"key": "filterValues",
+									"value": "IBM",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Custom Objects API",
+			"description": "",
+			"item": [
+				{
+					"name": "Describe Custom Objects",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/customobjects/product_new_c/describe.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"customobjects",
+								"product_new_c",
+								"describe.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Custom Objects",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/customobjects/application_c.json?access_token={{access_token}}&filterType=email&filterValues=ralfieri@marketo.com&fields=applicationID,applicationStatus,updatedAt",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"customobjects",
+								"application_c.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "filterType",
+									"value": "email",
+									"equals": true
+								},
+								{
+									"key": "filterValues",
+									"value": "ralfieri@marketo.com",
+									"equals": true
+								},
+								{
+									"key": "fields",
+									"value": "applicationID,applicationStatus,updatedAt",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "List Custom Objects",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/customobjects.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"customobjects.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sync Custom Objects",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/customobjects/application_c.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"customobjects",
+								"application_c.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"action\":\"createOrUpdate\",\n   \"dedupeBy\":\"dedupeFields\",\n   \"input\": [\n      {\n         \"applicationID\":\"VVV89383\",\n         \"applicationStatus\": \"Canceled\",\n         \"Email\":\"ralfieri@marketo.com\"\n      }\n   ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Custom Objects",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/customobjects/{{coName}}/delete.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"customobjects",
+								"{{coName}}",
+								"delete.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \n   \"deleteBy\":\"dedupeFields\",\n   \"input\":[  \n      {  \n         \"listname\":\"Lyrica High Performing\"\n      }\n   ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Email API",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Dynamic Content",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1014/dynamicContent/RVMtZWRpdF90ZXh0XzE=.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1014",
+								"dynamicContent",
+								"RVMtZWRpdF90ZXh0XzE=.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update content in Dynamic Content",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1014/dynamicContent/RVMtZWRpdF90ZXh0XzE=.json?access_token={{access_token}}&segment=US&value=<p>US Content</p>&type=HTML",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1014",
+								"dynamicContent",
+								"RVMtZWRpdF90ZXh0XzE=.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "segment",
+									"value": "US",
+									"equals": true
+								},
+								{
+									"key": "value",
+									"value": "<p>US Content</p>",
+									"equals": true
+								},
+								{
+									"key": "type",
+									"value": "HTML",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Email Content by Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1014/content.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1014",
+								"content.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Email by folder",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/emails.json?access_token={{access_token}}&folder=61&status=draft",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"emails.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "folder",
+									"value": "61",
+									"equals": true
+								},
+								{
+									"key": "status",
+									"value": "draft",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Email by Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1004.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1004.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Email by Name",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/byName.json?access_token={{access_token}}&name=Test Program.Email w/ Dynamic Content",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"byName.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "name",
+									"value": "Test Program.Email w/ Dynamic Content",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Folder API",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Folder by name",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/folder/byName.json?access_token={{access_token}}&name=FY14 Marketing Program from Marketo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"folder",
+								"byName.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "name",
+									"value": "FY14 Marketing Program from Marketo",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Folder by Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/folder/61.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"folder",
+								"61.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Browse Folder",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/folders.json?access_token={{access_token}}&maxDepth=10&maxReturn=100",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"folders.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "maxDepth",
+									"value": "10",
+									"equals": true
+								},
+								{
+									"key": "maxReturn",
+									"value": "100",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tokens by Folder Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/folder/141/tokens.json?access_token={{access_token}}&name=FY14 Marketing Program from Marketo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"folder",
+								"141",
+								"tokens.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "name",
+									"value": "FY14 Marketing Program from Marketo",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Leads API",
+			"description": "",
+			"item": [
+				{
+					"name": "Associate Lead",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/leads/5130978/associate.json?access_token={{access_token}}&cookie=id:608-KRG-311&token:_mch-marketo.com-1443500725306-30023=",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"leads",
+								"5130978",
+								"associate.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								},
+								{
+									"key": "cookie",
+									"value": "id:608-KRG-311"
+								},
+								{
+									"key": "token:_mch-marketo.com-1443500725306-30023",
+									"value": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Associate a lead with a cookie"
+					},
+					"response": []
+				},
+				{
+					"name": "Create/Update Leads",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/leads.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"leads.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \n   \"action\":\"createOrUpdate\",\n   \"lookupField\":\"email\",\n   \"partitionName\":\"Default\",\n   \"input\":[  \n      {  \n         \"email\":\"kjashaedd-1@klooblept.com\",\n         \"firstName\":\"Kataldar-1\",\n         \"lastName\":\"Jasha\",\n         \"postalCode\":\"04828\",\n         \"datetimeField\":\"2015-11-06T13:22:17\"\n      },\n      {  \n         \"email\":\"kjashaedd-2@klooblept.com\",\n         \"firstName\":\"Kataldar-2\",\n         \"postalCode\":\"04828\"\n      },\n      {  \n         \"email\":\"kjashaedd-3@klooblept.com\",\n         \"firstName\":\"Kataldar-3\",\n         \"postalCode\":\"04828\"\n      }\n   ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create/Update Leads [Simple]",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/leads.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"leads.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \n   \"action\":\"createOrUpdate\",\n   \"lookupField\":\"contactID\",\n   \"partitionName\":\"Default\",\n   \"input\":[  \n      {  \n         \"firstName\":\"John1\",\n         \"lastName\":\"Mattos1\",\n         \"contactID\":\"ABCDEFG1\"\n      }\n   ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create/Update Leads (No Action)",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/leads.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"leads.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \n   \"action\":\"createOrUpdate\",\n   \"lookupField\":\"email\",\n   \"partitionName\":\"Default\",\n   \"input\":[  \n      {  \n         \"email\":\"kjashaedd-1@klooblept.com\",\n         \"firstName\":\"Kataldar-1\",\n         \"lastName\":\"Jasha\",\n         \"postalCode\":\"04828\",\n         \"datetimeField\":\"2015-11-06T13:22:17\"\n      },\n      {  \n         \"email\":\"kjashaedd-2@klooblept.com\",\n         \"firstName\":\"Kataldar-2\",\n         \"postalCode\":\"04828\"\n      },\n      {  \n         \"email\":\"kjashaedd-3@klooblept.com\",\n         \"firstName\":\"Kataldar-3\",\n         \"postalCode\":\"04828\"\n      }\n   ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Describe Lead",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/leads/describe.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"leads",
+								"describe.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Campaign List",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/campaigns.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"campaigns.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Deleted Leads",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"nextPageToken\", jsonData.nextPageToken);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/activities/deletedleads.json?access_token={{access_token}}&nextPageToken={{nextPageToken}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"activities",
+								"deletedleads.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "nextPageToken",
+									"value": "{{nextPageToken}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Lead by Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/lead/5.json?access_token={{access_token}}&fields=id,email,company,address,city,state,postalCode",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"lead",
+								"5.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "fields",
+									"value": "id,email,company,address,city,state,postalCode",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Leads by Filter Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"nextPageToken\", jsonData.nextPageToken);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/leads.json?access_token={{access_token}}&filterType=id&filterValues=1,2,3,4,5,6,7,8,9,10&fields=firstName,lastName,email",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"leads.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "filterType",
+									"value": "id",
+									"equals": true
+								},
+								{
+									"key": "filterValues",
+									"value": "1,2,3,4,5,6,7,8,9,10",
+									"equals": true
+								},
+								{
+									"key": "fields",
+									"value": "firstName,lastName,email",
+									"equals": true
+								},
+								{
+									"key": "nextPageToken",
+									"value": "{{nextPageToken}}",
+									"equals": true,
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Leads by Program Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/leads/programs/1001.json?access_token={{access_token}}&fields=id,firstName,lastName,company,email,middleName",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"leads",
+								"programs",
+								"1001.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "fields",
+									"value": "id,firstName,lastName,company,email,middleName",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Lead Partitions",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/leads/partitions.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"leads",
+								"partitions.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Opportunities API - DISABLED W/CRM SYNC",
+			"description": "",
+			"item": [
+				{
+					"name": "Describe Opportunity Role",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/opportunities/roles/describe.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"opportunities",
+								"roles",
+								"describe.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Describe Opportunity",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/opportunities/describe.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"opportunities",
+								"describe.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Opportunities",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/opportunities.json?access_token={{access_token}}&filterType=cCountry&filterValues=US",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"opportunities.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								},
+								{
+									"key": "filterType",
+									"value": "cCountry"
+								},
+								{
+									"key": "filterValues",
+									"value": "US"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Program API",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Program By Name",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/program/byName.json?name=TestProgramName&access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"program",
+								"byName.json"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "TestProgramName",
+									"equals": true
+								},
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Program List",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/programs.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"programs.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Segmentation API",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Segments for Segmentation",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/segmentation/1005/segments.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"segmentation",
+								"1005",
+								"segments.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": [
+						{
+							"id": "1d5fbfb8-e186-4fbd-8f22-9348e5bfbafb",
+							"name": "WKH Sandbox Partitions",
+							"originalRequest": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/segmentation/1001/segments.json?access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"segmentation",
+										"1001",
+										"segments.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}"
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "javascript",
+							"_postman_previewtype": "html",
+							"header": [
+								{
+									"name": "Connection",
+									"key": "Connection",
+									"value": "keep-alive",
+									"description": ""
+								},
+								{
+									"name": "Content-Type",
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8",
+									"description": ""
+								},
+								{
+									"name": "Date",
+									"key": "Date",
+									"value": "Thu, 11 Jun 2015 20:51:59 GMT",
+									"description": ""
+								},
+								{
+									"name": "Server",
+									"key": "Server",
+									"value": "nginx",
+									"description": ""
+								},
+								{
+									"name": "Transfer-Encoding",
+									"key": "Transfer-Encoding",
+									"value": "chunked",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"responseTime": "374",
+							"body": "{\"success\":true,\"warnings\":[],\"errors\":[],\"requestId\":\"a9ed#14de464c691\",\"result\":[{\"id\":1001,\"name\":\"Technology\",\"description\":null,\"createdAt\":\"2015-05-05T16:15:44Z+0000\",\"updatedAt\":\"2015-05-05T16:19:37Z+0000\",\"url\":\"https://app-sj07.marketo.com/#SL14933A1\",\"type\":\"user\",\"status\":\"approved\",\"subtype\":\"user\",\"segmentationId\":1001,\"programId\":null,\"folder\":null},{\"id\":1002,\"name\":\"Healthcare\",\"description\":null,\"createdAt\":\"2015-05-05T16:15:44Z+0000\",\"updatedAt\":\"2015-05-05T16:19:37Z+0000\",\"url\":\"https://app-sj07.marketo.com/#SL14935A1\",\"type\":\"user\",\"status\":\"approved\",\"subtype\":\"user\",\"segmentationId\":1001,\"programId\":null,\"folder\":null},{\"id\":1003,\"name\":\"Finance\",\"description\":null,\"createdAt\":\"2015-05-05T16:15:44Z+0000\",\"updatedAt\":\"2015-05-05T16:19:37Z+0000\",\"url\":\"https://app-sj07.marketo.com/#SL14937A1\",\"type\":\"user\",\"status\":\"approved\",\"subtype\":\"user\",\"segmentationId\":1001,\"programId\":null,\"folder\":null},{\"id\":1004,\"name\":\"Default\",\"description\":null,\"createdAt\":\"2015-05-05T16:15:44Z+0000\",\"updatedAt\":\"2015-05-05T16:19:37Z+0000\",\"url\":\"https://app-sj07.marketo.com/#SL14939A1\",\"type\":\"user\",\"status\":\"approved\",\"subtype\":\"default\",\"segmentationId\":1001,\"programId\":null,\"folder\":null}]}"
+						}
+					]
+				},
+				{
+					"name": "Get Segmentations",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/segmentation.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"segmentation.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": [
+						{
+							"id": "af117b5b-b929-4f64-8c2a-9ea60920513f",
+							"name": "WKH Sandbox Partitions",
+							"originalRequest": {
+								"url": {
+									"raw": "{{url}}/rest/asset/v1/segmentation/1001/segments.json?access_token={{access_token}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"asset",
+										"v1",
+										"segmentation",
+										"1001",
+										"segments.json"
+									],
+									"query": [
+										{
+											"key": "access_token",
+											"value": "{{access_token}}"
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "javascript",
+							"_postman_previewtype": "html",
+							"header": [
+								{
+									"name": "Connection",
+									"key": "Connection",
+									"value": "keep-alive",
+									"description": ""
+								},
+								{
+									"name": "Content-Type",
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8",
+									"description": ""
+								},
+								{
+									"name": "Date",
+									"key": "Date",
+									"value": "Thu, 11 Jun 2015 20:51:59 GMT",
+									"description": ""
+								},
+								{
+									"name": "Server",
+									"key": "Server",
+									"value": "nginx",
+									"description": ""
+								},
+								{
+									"name": "Transfer-Encoding",
+									"key": "Transfer-Encoding",
+									"value": "chunked",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"responseTime": "374",
+							"body": "{\"success\":true,\"warnings\":[],\"errors\":[],\"requestId\":\"a9ed#14de464c691\",\"result\":[{\"id\":1001,\"name\":\"Technology\",\"description\":null,\"createdAt\":\"2015-05-05T16:15:44Z+0000\",\"updatedAt\":\"2015-05-05T16:19:37Z+0000\",\"url\":\"https://app-sj07.marketo.com/#SL14933A1\",\"type\":\"user\",\"status\":\"approved\",\"subtype\":\"user\",\"segmentationId\":1001,\"programId\":null,\"folder\":null},{\"id\":1002,\"name\":\"Healthcare\",\"description\":null,\"createdAt\":\"2015-05-05T16:15:44Z+0000\",\"updatedAt\":\"2015-05-05T16:19:37Z+0000\",\"url\":\"https://app-sj07.marketo.com/#SL14935A1\",\"type\":\"user\",\"status\":\"approved\",\"subtype\":\"user\",\"segmentationId\":1001,\"programId\":null,\"folder\":null},{\"id\":1003,\"name\":\"Finance\",\"description\":null,\"createdAt\":\"2015-05-05T16:15:44Z+0000\",\"updatedAt\":\"2015-05-05T16:19:37Z+0000\",\"url\":\"https://app-sj07.marketo.com/#SL14937A1\",\"type\":\"user\",\"status\":\"approved\",\"subtype\":\"user\",\"segmentationId\":1001,\"programId\":null,\"folder\":null},{\"id\":1004,\"name\":\"Default\",\"description\":null,\"createdAt\":\"2015-05-05T16:15:44Z+0000\",\"updatedAt\":\"2015-05-05T16:19:37Z+0000\",\"url\":\"https://app-sj07.marketo.com/#SL14939A1\",\"type\":\"user\",\"status\":\"approved\",\"subtype\":\"default\",\"segmentationId\":1001,\"programId\":null,\"folder\":null}]}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Static Lists API",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Leads by List Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/list/1004/leads.json?access_token={{access_token}}&fields=id,firstName,lastName,company,email,middleName",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"list",
+								"1004",
+								"leads.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "fields",
+									"value": "id,firstName,lastName,company,email,middleName",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get List by Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/lists/1004.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"lists",
+								"1004.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Lists",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/lists.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"lists.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Add Leads to List",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/lists/1005/leads.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"lists",
+								"1005",
+								"leads.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"input\":[\n      {\n         \"id\": \"1\"\n      },\n      {\n         \"id\": \"1012057\"\n      },\n      {\n         \"id\": \"1012058\"\n      },      \n      {\n         \"id\": \"1012059\"\n      },\n      {\n         \"id\": \"1012060\"\n      }\n   ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Remove from List",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/lists/1002/leads.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"lists",
+								"1002",
+								"leads.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								}
+							],
+							"variable": []
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"input\":[\n      {\n         \"id\": \"1\"\n      },\n      {\n         \"id\": \"2\"\n      }\n   ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usage API",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Daily Errors",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/stats/errors.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"stats",
+								"errors.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Daily Usage",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/stats/usage.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"stats",
+								"usage.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Weekly Errors",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/stats/errors/last7days.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"stats",
+								"errors",
+								"last7days.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Weekly Usage",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/stats/usage/last7days.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"stats",
+								"usage",
+								"last7days.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Use Case Update Email with Dynamic Contents",
+			"description": "",
+			"item": [
+				{
+					"name": "1. Get Email by Name",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/byName.json?access_token={{access_token}}&name=Test Program.Email w/ Dynamic Content",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"byName.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "name",
+									"value": "Test Program.Email w/ Dynamic Content",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get Email Content by Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1023/content.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1023",
+								"content.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "3. Update Email Content by Id",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1023/content.json?access_token={{access_token}}&subject={\"type\":\"DynamicContent\",\"value\":\"1001\"}&fromEmail={\"type\":\"Text\",\"value\":\"from@email.com\"}&fromName={\"type\":\"Text\",\"value\":\"From Name\"}&replyTO={\"type\":\"Text\",\"value\":\"re",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1023",
+								"content.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "subject",
+									"value": "{\"type\":\"DynamicContent\",\"value\":\"1001\"}",
+									"equals": true
+								},
+								{
+									"key": "fromEmail",
+									"value": "{\"type\":\"Text\",\"value\":\"from@email.com\"}",
+									"equals": true
+								},
+								{
+									"key": "fromName",
+									"value": "{\"type\":\"Text\",\"value\":\"From Name\"}",
+									"equals": true
+								},
+								{
+									"key": "replyTO",
+									"value": "{\"type\":\"Text\",\"value\":\"re",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Email Header Update"
+					},
+					"response": []
+				},
+				{
+					"name": "4. Update Dynamic Content content (header)",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1023/dynamicContent/SC1zdWJqZWN0.json?access_token={{access_token}}&segment=US&value=US Subject Line",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1023",
+								"dynamicContent",
+								"SC1zdWJqZWN0.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "segment",
+									"value": "US",
+									"equals": true
+								},
+								{
+									"key": "value",
+									"value": "US Subject Line",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "5. Get Dynamic Content (header)",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1023/dynamicContent/SC1zdWJqZWN0.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1023",
+								"dynamicContent",
+								"SC1zdWJqZWN0.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "6. Update Email Content by htmlId",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1023/content/volume_title.json?access_token={{access_token}}&type=Text&value=<strong>HTML Volume Title</strong>&textValue=Text Volume Title",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1023",
+								"content",
+								"volume_title.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "type",
+									"value": "Text",
+									"equals": true
+								},
+								{
+									"key": "value",
+									"value": "<strong>HTML Volume Title</strong>",
+									"equals": true
+								},
+								{
+									"key": "textValue",
+									"value": "Text Volume Title",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "7. Update Email Content to Dynamic Content",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1023/content/intro_title.json?access_token={{access_token}}&type=DynamicContent&value=1001",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1023",
+								"content",
+								"intro_title.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "type",
+									"value": "DynamicContent",
+									"equals": true
+								},
+								{
+									"key": "value",
+									"value": "1001",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "8. Update Dynamic Content content (body-HTML)",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1023/dynamicContent/RVMtaW50cm9fdGl0bGU=.json?access_token={{access_token}}&segment=US&value=<strong>HTML</strong>&type=HTML",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1023",
+								"dynamicContent",
+								"RVMtaW50cm9fdGl0bGU=.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "segment",
+									"value": "US",
+									"equals": true
+								},
+								{
+									"key": "value",
+									"value": "<strong>HTML</strong>",
+									"equals": true
+								},
+								{
+									"key": "type",
+									"value": "HTML",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "9. Update Dynamic Content content (body-Text)",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1023/dynamicContent/RVMtaW50cm9fdGl0bGU=.json?access_token={{access_token}}&segment=US&value=Text&type=Text",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1023",
+								"dynamicContent",
+								"RVMtaW50cm9fdGl0bGU=.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								},
+								{
+									"key": "segment",
+									"value": "US",
+									"equals": true
+								},
+								{
+									"key": "value",
+									"value": "Text",
+									"equals": true
+								},
+								{
+									"key": "type",
+									"value": "Text",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "10. Get Dynamic Content (body)",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/asset/v1/email/1023/dynamicContent/RVMtaW50cm9fdGl0bGU=.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"asset",
+								"v1",
+								"email",
+								"1023",
+								"dynamicContent",
+								"RVMtaW50cm9fdGl0bGU=.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Web Personalization API",
+			"description": "",
+			"item": [
+				{
+					"name": "Web Activity Tracking API",
+					"request": {
+						"url": "{{RTPurl}}/api/1.1/lead/personalization/user/tracking.json",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Bearer",
+								"value": "{{RTPAuthenticationToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"myDomain-1444630987176-cec8b9e9\",\n    \"_mkto_trk\" : \"id:561-YYY-937&token:_mch-mydomain.com-1443215913380-54620\",\n    \"account_uid\": \"myDomain\",\n    \"sid\": \"myDomain-1448816122677-539ce69o\",\n    \"vc\": 1,\n    \"remote_host\": \"192.116.190.34\",\n    \"page\" : \"www.mywebsite.com/blog\",\n    \"ref\" : \"www.mywebsite.com/home\",\n    \"st\" : \"search terms\",\n    \"custom_event\" : \"VIP\",\n    \"timestamp\" : 1446713503271\n}"
+						},
+						"description": "https://resource.marketo.com/confluence/display/eng/RTP+REST+API+-+V1.1"
+					},
+					"response": []
+				},
+				{
+					"name": "Authentication",
+					"request": {
+						"url": "{{RTPAuthenticationURL2}}/api/1.1/lead/token/request_token",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@mycompany.com\",\n    \"secretToken\": \"b8ccc078-5476-4d52-9e15-88478d0d072f\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vetsource_txmail",
+			"description": "",
+			"item": [
+				{
+					"name": "Order creation",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/customobjects/order_new_c.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"customobjects",
+								"order_new_c.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\":\"createOrUpdate\",\n  \"dedupeBy\":\"dedupeFields\",\n  \"input\": [\n     {\n          \"emailAddress\" : \"jayaraman@asahitechnologies.com\",\n          \"orderId\": \"16\",\n          \"cartDiscount\":\"0.00\",\n          \"couponApplied\" : \"false\",\n          \"promotionDiscount\" : \"0.00\",\n          \"shippingCostInOrder\" : \"0.00\",\n          \"subTotal\" : \"25.99\",\n          \"totalOrderAmount\" : \"25.99\",\n          \"totalQuantity\" : \"\" ,\n          \"taxInOrder\" : \"0.00\" ,\n          \"shippingDetails\" : \"\" ,\n          \"billingDetails\" : \"6 Amherst St. Garden City,NY 60185\" ,\n          \"billingAddressContact\" : \"Jayaramanan K\",\n          \"billingAddressOne\": \"6 Amherst St.\" ,\n          \"billingAddressTwo\" : \"\",\n          \"billingAddressCity\" : \"Garden City\",\n          \"billingAddressRegion\" : \"NY\",\n          \"billingPostalCode\" : \"11530\",\n          \"manufacturer\" : \"Novartis\" ,\n          \"orderCompounded\" : \"false\" ,\n          \"pendingApproval\" : \"true\" ,\n          \"secureURL\" : \"\",\n          \"shipToClinic\" : \"true\" ,\n          \"shippingAddressContact\" : \"Jayaramanan K\",\n          \"shippingAddressOne\" : \"80 Princeton Road\" ,\n          \"shippingAddressTwo\" : \"\",\n          \"shippingAddressCity\" : \"Illinois\",\n          \"shippingAddressRegion\" : \"IL\",\n          \"shippingPostalCode\" : \"60133\",\n          \"elancoPromo\" : \"false\",\n          \"prepay\" : \"false\"\n     }\n  ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Product creation",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/customobjects/product_new_c.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"customobjects",
+								"product_new_c.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\":\"createOrUpdate\",\n  \"dedupeBy\":\"dedupeFields\",\n  \"input\": [\n     {\n            \"emailAddress\" : \"mahesh@asahitechnologies.com\",\n          \"orderId\": \"759\",\n          \"autoShip\" : \"false\" ,\n          \"catalogItemDisplay\":\"Heartgard Plus Chewables - up to 25 lbs (Blue), 6-ct Pack\",\n          \"catalogItemPartNumber\" : \"25037811PK\",\n          \"directions\" : \"Use as directed by Veterinarian\",\n          \"discount\" : \"0.00\" ,\n          \"discountIsPercentageDiscount\" : \"false\" ,\n          \"discountName\" : \"\" ,\n          \"discountPercentageOff\" : \"0.00\",\n          \"incrementId\" : \"1\",\n          \"itemPrice\" : \"34.99\" ,\n          \"orderCalculateCompoundVetFeeTotal\" : \"0.00\" ,\n          \"orderItemCompoundedVetFee\" : \"0.00\" ,\n          \"packaging\" : \"6-ct Pack\" ,\n          \"petName\" : \"Tommy\" ,\n          \"prePay\" : \"0\",\n          \"prescribingVeterinarian\" : \"Clint Eastwood\" ,\n          \"productAmount\" : \"34.99\" ,\n          \"productName\" : \"Heartgard Plus Chewables\" ,\n          \"productQuantity\" : \"1\" ,\n          \"shipDate\" : \"2018-06-21\" ,\n          \"shipFrequency\" : \"none\" ,\n          \"strengthAndSize\" : \"Dogs\"\n     } ,\n     {\n            \"emailAddress\" : \"mahesh@asahitechnologies.com\",\n          \"orderId\": \"759\",\n          \"autoShip\" : \"true\" ,\n          \"catalogItemDisplay\":\"OraVet - 2.5 mL, 8-ct Pack\",\n          \"catalogItemPartNumber\" : \"25297320PK\",\n          \"directions\" : \"Use as advised by Vet\",\n          \"discount\" : \"0.00\" ,\n          \"discountIsPercentageDiscount\" : \"false\" ,\n          \"discountName\" : \"\" ,\n          \"discountPercentageOff\" : \"0.00\",\n          \"incrementId\" : \"2\",\n          \"itemPrice\" : \"37.79\" ,\n          \"orderCalculateCompoundVetFeeTotal\" : \"0.00\" ,\n          \"orderItemCompoundedVetFee\" : \"0.00\" ,\n          \"packaging\" : \"8-ct Pack\" ,\n          \"petName\" : \"Tommy\" ,\n          \"prePay\" : \"0\",\n          \"prescribingVeterinarian\" : \"Clint Eastwood\" ,\n          \"productAmount\" : \"37.79\" ,\n          \"productName\" : \"OraVet\" ,\n          \"productQuantity\" : \"1\" ,\n          \"shipDate\" : \"2018-06-25\" ,\n          \"shipFrequency\" : \"21\" ,\n          \"strengthAndSize\" : \"Dogs\"\n     }\n  ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Email trigger",
+					"request": {
+						"url": {
+							"raw": "{{url}}/rest/v1/campaigns/1542/trigger.json?access_token={{access_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"campaigns",
+								"1542",
+								"trigger.json"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "{{access_token}}",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"leads\" : [\n\t\t{ \"id\" : 2092306 }\t\n\t ],\n\t\"tokens\": []\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
